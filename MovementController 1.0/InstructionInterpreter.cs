@@ -10,7 +10,7 @@ namespace MovementController_1._0
     {
         private decimal currentEL;
         private decimal currentAZ;
-        private double minSecInterval;
+        private decimal minSecInterval;
         private List<Command> trajectory;
 
         public InstructionInterpreter()
@@ -23,17 +23,18 @@ namespace MovementController_1._0
 
         public void InputPointTimeInstruction(PointTimeInstruction instruction)
         {
-            // TODO
-            //TimeSpan interval = instruction.arrivalTime - DateTime.Today;
-            //for (DateTime i = DateTime.Today; i.CompareTo(interval.TotalSeconds) < 0; i.AddSeconds(minSecInterval))
-            //{
-            //    trajectory.Add(
-            //        new Command(
-            //            instruction.PointTimePosition(currentEL, DateTime.Today, i),
-            //            instruction.PointTimePosition(currentAZ, DateTime.Today, i),
-            //            i)
-            //    );
-            //}
+            DateTime startDateTime = DateTime.Now;
+            TimeSpan interval = instruction.arrivalTime - startDateTime;
+            
+            for (decimal i = 0; i.CompareTo(interval) < 0; i+=minSecInterval)
+            {
+                trajectory.Add(
+                    new Command(
+                        instruction.PointTimePosition(currentEL, startDateTime, i),
+                        instruction.PointTimePosition(currentAZ, startDateTime, i),
+                        instruction.arrivalTime.AddSeconds((double) i)
+                ));
+            }
         }
     }
 }
