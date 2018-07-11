@@ -9,19 +9,31 @@ namespace MovementController_1._0
     class InstructionInterpreter
     {
         private decimal currentEL;
-        private decimal currnetAZ;
+        private decimal currentAZ;
         private double minSecInterval;
+        private List<Command> trajectory;
 
         public InstructionInterpreter()
         {
             currentEL = 0;
-            currnetAZ = 0;
-            minSecInterval = 0.001;
+            currentAZ = 0;
+            minSecInterval = 1/1000;
+            trajectory = new List<Command>();
         }
 
         public void InputPointTimeInstruction(PointTimeInstruction instruction)
         {
-            
+            // TODO
+            //TimeSpan interval = instruction.arrivalTime - DateTime.Today;
+            //for (DateTime i = DateTime.Today; i.CompareTo(interval.TotalSeconds) < 0; i.AddSeconds(minSecInterval))
+            //{
+            //    trajectory.Add(
+            //        new Command(
+            //            instruction.PointTimePosition(currentEL, DateTime.Today, i),
+            //            instruction.PointTimePosition(currentAZ, DateTime.Today, i),
+            //            i)
+            //    );
+            //}
         }
     }
 }

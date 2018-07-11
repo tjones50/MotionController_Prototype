@@ -13,9 +13,9 @@ namespace MovementController_1._0
 
     class PointTimeInstruction : Instruction
     {
-        decimal azimuth;
-        decimal elevation;
-        DateTime arrivalTime;
+        public decimal azimuth;
+        public decimal elevation;
+        public DateTime arrivalTime;
 
         public PointTimeInstruction(decimal elevationInput, decimal azimuthInput, DateTime arrivalTimeInput)
         {

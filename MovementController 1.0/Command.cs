@@ -12,9 +12,11 @@ namespace MovementController_1._0
         decimal elevation;
         DateTime arrivalTime;
 
-        public Command()
+        public Command(decimal elevationInput, decimal azimuthInput, DateTime arrivalTimeInput)
         {
-
+            decimal elevation = elevationInput;
+            decimal azimuth = azimuthInput;
+            DateTime arrivalTime = arrivalTimeInput;
         }
     }
 }
