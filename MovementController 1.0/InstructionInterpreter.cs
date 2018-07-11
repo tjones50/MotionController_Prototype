@@ -8,32 +8,29 @@ namespace MovementController_1._0
 {
     class InstructionInterpreter
     {
-        private decimal currentEL;
-        private decimal currentAZ;
-        private decimal minSecInterval;
-        private List<Command> trajectory;
+        private decimal startEL;
+        private decimal startAZ;
+        internal List<Command> trajectory;
+        internal TimeSpan interval;
 
         public InstructionInterpreter()
         {
-            currentEL = 0;
-            currentAZ = 0;
-            minSecInterval = 1/1000;
+            startEL = 0;
+            startAZ = 0;
             trajectory = new List<Command>();
+            interval = new TimeSpan(0);
         }
 
         public void InputPointTimeInstruction(PointTimeInstruction instruction)
         {
             DateTime startDateTime = DateTime.Now;
-            TimeSpan interval = instruction.arrivalTime - startDateTime;
+            interval = instruction.arrivalTime - startDateTime;
             
-            for (decimal i = 0; i.CompareTo((decimal) interval.TotalSeconds) < 0; i+=minSecInterval)
+            for (int i = 0; i < interval.TotalSeconds; i++)
             {
-                trajectory.Add(
-                    new Command(
-                        instruction.PointTimePosition(currentEL, startDateTime, i),
-                        instruction.PointTimePosition(currentAZ, startDateTime, i),
-                        instruction.arrivalTime.AddSeconds((double) i)
-                ));
+                decimal currentEL = instruction.LocationTimePosition(instruction.elevation, startEL, startDateTime, i);
+                decimal currentAZ = instruction.LocationTimePosition(instruction.azimuth, startAZ, startDateTime, i);
+                trajectory.Add(new Command(currentEL, currentAZ, i));
             }
         }
     }

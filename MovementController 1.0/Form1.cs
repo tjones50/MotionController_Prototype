@@ -19,19 +19,29 @@ namespace MovementController_1._0
 
         private void SubmitButton_Click(object sender, EventArgs e)
         {
-            // Graphing Test
-            int test = 0;
-            foreach( var series in this.OuputChart.Series)
-            {
-                series.Points.Clear();
-                series.Points.AddXY(0, 0);
-                series.Points.AddXY(ELPositionInput.Value, AZPositionInput.Value + test);
-                test++;
-            }
-            
+            decimal endEL = ELPositionInput.Value;
+            decimal endAZ = AZPositionInput.Value;
+            DateTime arrivalTime = ArrivalTimeInput.Value;
+
             InstructionInterpreter instructionInterpreter = new InstructionInterpreter();
-            PointTimeInstruction inputInstruction = new PointTimeInstruction(ELPositionInput.Value, AZPositionInput.Value, ArrivalTimeInput.Value);
+            PointTimeInstruction inputInstruction = new PointTimeInstruction(endEL, endAZ, arrivalTime);
             instructionInterpreter.InputPointTimeInstruction(inputInstruction);
+
+            // Graph Input 
+            this.ELChart.Series[0].Points.Clear();
+            foreach (var cmd in instructionInterpreter.trajectory)
+            {
+                this.ELChart.Series[0].Points.AddXY(cmd.secOffset, cmd.elevation);
+            }
+
+            // Graph Output 
+            this.AZChart.Series[0].Points.Clear();
+            foreach (var cmd in instructionInterpreter.trajectory)
+            {
+                this.AZChart.Series[0].Points.AddXY(cmd.secOffset, cmd.azimuth);
+            }
+
+
         }
     }
 }

@@ -8,15 +8,15 @@ namespace MovementController_1._0
 {
     class Command
     {
-        decimal azimuth;
-        decimal elevation;
-        DateTime arrivalTime;
+        public decimal azimuth;
+        public decimal elevation;
+        public decimal secOffset;
 
-        public Command(decimal elevationInput, decimal azimuthInput, DateTime arrivalTimeInput)
+        public Command(decimal elevationInput, decimal azimuthInput, decimal secOffsetInput)
         {
-            decimal elevation = elevationInput;
-            decimal azimuth = azimuthInput;
-            DateTime arrivalTime = arrivalTimeInput;
+            elevation = elevationInput;
+            azimuth = azimuthInput;
+            secOffset = secOffsetInput;
         }
     }
 }
