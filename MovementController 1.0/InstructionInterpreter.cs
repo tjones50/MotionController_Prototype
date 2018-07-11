@@ -26,7 +26,7 @@ namespace MovementController_1._0
             DateTime startDateTime = DateTime.Now;
             TimeSpan interval = instruction.arrivalTime - startDateTime;
             
-            for (decimal i = 0; i.CompareTo(interval) < 0; i+=minSecInterval)
+            for (decimal i = 0; i.CompareTo((decimal) interval.TotalSeconds) < 0; i+=minSecInterval)
             {
                 trajectory.Add(
                     new Command(
