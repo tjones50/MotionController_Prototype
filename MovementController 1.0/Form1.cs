@@ -17,31 +17,102 @@ namespace MovementController_1._0
             InitializeComponent();
         }
 
-        private void SubmitButton_Click(object sender, EventArgs e)
+        private void SlewButton_Click(object sender, EventArgs e)
         {
             decimal endEL = ELPositionInput.Value;
             decimal endAZ = AZPositionInput.Value;
             DateTime arrivalTime = ArrivalTimeInput.Value;
 
             InstructionInterpreter instructionInterpreter = new InstructionInterpreter();
-            PointTimeInstruction inputInstruction = new PointTimeInstruction(endEL, endAZ, arrivalTime);
-            instructionInterpreter.InputPointTimeInstruction(inputInstruction);
+            MoveToAZELInstruction inputInstruction = new MoveToAZELInstruction(endEL, endAZ, arrivalTime);
+            instructionInterpreter.ProcessInstructionInput(inputInstruction);
 
-            // Graph Input 
+            // Graph Elevation vs. Time 
             this.ELChart.Series[0].Points.Clear();
             foreach (var cmd in instructionInterpreter.trajectory)
             {
-                this.ELChart.Series[0].Points.AddXY(cmd.secOffset, cmd.elevation);
+                this.ELChart.Series[0].Points.AddXY(cmd.diffSecs, cmd.coordinates.elevation);
             }
 
-            // Graph Output 
+            // Graph Azimuth vs. Time 
             this.AZChart.Series[0].Points.Clear();
             foreach (var cmd in instructionInterpreter.trajectory)
             {
-                this.AZChart.Series[0].Points.AddXY(cmd.secOffset, cmd.azimuth);
+                this.AZChart.Series[0].Points.AddXY(cmd.diffSecs, cmd.coordinates.azimuth);
             }
 
-
+            // Graph Elevation vs. Azimuth
+            this.ELAZChart.Series[0].Points.Clear();
+            foreach (var cmd in instructionInterpreter.trajectory)
+            {
+                this.ELAZChart.Series[0].Points.AddXY(cmd.coordinates.azimuth, cmd.coordinates.elevation);
+            }
         }
+
+        private void TrackButton_Click(object sender, EventArgs e)
+        {
+            decimal endEL = ELPositionInput.Value;
+            decimal endAZ = AZPositionInput.Value;
+            DateTime arrivalTime = ArrivalTimeInput.Value;
+
+            InstructionInterpreter instructionInterpreter = new InstructionInterpreter();
+            TrackInstruction inputInstruction = new TrackInstruction(endEL, endAZ, arrivalTime);
+            instructionInterpreter.ProcessInstructionInput(inputInstruction);
+
+            // Graph Elevation vs. Time  
+            this.ELChart.Series[0].Points.Clear();
+            foreach (var cmd in instructionInterpreter.trajectory)
+            {
+                this.ELChart.Series[0].Points.AddXY(cmd.diffSecs, cmd.coordinates.elevation);
+            }
+
+            // Graph Azimuth vs. Time 
+            this.AZChart.Series[0].Points.Clear();
+            foreach (var cmd in instructionInterpreter.trajectory)
+            {
+                this.AZChart.Series[0].Points.AddXY(cmd.diffSecs, cmd.coordinates.azimuth);
+            }
+
+            // Graph Elevation vs. Azimuth
+            this.ELAZChart.Series[0].Points.Clear();
+            foreach (var cmd in instructionInterpreter.trajectory)
+            {
+                this.ELAZChart.Series[0].Points.AddXY(cmd.coordinates.azimuth, cmd.coordinates.elevation);
+            }
+        }
+
+        private void DriftScanButton_Click(object sender, EventArgs e)
+        {
+            decimal endEL = ELPositionInput.Value;
+            decimal endAZ = AZPositionInput.Value;
+            DateTime arrivalTime = ArrivalTimeInput.Value;
+
+            InstructionInterpreter instructionInterpreter = new InstructionInterpreter();
+            DriftScanInstruction inputInstruction = new DriftScanInstruction(endEL, endAZ, arrivalTime);
+            instructionInterpreter.ProcessInstructionInput(inputInstruction);
+
+            // Graph Elevation vs. Time 
+            this.ELChart.Series[0].Points.Clear();
+            foreach (var cmd in instructionInterpreter.trajectory)
+            {
+                this.ELChart.Series[0].Points.AddXY(cmd.diffSecs, cmd.coordinates.elevation);
+            }
+
+            // Graph Azimuth vs. Time 
+            this.AZChart.Series[0].Points.Clear();
+            foreach (var cmd in instructionInterpreter.trajectory)
+            {
+                this.AZChart.Series[0].Points.AddXY(cmd.diffSecs, cmd.coordinates.azimuth);
+            }
+
+            // Graph Elevation vs. Azimuth
+            this.ELAZChart.Series[0].Points.Clear();
+            foreach (var cmd in instructionInterpreter.trajectory)
+            {
+                this.ELAZChart.Series[0].Points.AddXY(cmd.coordinates.azimuth, cmd.coordinates.elevation);
+            }
+        }
+
+        
     }
 }

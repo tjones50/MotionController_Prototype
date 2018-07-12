@@ -8,30 +8,26 @@ namespace MovementController_1._0
 {
     class InstructionInterpreter
     {
-        private decimal startEL;
-        private decimal startAZ;
-        internal List<Command> trajectory;
-        internal TimeSpan interval;
+        private const decimal DEFAULT_INTERVAL = 1 / 1000;
 
+        internal List<DiscreteCommand> trajectory;
+
+        // A session creates one of these and it hosts all the Commands
         public InstructionInterpreter()
         {
-            startEL = 0;
-            startAZ = 0;
-            trajectory = new List<Command>();
-            interval = new TimeSpan(0);
+            trajectory = new List<DiscreteCommand>();
         }
 
-        public void InputPointTimeInstruction(PointTimeInstruction instruction)
+        public void ProcessInstructionInput(Instruction instruction)
         {
-            DateTime startDateTime = DateTime.Now;
-            interval = instruction.arrivalTime - startDateTime;
-            
+            TimeSpan interval = instruction.destinationTime - DateTime.Now;
+
+            // Some kind of global call that gets the current position from the last read encoder values
+            // For now, populate with (0,0)... Ask Travis what he thinks we should do?
+            AZELCoordinate startCoords = new AZELCoordinate(0, 0);
+
             for (int i = 0; i < interval.TotalSeconds; i++)
-            {
-                decimal currentEL = instruction.LocationTimePosition(instruction.elevation, startEL, startDateTime, i);
-                decimal currentAZ = instruction.LocationTimePosition(instruction.azimuth, startAZ, startDateTime, i);
-                trajectory.Add(new Command(currentEL, currentAZ, i));
-            }
+                trajectory.Add(new DiscreteCommand(instruction.CoordinateAtTime(i, startCoords), i));
         }
     }
 }
