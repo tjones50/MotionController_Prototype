@@ -24,7 +24,7 @@ namespace MovementController_1._0
             DateTime arrivalTime = ArrivalTimeInput.Value;
 
             InstructionInterpreter instructionInterpreter = new InstructionInterpreter();
-            MoveToAZELInstruction inputInstruction = new MoveToAZELInstruction(endEL, endAZ, arrivalTime);
+            SlewInstruction inputInstruction = new SlewInstruction(endEL, endAZ, arrivalTime);
             instructionInterpreter.ProcessInstructionInput(inputInstruction);
 
             // Graph Elevation vs. Time 

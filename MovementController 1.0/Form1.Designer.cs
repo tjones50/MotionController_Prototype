@@ -92,9 +92,9 @@ namespace MovementController_1._0
             this.ArrivalTimeLabel.AutoSize = true;
             this.ArrivalTimeLabel.Location = new System.Drawing.Point(1149, 384);
             this.ArrivalTimeLabel.Name = "ArrivalTimeLabel";
-            this.ArrivalTimeLabel.Size = new System.Drawing.Size(185, 17);
+            this.ArrivalTimeLabel.Size = new System.Drawing.Size(119, 17);
             this.ArrivalTimeLabel.TabIndex = 3;
-            this.ArrivalTimeLabel.Text = "Arrival Time (sec) - Optional";
+            this.ArrivalTimeLabel.Text = "Arrival Time (sec)";
             // 
             // ArrivalTimeInput
             // 

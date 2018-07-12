@@ -26,6 +26,9 @@ namespace MovementController_1._0
             // For now, populate with (0,0)... Ask Travis what he thinks we should do?
             AZELCoordinate startCoords = new AZELCoordinate(0, 0);
 
+            // Set Start time to new
+            instruction.setStartTime(DateTime.Now);
+
             for (int i = 0; i < interval.TotalSeconds; i++)
                 trajectory.Add(new DiscreteCommand(instruction.CoordinateAtTime(i, startCoords), i));
         }

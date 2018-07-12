@@ -28,9 +28,9 @@ namespace MovementController_1._0
         public abstract AZELCoordinate CoordinateAtTime(decimal dt, AZELCoordinate curr);
     }
 
-    class MoveToAZELInstruction : Instruction
+    class SlewInstruction : Instruction
     {
-        public MoveToAZELInstruction(decimal az, decimal el, DateTime dest) : base(az, el, dest) { }
+        public SlewInstruction(decimal az, decimal el, DateTime dest) : base(az, el, dest) { }
 
         public override AZELCoordinate CoordinateAtTime(decimal elapsedTime, AZELCoordinate startCoordinates)
         {
