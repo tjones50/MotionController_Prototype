@@ -60,6 +60,7 @@
     </Compile>
     <Compile Include="InstructionInterpreter.cs" />
     <Compile Include="Instruction.cs" />
+    <Compile Include="Path.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">

@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AASharpExamples", "AASharpE
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AASharp.Tests", "AASharp.Tests\AASharp.Tests.csproj", "{F0E6AE66-C1E0-4FA2-BAC8-CCB13856C958}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AASharp (Ref. Only)", "AASharp (Ref. Only)", "{3728FBB0-92A3-48DE-8921-0F584062263A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,6 +56,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DCA29AAE-BF2A-420D-9E11-710D9178978E} = {3728FBB0-92A3-48DE-8921-0F584062263A}
+		{FDE1CCD0-E59E-407F-9DE3-574151820AD0} = {3728FBB0-92A3-48DE-8921-0F584062263A}
+		{F0E6AE66-C1E0-4FA2-BAC8-CCB13856C958} = {3728FBB0-92A3-48DE-8921-0F584062263A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A403A1EC-73CE-4EC2-B3BA-BF1BF1E81D9D}
