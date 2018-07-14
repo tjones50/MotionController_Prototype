@@ -52,18 +52,22 @@ namespace MovementController_1._0
             this.ELAZChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.SlewButton = new System.Windows.Forms.Button();
             this.DriftScanButton = new System.Windows.Forms.Button();
+            this.ToggleTimeIntervalButton = new System.Windows.Forms.Button();
+            this.IntervalInput = new System.Windows.Forms.NumericUpDown();
+            this.IntervalLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.ELPositionInput)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.AZPositionInput)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.AZChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ELChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ELAZChart)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.IntervalInput)).BeginInit();
             this.SuspendLayout();
             // 
             // TrackButton
             // 
-            this.TrackButton.Location = new System.Drawing.Point(974, 502);
+            this.TrackButton.Location = new System.Drawing.Point(974, 557);
             this.TrackButton.Name = "TrackButton";
-            this.TrackButton.Size = new System.Drawing.Size(149, 23);
+            this.TrackButton.Size = new System.Drawing.Size(149, 27);
             this.TrackButton.TabIndex = 0;
             this.TrackButton.Text = "Track Instruction";
             this.TrackButton.UseVisualStyleBackColor = true;
@@ -90,19 +94,19 @@ namespace MovementController_1._0
             // ArrivalTimeLabel
             // 
             this.ArrivalTimeLabel.AutoSize = true;
-            this.ArrivalTimeLabel.Location = new System.Drawing.Point(1149, 384);
+            this.ArrivalTimeLabel.Location = new System.Drawing.Point(793, 468);
             this.ArrivalTimeLabel.Name = "ArrivalTimeLabel";
-            this.ArrivalTimeLabel.Size = new System.Drawing.Size(119, 17);
+            this.ArrivalTimeLabel.Size = new System.Drawing.Size(83, 17);
             this.ArrivalTimeLabel.TabIndex = 3;
-            this.ArrivalTimeLabel.Text = "Arrival Time (sec)";
+            this.ArrivalTimeLabel.Text = "Arrival Time";
             // 
             // ArrivalTimeInput
             // 
             this.ArrivalTimeInput.Checked = false;
             this.ArrivalTimeInput.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.ArrivalTimeInput.Location = new System.Drawing.Point(1152, 412);
+            this.ArrivalTimeInput.Location = new System.Drawing.Point(796, 488);
             this.ArrivalTimeInput.Name = "ArrivalTimeInput";
-            this.ArrivalTimeInput.Size = new System.Drawing.Size(182, 22);
+            this.ArrivalTimeInput.Size = new System.Drawing.Size(149, 22);
             this.ArrivalTimeInput.TabIndex = 7;
             // 
             // ELPositionInput
@@ -197,9 +201,9 @@ namespace MovementController_1._0
             // 
             // SlewButton
             // 
-            this.SlewButton.Location = new System.Drawing.Point(802, 502);
+            this.SlewButton.Location = new System.Drawing.Point(796, 557);
             this.SlewButton.Name = "SlewButton";
-            this.SlewButton.Size = new System.Drawing.Size(149, 23);
+            this.SlewButton.Size = new System.Drawing.Size(155, 27);
             this.SlewButton.TabIndex = 13;
             this.SlewButton.Text = "Slew Instruction";
             this.SlewButton.UseVisualStyleBackColor = true;
@@ -207,19 +211,50 @@ namespace MovementController_1._0
             // 
             // DriftScanButton
             // 
-            this.DriftScanButton.Location = new System.Drawing.Point(1152, 502);
+            this.DriftScanButton.Location = new System.Drawing.Point(1152, 557);
             this.DriftScanButton.Name = "DriftScanButton";
-            this.DriftScanButton.Size = new System.Drawing.Size(149, 23);
+            this.DriftScanButton.Size = new System.Drawing.Size(149, 27);
             this.DriftScanButton.TabIndex = 14;
             this.DriftScanButton.Text = "Drift Scan Instruction";
             this.DriftScanButton.UseVisualStyleBackColor = true;
             this.DriftScanButton.Click += new System.EventHandler(this.DriftScanButton_Click);
+            // 
+            // ToggleTimeIntervalButton
+            // 
+            this.ToggleTimeIntervalButton.Location = new System.Drawing.Point(1152, 485);
+            this.ToggleTimeIntervalButton.Name = "ToggleTimeIntervalButton";
+            this.ToggleTimeIntervalButton.Size = new System.Drawing.Size(155, 27);
+            this.ToggleTimeIntervalButton.TabIndex = 15;
+            this.ToggleTimeIntervalButton.Text = "Toggle Time/Interval";
+            this.ToggleTimeIntervalButton.UseVisualStyleBackColor = true;
+            this.ToggleTimeIntervalButton.Click += new System.EventHandler(this.ToggleTimeIntervalButton_Click);
+            // 
+            // IntervalInput
+            // 
+            this.IntervalInput.Enabled = false;
+            this.IntervalInput.Location = new System.Drawing.Point(974, 488);
+            this.IntervalInput.Name = "IntervalInput";
+            this.IntervalInput.Size = new System.Drawing.Size(147, 22);
+            this.IntervalInput.TabIndex = 17;
+            // 
+            // IntervalLabel
+            // 
+            this.IntervalLabel.AutoSize = true;
+            this.IntervalLabel.Enabled = false;
+            this.IntervalLabel.Location = new System.Drawing.Point(971, 468);
+            this.IntervalLabel.Name = "IntervalLabel";
+            this.IntervalLabel.Size = new System.Drawing.Size(90, 17);
+            this.IntervalLabel.TabIndex = 16;
+            this.IntervalLabel.Text = "Interval (sec)";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1574, 689);
+            this.Controls.Add(this.IntervalInput);
+            this.Controls.Add(this.IntervalLabel);
+            this.Controls.Add(this.ToggleTimeIntervalButton);
             this.Controls.Add(this.DriftScanButton);
             this.Controls.Add(this.SlewButton);
             this.Controls.Add(this.ELAZChart);
@@ -239,6 +274,7 @@ namespace MovementController_1._0
             ((System.ComponentModel.ISupportInitialize)(this.AZChart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ELChart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ELAZChart)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.IntervalInput)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -258,6 +294,9 @@ namespace MovementController_1._0
         private System.Windows.Forms.DataVisualization.Charting.Chart ELAZChart;
         private System.Windows.Forms.Button SlewButton;
         private System.Windows.Forms.Button DriftScanButton;
+        private System.Windows.Forms.Button ToggleTimeIntervalButton;
+        private System.Windows.Forms.NumericUpDown IntervalInput;
+        private System.Windows.Forms.Label IntervalLabel;
     }
 }
 

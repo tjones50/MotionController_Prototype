@@ -21,7 +21,9 @@ namespace MovementController_1._0
         {
             decimal endEL = ELPositionInput.Value;
             decimal endAZ = AZPositionInput.Value;
-            DateTime arrivalTime = ArrivalTimeInput.Value;
+            DateTime arrivalTime;
+            if (ArrivalTimeInput.Enabled) {  arrivalTime = ArrivalTimeInput.Value;  }
+            else { arrivalTime = DateTime.Now.AddSeconds((double) IntervalInput.Value); }
 
             SlewInstruction inputInstruction = new SlewInstruction(endAZ, endEL, arrivalTime);
             Graph(inputInstruction);
@@ -31,7 +33,9 @@ namespace MovementController_1._0
         {
             decimal endEL = ELPositionInput.Value;
             decimal endAZ = AZPositionInput.Value;
-            DateTime arrivalTime = ArrivalTimeInput.Value;
+            DateTime arrivalTime;
+            if (ArrivalTimeInput.Enabled) { arrivalTime = ArrivalTimeInput.Value; }
+            else { arrivalTime = DateTime.Now.AddSeconds((double)IntervalInput.Value); }
 
             TrackInstruction inputInstruction = new TrackInstruction(endAZ, endEL, arrivalTime);
             Graph(inputInstruction);
@@ -41,7 +45,9 @@ namespace MovementController_1._0
         {
             decimal endEL = ELPositionInput.Value;
             decimal endAZ = AZPositionInput.Value;
-            DateTime arrivalTime = ArrivalTimeInput.Value;
+            DateTime arrivalTime;
+            if (ArrivalTimeInput.Enabled) { arrivalTime = ArrivalTimeInput.Value; }
+            else { arrivalTime = DateTime.Now.AddSeconds((double)IntervalInput.Value); }
 
             DriftScanInstruction inputInstruction = new DriftScanInstruction(endAZ, endEL, arrivalTime);
             Graph(inputInstruction);
@@ -74,6 +80,29 @@ namespace MovementController_1._0
             }
         }
 
-        
+        private void ToggleTimeIntervalButton_Click(object sender, EventArgs e)
+        {
+            if (ArrivalTimeInput.Enabled && ArrivalTimeLabel.Enabled)
+            {
+                ArrivalTimeInput.Enabled = false;
+                ArrivalTimeLabel.Enabled = false;
+                IntervalInput.Enabled = true;
+                IntervalLabel.Enabled = true;
+            }
+            else if (IntervalInput.Enabled && IntervalLabel.Enabled)
+            {
+                ArrivalTimeInput.Enabled = true;
+                ArrivalTimeLabel.Enabled = true;
+                IntervalInput.Enabled = false;
+                IntervalLabel.Enabled = false;
+            }
+            else
+            {
+                ArrivalTimeInput.Enabled = true;
+                ArrivalTimeLabel.Enabled = true;
+                IntervalInput.Enabled = false;
+                IntervalLabel.Enabled = false;
+            }
+        }
     }
 }

@@ -34,12 +34,12 @@ namespace MovementController_1._0
 
         public override AZELCoordinate CoordinateAtTime(decimal elapsedTime, AZELCoordinate startCoordinates)
         {
-            int destinationElapsedTime = destinationTime.Subtract(startTime).Seconds;
+            int timeInterval = destinationTime.Subtract(startTime).Seconds;
 
-            if (destinationElapsedTime > 0 && elapsedTime > 0)
+            if (timeInterval > 0 && elapsedTime > 0)
             {
-                decimal mAZ = (destinationCoordinates.azimuth - startCoordinates.azimuth) / destinationElapsedTime;
-                decimal mEL = (destinationCoordinates.elevation - startCoordinates.elevation) / destinationElapsedTime;
+                decimal mAZ = (destinationCoordinates.azimuth - startCoordinates.azimuth) / timeInterval;
+                decimal mEL = (destinationCoordinates.elevation - startCoordinates.elevation) / timeInterval;
                 return new AZELCoordinate(
                     (mAZ * elapsedTime) + startCoordinates.azimuth,
                     (mEL * elapsedTime) + startCoordinates.elevation
@@ -142,6 +142,7 @@ namespace MovementController_1._0
                         return cumulative;
                     }
 
+                    // FIXME: can't change both AZ and EL
                     if (portionDone - accPath > SCAN_DROP_DEGREES)
                     {
                         cumulative.elevation += dDR;
