@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace MovementController_1._0
 {
+    // Test bruh
     class AZELCoordinate
     {
         public decimal azimuth;
