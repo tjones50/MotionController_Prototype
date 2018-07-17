@@ -40,7 +40,6 @@ namespace MovementController_1._0
             System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Title title3 = new System.Windows.Forms.DataVisualization.Charting.Title();
-            this.TrackButton = new System.Windows.Forms.Button();
             this.ELPositionLabel = new System.Windows.Forms.Label();
             this.AZPositionLabel = new System.Windows.Forms.Label();
             this.ArrivalTimeLabel = new System.Windows.Forms.Label();
@@ -62,16 +61,6 @@ namespace MovementController_1._0
             ((System.ComponentModel.ISupportInitialize)(this.ELAZChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.IntervalInput)).BeginInit();
             this.SuspendLayout();
-            // 
-            // TrackButton
-            // 
-            this.TrackButton.Location = new System.Drawing.Point(974, 557);
-            this.TrackButton.Name = "TrackButton";
-            this.TrackButton.Size = new System.Drawing.Size(149, 27);
-            this.TrackButton.TabIndex = 0;
-            this.TrackButton.Text = "Track Instruction";
-            this.TrackButton.UseVisualStyleBackColor = true;
-            this.TrackButton.Click += new System.EventHandler(this.TrackButton_Click);
             // 
             // ELPositionLabel
             // 
@@ -112,18 +101,26 @@ namespace MovementController_1._0
             // ELPositionInput
             // 
             this.ELPositionInput.Location = new System.Drawing.Point(796, 412);
+            this.ELPositionInput.Maximum = new decimal(new int[] {
+            90,
+            0,
+            0,
+            0});
             this.ELPositionInput.Name = "ELPositionInput";
             this.ELPositionInput.Size = new System.Drawing.Size(155, 22);
             this.ELPositionInput.TabIndex = 8;
-            this.ELPositionInput.Maximum = 90;
             // 
             // AZPositionInput
             // 
             this.AZPositionInput.Location = new System.Drawing.Point(974, 412);
+            this.AZPositionInput.Maximum = new decimal(new int[] {
+            360,
+            0,
+            0,
+            0});
             this.AZPositionInput.Name = "AZPositionInput";
             this.AZPositionInput.Size = new System.Drawing.Size(147, 22);
             this.AZPositionInput.TabIndex = 9;
-            this.AZPositionInput.Maximum = 360;
             // 
             // AZChart
             // 
@@ -213,7 +210,7 @@ namespace MovementController_1._0
             // 
             // DriftScanButton
             // 
-            this.DriftScanButton.Location = new System.Drawing.Point(1152, 557);
+            this.DriftScanButton.Location = new System.Drawing.Point(974, 557);
             this.DriftScanButton.Name = "DriftScanButton";
             this.DriftScanButton.Size = new System.Drawing.Size(149, 27);
             this.DriftScanButton.TabIndex = 14;
@@ -235,10 +232,14 @@ namespace MovementController_1._0
             // 
             this.IntervalInput.Enabled = false;
             this.IntervalInput.Location = new System.Drawing.Point(974, 488);
+            this.IntervalInput.Maximum = new decimal(new int[] {
+            3600,
+            0,
+            0,
+            0});
             this.IntervalInput.Name = "IntervalInput";
             this.IntervalInput.Size = new System.Drawing.Size(147, 22);
             this.IntervalInput.TabIndex = 17;
-            this.IntervalInput.Maximum = 3600;
             // 
             // IntervalLabel
             // 
@@ -269,7 +270,6 @@ namespace MovementController_1._0
             this.Controls.Add(this.ArrivalTimeLabel);
             this.Controls.Add(this.AZPositionLabel);
             this.Controls.Add(this.ELPositionLabel);
-            this.Controls.Add(this.TrackButton);
             this.Name = "Form1";
             this.Text = "User Input";
             ((System.ComponentModel.ISupportInitialize)(this.ELPositionInput)).EndInit();
@@ -284,8 +284,6 @@ namespace MovementController_1._0
         }
 
         #endregion
-
-        private System.Windows.Forms.Button TrackButton;
         private System.Windows.Forms.Label ELPositionLabel;
         private System.Windows.Forms.Label AZPositionLabel;
         private System.Windows.Forms.Label ArrivalTimeLabel;

@@ -30,18 +30,6 @@ namespace MovementController_1._0
             Graph(inputInstruction);
         }
 
-        private void TrackButton_Click(object sender, EventArgs e)
-        {
-            decimal endEL = ELPositionInput.Value;
-            decimal endAZ = AZPositionInput.Value;
-            DateTime arrivalTime;
-            if (ArrivalTimeInput.Enabled) { arrivalTime = ArrivalTimeInput.Value; }
-            else { arrivalTime = DateTime.Now.AddSeconds((double)IntervalInput.Value); }
-
-            TrackInstruction inputInstruction = new TrackInstruction(endAZ, endEL, arrivalTime);
-            Graph(inputInstruction);
-        }
-
         private void DriftScanButton_Click(object sender, EventArgs e)
         {
             decimal endEL = ELPositionInput.Value;

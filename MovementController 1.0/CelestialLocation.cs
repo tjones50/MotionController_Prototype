@@ -69,7 +69,7 @@ namespace MovementController_1._0
             dateTime = dateTime.ToUniversalTime(); // NOTE: time must be converted to Universal Time
 
             //Calculate the topocentric horizontal position of the Moon 
-            AASDate dateMoonCalc = new AASDate(2007, 9, 21, true);
+            AASDate dateMoonCalc = new AASDate(dateTime.Year, dateTime.Month, dateTime.Day, dateTime.Hour, dateTime.Minute, dateTime.Second, true);
             double JDMoon = dateMoonCalc.Julian + AASDynamicalTime.DeltaT(dateMoonCalc.Julian) / 86400.0;
             double MoonLong = AASMoon.EclipticLongitude(JDMoon);
             double MoonLat = AASMoon.EclipticLatitude(JDMoon);
