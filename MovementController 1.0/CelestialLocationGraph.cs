@@ -11,48 +11,49 @@ using AASharp;
 
 namespace MovementController_1._0
 {
-    public partial class Form1 : Form
+    public partial class CelestialLocationGraph : Form
     {
-        public Form1()
+        public CelestialLocationGraph()
         {
             InitializeComponent();
         }
 
-        private void SlewButton_Click(object sender, EventArgs e)
+        private void TrackSunButton_Click(object sender, EventArgs e)
         {
-            decimal endEL = ELPositionInput.Value;
-            decimal endAZ = AZPositionInput.Value;
             DateTime arrivalTime;
-            if (ArrivalTimeInput.Enabled) {  arrivalTime = ArrivalTimeInput.Value;  }
-            else { arrivalTime = DateTime.Now.AddSeconds((double) IntervalInput.Value); }
+            if (ArrivalTimeInput.Enabled) { arrivalTime = ArrivalTimeInput.Value; }
+            else { arrivalTime = DateTime.Now.AddSeconds((double)IntervalInput.Value); }
+
+            AAS2DCoordinate sunPos = CelestialLocation.CelestialObjectSwitch(CelestialLocation.CelestialObjectEnum.Sun, arrivalTime);
+
+            decimal endEL = (decimal) sunPos.Y;
+            decimal endAZ = (decimal) sunPos.X;
+
+            ELValue.Value = endEL;
+            AZValue.Value = endAZ;
 
             SlewInstruction inputInstruction = new SlewInstruction(endAZ, endEL, arrivalTime);
             Graph(inputInstruction);
         }
 
-        private void TrackButton_Click(object sender, EventArgs e)
+        private void TrackMoonButton_Click(object sender, EventArgs e)
         {
-            decimal endEL = ELPositionInput.Value;
-            decimal endAZ = AZPositionInput.Value;
             DateTime arrivalTime;
             if (ArrivalTimeInput.Enabled) { arrivalTime = ArrivalTimeInput.Value; }
             else { arrivalTime = DateTime.Now.AddSeconds((double)IntervalInput.Value); }
 
-            TrackInstruction inputInstruction = new TrackInstruction(endAZ, endEL, arrivalTime);
+            AAS2DCoordinate moonPos = CelestialLocation.CelestialObjectSwitch(CelestialLocation.CelestialObjectEnum.Moon, arrivalTime);
+
+            decimal endEL = (decimal) moonPos.Y;
+            decimal endAZ = (decimal) moonPos.X;
+
+            ELValue.Value = endEL;
+            AZValue.Value = endAZ;
+
+            SlewInstruction inputInstruction = new SlewInstruction(endAZ, endEL, arrivalTime);
             Graph(inputInstruction);
         }
 
-        private void DriftScanButton_Click(object sender, EventArgs e)
-        {
-            decimal endEL = ELPositionInput.Value;
-            decimal endAZ = AZPositionInput.Value;
-            DateTime arrivalTime;
-            if (ArrivalTimeInput.Enabled) { arrivalTime = ArrivalTimeInput.Value; }
-            else { arrivalTime = DateTime.Now.AddSeconds((double)IntervalInput.Value); }
-
-            DriftScanInstruction inputInstruction = new DriftScanInstruction(endAZ, endEL, arrivalTime);
-            Graph(inputInstruction);
-        }
 
         private void Graph(Instruction instruction)
         {
@@ -105,5 +106,7 @@ namespace MovementController_1._0
                 IntervalLabel.Enabled = false;
             }
         }
+
+
     }
 }
