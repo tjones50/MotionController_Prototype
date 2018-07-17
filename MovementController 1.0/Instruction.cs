@@ -52,43 +52,6 @@ namespace MovementController_1._0
         }
     }
 
-    class TrackInstruction : Instruction
-    {
-        public CelestialBody body;
-
-        public TrackInstruction(decimal az, decimal el, DateTime dest, CelestialBody bo) : base(az, el, dest)
-        {
-            body = bo;
-        }
-        public TrackInstruction(decimal az, decimal el, DateTime dest)
-            : this(az, el, dest, TempContainer.OBJ_STAR) { }
-
-        public override AZELCoordinate CoordinateAtTime(decimal elapsedTime, AZELCoordinate startCoordinates)
-        {
-            int destinationElapsedTime = destinationTime.Subtract(startTime).Seconds;
-
-            if (destinationElapsedTime > 0 && elapsedTime > 0)
-            {
-                // This is wrong, we have to actually find arc length
-
-                AZELCoordinate result = new AZELCoordinate(0, 0);
-
-                decimal b = destinationCoordinates.azimuth - startCoordinates.azimuth;
-                decimal timeDone = elapsedTime / destinationElapsedTime;
-                decimal azDone = timeDone * b;
-
-                result.elevation = body.height * (timeDone * timeDone) / (b * b);
-                result.azimuth = azDone + startCoordinates.azimuth;
-
-                return result;
-            }
-            else
-            {
-                return startCoordinates;
-            }
-        }
-    }
-
     // NOT STABLE, PRODUCES WEIRD RESULTS
     class DriftScanInstruction : Instruction
     {

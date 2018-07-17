@@ -18,16 +18,16 @@ namespace MovementController_1._0.Tests
         public void SunPositionTest()
         {
             AAS2DCoordinate sunPos = CelestialLocation.CelestialObjectSwitch(CelestialLocation.CelestialObjectEnum.Sun, testDate);
-            Assert.IsTrue(sunPos.X > 269 && sunPos.X < 271);
-            Assert.IsTrue(sunPos.Y > 33 && sunPos.Y < 34);
+            Assert.IsTrue(sunPos.X == 269.57123926548138);
+            Assert.IsTrue(sunPos.Y == 33.628720015243417);
         }
 
         [TestMethod()]
         public void MoonPositionTest()
         {
             AAS2DCoordinate moonPos = CelestialLocation.CelestialObjectSwitch(CelestialLocation.CelestialObjectEnum.Moon, testDate);
-            Assert.IsTrue(moonPos.X > 270 && moonPos.X < 271);
-            Assert.IsTrue(moonPos.Y > 33 && moonPos.Y < 34);
+            Assert.IsTrue(moonPos.X == 242.21120161301471);
+            Assert.IsTrue(moonPos.Y == -21.999140976834383);
         }
     }
 }
