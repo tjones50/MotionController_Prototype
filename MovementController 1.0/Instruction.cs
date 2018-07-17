@@ -102,60 +102,90 @@ namespace MovementController_1._0
 
             if (destinationElapsedTime > 0 && elapsedTime > 0)
             {
+                // Assume change in azimuth and change in elevation are both positive
                 decimal dAZ = destinationCoordinates.azimuth - startCoordinates.azimuth;
                 decimal dEL = destinationCoordinates.elevation - startCoordinates.elevation;
 
-                decimal pathLength = Math.Abs(dAZ);
-                decimal remainingEL = Math.Abs(dEL);
+                // Every DriftScan must be at least one change in azimuth across
+                decimal pathLength = dAZ;
+
+                // Track how much change in elevation is left
+                decimal remainingEL = dEL;
 
                 while (remainingEL > 2 * SCAN_DROP_DEGREES)
                 {
-                    pathLength += (2 * Math.Abs(dAZ) + 2 * SCAN_DROP_DEGREES);
+                    pathLength += ((2 * dAZ) + (2 * SCAN_DROP_DEGREES));
                     remainingEL -= (2 * SCAN_DROP_DEGREES);
                 }
 
                 // Ignore this case for now (assume the difference in position is an
-                // exact interval of 2*SCAN_DROP_DEGREES + 1)
-                //pathLength += remainingEL;
+                // exact interval of 2*SCAN_DROP_DEGREES)
+                // pathLength += remainingEL;
 
                 decimal portionDone = pathLength * (elapsedTime / destinationElapsedTime);
 
                 AZELCoordinate cumulative = new AZELCoordinate(0, 0);
-                decimal accPath = Math.Abs(dAZ);
-
-                decimal dDR = dEL >= 0 ? SCAN_DROP_DEGREES : -SCAN_DROP_DEGREES;
-                decimal dIA = 0;
+                decimal accPath = 0;
+                decimal sequence = 0;
 
                 while (true)
                 {
-                    if (portionDone - accPath > Math.Abs(dAZ))
+                    switch (sequence)
                     {
-                        dIA = 1 - dIA;
-                        accPath += Math.Abs(dAZ);
-                    }
-                    else
-                    {
-                        cumulative.azimuth = portionDone - accPath * (dAZ >= 0 ? 1 : -1);
-                        Console.WriteLine(
-                            "returning " + cumulative.azimuth.ToString() + " : " + cumulative.elevation.ToString()
-                        );
-                        return cumulative;
+                        case 0:
+                            if (portionDone - accPath > dAZ)
+                            {
+                                accPath += dAZ;
+                            }
+                            else
+                            {
+                                cumulative.azimuth = portionDone - accPath;
+                                return cumulative;
+                            }
+                            break;
+
+                        case 1:
+                            if (portionDone - accPath > SCAN_DROP_DEGREES)
+                            {
+                                accPath += SCAN_DROP_DEGREES;
+                                cumulative.elevation += SCAN_DROP_DEGREES;
+                            }
+                            else
+                            {
+                                cumulative.elevation += portionDone - accPath;
+                                cumulative.azimuth = dAZ;
+                                return cumulative;
+                            }
+                            break;
+
+                        case 2:
+                            if (portionDone - accPath > dAZ)
+                            {
+                                accPath += dAZ;
+                            }
+                            else
+                            {
+                                cumulative.azimuth = dAZ - portionDone + accPath;
+                                return cumulative;
+                            }
+                            break;
+
+                        case 3:
+                            if (portionDone - accPath > SCAN_DROP_DEGREES)
+                            {
+                                accPath += SCAN_DROP_DEGREES;
+                                cumulative.elevation += SCAN_DROP_DEGREES;
+                            }
+                            else
+                            {
+                                cumulative.elevation += portionDone - accPath;
+                                cumulative.azimuth = 0;
+                                return cumulative;
+                            }
+                            break;
                     }
 
-                    // FIXME: can't change both AZ and EL
-                    if (portionDone - accPath > SCAN_DROP_DEGREES)
-                    {
-                        cumulative.elevation += dDR;
-                        accPath += SCAN_DROP_DEGREES;
-                    }
-                    else
-                    {
-                        cumulative.elevation += portionDone - accPath;
-                        Console.WriteLine(
-                            "returning " + cumulative.azimuth.ToString() + " : " + cumulative.elevation.ToString()
-                        );
-                        return cumulative;
-                    }
+                    sequence = (sequence + 1) % 4;
 
                     Console.WriteLine(
                         accPath.ToString() + " : " + portionDone.ToString() + " : " +

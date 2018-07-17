@@ -115,6 +115,7 @@ namespace MovementController_1._0
             this.ELPositionInput.Name = "ELPositionInput";
             this.ELPositionInput.Size = new System.Drawing.Size(155, 22);
             this.ELPositionInput.TabIndex = 8;
+            this.ELPositionInput.Maximum = 90;
             // 
             // AZPositionInput
             // 
@@ -122,6 +123,7 @@ namespace MovementController_1._0
             this.AZPositionInput.Name = "AZPositionInput";
             this.AZPositionInput.Size = new System.Drawing.Size(147, 22);
             this.AZPositionInput.TabIndex = 9;
+            this.AZPositionInput.Maximum = 360;
             // 
             // AZChart
             // 
@@ -236,6 +238,7 @@ namespace MovementController_1._0
             this.IntervalInput.Name = "IntervalInput";
             this.IntervalInput.Size = new System.Drawing.Size(147, 22);
             this.IntervalInput.TabIndex = 17;
+            this.IntervalInput.Maximum = 3600;
             // 
             // IntervalLabel
             // 
