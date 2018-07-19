@@ -11,8 +11,8 @@ namespace MovementController_1._0
 		private const UInt16 maxAzCount = 36000;
 		private const UInt16 maxElCount = 9000;
 
-		private UInt16 currentAz;
-		private UInt16 currentEl;
+		private decimal currentAz;
+		private decimal currentEl;
 
 		public EncoderSimulator()
 		{
@@ -21,7 +21,7 @@ namespace MovementController_1._0
 		}
 
 		//Move and report an encoder position
-		public ushort moveAz(decimal az)
+		public decimal moveAz(decimal az)
 		{
             if (az != currentAz) {
                 int tolerance;
@@ -37,10 +37,11 @@ namespace MovementController_1._0
                 //currentAz = (ushort)(tolerance + az);
             }
 
-            return currentAz = (ushort)az;
+            return currentAz = az;
 		}
 
-		public ushort moveEl(decimal el)
+		//TODO: change to ushort
+		public decimal moveEl(decimal el)
 		{
 
             if (el != currentEl)
@@ -58,14 +59,14 @@ namespace MovementController_1._0
                 //currentEl = (ushort)(tolerance + el);
             }
 
-			return currentEl = (ushort)el;
+			return currentEl = el;
 		}
 
-		public ushort getCurrentAz()
+		public decimal getCurrentAz()
 		{
 			return currentAz;
 		}
-		public ushort getCurrentEl()
+		public decimal getCurrentEl()
 		{
 			return currentEl;
 		}
