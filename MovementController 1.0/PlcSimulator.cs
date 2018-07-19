@@ -8,5 +8,6 @@ namespace MovementController_1._0
 {
 	class PlcSimulator
 	{
+		//Placeholder for simulation of PLC
 	}
 }
