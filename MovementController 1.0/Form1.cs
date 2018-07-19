@@ -14,6 +14,7 @@ namespace MovementController_1._0
     public partial class Form1 : Form
     {
 		EncoderSimulator encoder = new EncoderSimulator();
+		UnityController unity = new UnityController();
 
         public Form1()
         {
@@ -84,6 +85,8 @@ namespace MovementController_1._0
             {
                 this.ELChart.Series[0].Points.AddXY(cmd.diffSecs, cmd.coordinates.elevation);
 				encoder.moveEl(cmd.coordinates.elevation);
+				unity.sendData(cmd.diffSecs);
+				unity.sendData(cmd.coordinates.elevation);
             }
 
             // Graph Azimuth vs. Time 
