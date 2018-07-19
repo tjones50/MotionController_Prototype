@@ -58,7 +58,6 @@
     <Compile Include="CelestialLocationGraph.Designer.cs">
       <DependentUpon>CelestialLocationGraph.cs</DependentUpon>
     </Compile>
-    <Compile Include="EncoderSimulator.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -8,17 +8,13 @@ namespace MovementController_1._0
 {
     abstract class Instruction
     {
-        public AZELCoordinate destinationCoordinates;
         public DateTime destinationTime;
         public DateTime startTime;
 
-        public Instruction(AZELCoordinate destCoords, DateTime destTime)
+        public Instruction(DateTime destTime)
         {
-            destinationCoordinates = destCoords;
             destinationTime = destTime;
         }
-
-        public Instruction(decimal az, decimal el, DateTime dest) : this(new AZELCoordinate(az, el), dest) {}
 
         // This will be used later when this Instruction is starting its execution, to recalibrate
         // its actual start time instead of assuming its exactly on time
@@ -30,7 +26,9 @@ namespace MovementController_1._0
 
     class SlewInstruction : Instruction
     {
-        public SlewInstruction(decimal az, decimal el, DateTime dest) : base(az, el, dest) { }
+        public AZELCoordinate destinationCoordinates;
+
+        public SlewInstruction(decimal az, decimal el, DateTime destTime) : base(destTime) { destinationCoordinates = new AZELCoordinate(az, el); }
 
         public override AZELCoordinate CoordinateAtTime(decimal elapsedTime, AZELCoordinate startCoordinates)
         {
@@ -52,11 +50,37 @@ namespace MovementController_1._0
         }
     }
 
+    class TrackCelestialObjectInstruction : Instruction
+    {
+        public CelestialLocation.CelestialObjectEnum celestialObject;
+
+        public TrackCelestialObjectInstruction(CelestialLocation.CelestialObjectEnum celestialObj, DateTime destTime) : base(destTime)
+        {
+            celestialObject = celestialObj;
+        }
+
+        public override AZELCoordinate CoordinateAtTime(decimal elapsedTime, AZELCoordinate startCoordinates)
+        {
+            if (elapsedTime > 0)
+            {
+                DateTime currentTime = startTime.AddSeconds((double)elapsedTime);
+                AASharp.AAS2DCoordinate celestialLocation = CelestialLocation.CelestialObjectSwitch(celestialObject, currentTime);
+                return new AZELCoordinate((decimal)celestialLocation.X, (decimal)celestialLocation.Y);
+            }
+            else
+            {
+                return startCoordinates;
+            }
+        }
+    }
+
     class DriftScanInstruction : Instruction
     {
+        public AZELCoordinate destinationCoordinates;
+
         private const decimal SCAN_DROP_DEGREES = 0.5m;
 
-        public DriftScanInstruction(decimal az, decimal el, DateTime dest) : base(az, el, dest) { }
+        public DriftScanInstruction(decimal az, decimal el, DateTime destTime) : base(destTime) { destinationCoordinates = new AZELCoordinate(az, el); }
 
         public override AZELCoordinate CoordinateAtTime(decimal elapsedTime, AZELCoordinate startCoordinates)
         {

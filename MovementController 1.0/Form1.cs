@@ -44,6 +44,31 @@ namespace MovementController_1._0
             Graph(inputInstruction);
         }
 
+        private void TrackInstructionButton_Click(object sender, EventArgs e)
+        {
+            DateTime arrivalTime;
+            if (ArrivalTimeInput.Enabled) { arrivalTime = ArrivalTimeInput.Value; }
+            else { arrivalTime = DateTime.Now.AddSeconds((double)IntervalInput.Value); }
+
+            CelestialLocation.CelestialObjectEnum celestialObject;
+
+            if (CelesitialDropDown.SelectedItem.Equals("Sun"))
+            {
+                celestialObject = CelestialLocation.CelestialObjectEnum.Sun;
+            }
+            else if (CelesitialDropDown.SelectedItem.Equals("Moon"))
+            {
+                celestialObject = CelestialLocation.CelestialObjectEnum.Moon;
+            }
+            else
+            {
+                throw new Exception("Invalid Input");
+            }
+
+            TrackCelestialObjectInstruction inputInstruction = new TrackCelestialObjectInstruction(celestialObject, arrivalTime);
+            Graph(inputInstruction);
+        }
+
         private void Graph(Instruction instruction)
         {
             InstructionInterpreter instructionInterpreter = new InstructionInterpreter();
@@ -69,8 +94,8 @@ namespace MovementController_1._0
 				encoder.moveAz(cmd.coordinates.azimuth);
 			}
 
-			// Graph Elevation vs. Azimuth
-			this.ELAZChart.Series[0].Points.Clear();
+            // Graph Elevation vs. Azimuth
+            this.ELAZChart.Series[0].Points.Clear();
             foreach (var cmd in instructionInterpreter.trajectory)
             {
                 this.ELAZChart.Series[0].Points.AddXY(cmd.coordinates.azimuth, cmd.coordinates.elevation);
@@ -81,7 +106,7 @@ namespace MovementController_1._0
 
 		}
 
-		private void ToggleTimeIntervalButton_Click(object sender, EventArgs e)
+        private void ToggleTimeIntervalButton_Click(object sender, EventArgs e)
         {
             if (ArrivalTimeInput.Enabled && ArrivalTimeLabel.Enabled)
             {
@@ -104,6 +129,11 @@ namespace MovementController_1._0
                 IntervalInput.Enabled = false;
                 IntervalLabel.Enabled = false;
             }
+        }
+
+        private void CelesitialDropDown_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            TrackInstructionButton.Enabled = true;
         }
 	}
 }
