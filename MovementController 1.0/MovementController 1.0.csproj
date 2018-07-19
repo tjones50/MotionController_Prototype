@@ -50,7 +50,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AZELCoordinate.cs" />
-    <Compile Include="CelestialBody.cs" />
     <Compile Include="CelestialLocation.cs" />
     <Compile Include="DiscreteCommand.cs" />
     <Compile Include="CelestialLocationGraph.cs">

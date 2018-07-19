@@ -34,7 +34,7 @@ namespace MovementController_1._0
 
         public override AZELCoordinate CoordinateAtTime(decimal elapsedTime, AZELCoordinate startCoordinates)
         {
-            int timeInterval = destinationTime.Subtract(startTime).Seconds;
+            int timeInterval = (int) destinationTime.Subtract(startTime).TotalSeconds;
 
             if (timeInterval > 0 && elapsedTime > 0)
             {
@@ -52,44 +52,6 @@ namespace MovementController_1._0
         }
     }
 
-    class TrackInstruction : Instruction
-    {
-        public CelestialBody body;
-
-        public TrackInstruction(decimal az, decimal el, DateTime dest, CelestialBody bo) : base(az, el, dest)
-        {
-            body = bo;
-        }
-        public TrackInstruction(decimal az, decimal el, DateTime dest)
-            : this(az, el, dest, TempContainer.OBJ_STAR) { }
-
-        public override AZELCoordinate CoordinateAtTime(decimal elapsedTime, AZELCoordinate startCoordinates)
-        {
-            int destinationElapsedTime = destinationTime.Subtract(startTime).Seconds;
-
-            if (destinationElapsedTime > 0 && elapsedTime > 0)
-            {
-                // This is wrong, we have to actually find arc length
-
-                AZELCoordinate result = new AZELCoordinate(0, 0);
-
-                decimal b = destinationCoordinates.azimuth - startCoordinates.azimuth;
-                decimal timeDone = elapsedTime / destinationElapsedTime;
-                decimal azDone = timeDone * b;
-
-                result.elevation = body.height * (timeDone * timeDone) / (b * b);
-                result.azimuth = azDone + startCoordinates.azimuth;
-
-                return result;
-            }
-            else
-            {
-                return startCoordinates;
-            }
-        }
-    }
-
-    // NOT STABLE, PRODUCES WEIRD RESULTS
     class DriftScanInstruction : Instruction
     {
         private const decimal SCAN_DROP_DEGREES = 0.5m;
@@ -98,9 +60,9 @@ namespace MovementController_1._0
 
         public override AZELCoordinate CoordinateAtTime(decimal elapsedTime, AZELCoordinate startCoordinates)
         {
-            int destinationElapsedTime = destinationTime.Subtract(startTime).Seconds;
+            int timeInterval = (int) destinationTime.Subtract(startTime).TotalSeconds;
 
-            if (destinationElapsedTime > 0 && elapsedTime > 0)
+            if (timeInterval > 0 && elapsedTime > 0)
             {
                 // Assume change in azimuth and change in elevation are both positive
                 decimal dAZ = destinationCoordinates.azimuth - startCoordinates.azimuth;
@@ -122,7 +84,7 @@ namespace MovementController_1._0
                 // exact interval of 2*SCAN_DROP_DEGREES)
                 // pathLength += remainingEL;
 
-                decimal portionDone = pathLength * (elapsedTime / destinationElapsedTime);
+                decimal portionDone = pathLength * (elapsedTime / timeInterval);
 
                 AZELCoordinate cumulative = new AZELCoordinate(0, 0);
                 decimal accPath = 0;
@@ -186,11 +148,6 @@ namespace MovementController_1._0
                     }
 
                     sequence = (sequence + 1) % 4;
-
-                    Console.WriteLine(
-                        accPath.ToString() + " : " + portionDone.ToString() + " : " +
-                        cumulative.azimuth.ToString() + " : " + cumulative.elevation.ToString()
-                    );
                 }
             }
             else
