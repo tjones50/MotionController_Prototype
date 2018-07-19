@@ -52,12 +52,6 @@
     <Compile Include="AZELCoordinate.cs" />
     <Compile Include="CelestialLocation.cs" />
     <Compile Include="DiscreteCommand.cs" />
-    <Compile Include="CelestialLocationGraph.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="CelestialLocationGraph.Designer.cs">
-      <DependentUpon>CelestialLocationGraph.cs</DependentUpon>
-    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -69,9 +63,6 @@
     <Compile Include="Path.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="CelestialLocationGraph.resx">
-      <DependentUpon>CelestialLocationGraph.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
