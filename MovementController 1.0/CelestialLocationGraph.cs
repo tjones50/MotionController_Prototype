@@ -58,7 +58,7 @@ namespace MovementController_1._0
         private void Graph(Instruction instruction)
         {
             InstructionInterpreter instructionInterpreter = new InstructionInterpreter();
-            instructionInterpreter.ProcessInstructionInput(instruction);
+            instructionInterpreter.ProcessInstructionInput(instruction, new AZELCoordinate(0,0));
 
             // Graph Elevation vs. Time 
             this.ELChart.Series[0].Points.Clear();
