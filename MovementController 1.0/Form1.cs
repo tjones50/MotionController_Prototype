@@ -32,7 +32,7 @@ namespace MovementController_1._0
             Graph(inputInstruction);
         }
 
-        private void DriftScanButton_Click(object sender, EventArgs e)
+        private void ScanButton_Click(object sender, EventArgs e)
         {
             decimal endEL = ELPositionInput.Value;
             decimal endAZ = AZPositionInput.Value;
@@ -135,5 +135,5 @@ namespace MovementController_1._0
         {
             TrackInstructionButton.Enabled = true;
         }
-	}
+    }
 }

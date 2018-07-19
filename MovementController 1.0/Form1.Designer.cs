@@ -220,7 +220,7 @@ namespace MovementController_1._0
             this.ScanButton.TabIndex = 14;
             this.ScanButton.Text = "Scan Instruction";
             this.ScanButton.UseVisualStyleBackColor = true;
-            this.ScanButton.Click += new System.EventHandler(this.DriftScanButton_Click);
+            this.ScanButton.Click += new System.EventHandler(this.ScanButton_Click);
             // 
             // ToggleTimeIntervalButton
             // 

@@ -62,7 +62,6 @@
     <Compile Include="InstructionInterpreter.cs" />
     <Compile Include="Instruction.cs" />
     <Compile Include="MotorController.cs" />
-    <Compile Include="Path.cs" />
     <Compile Include="PlcSimulator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
