@@ -28,7 +28,7 @@ namespace MovementController_1._0
     {
         public AZELCoordinate destinationCoordinates;
 
-        public SlewInstruction(decimal az, decimal el, DateTime dest) : base(dest) { destinationCoordinates = new AZELCoordinate(az, el); }
+        public SlewInstruction(decimal az, decimal el, DateTime destTime) : base(destTime) { destinationCoordinates = new AZELCoordinate(az, el); }
 
         public override AZELCoordinate CoordinateAtTime(decimal elapsedTime, AZELCoordinate startCoordinates)
         {
@@ -54,7 +54,7 @@ namespace MovementController_1._0
     {
         public CelestialLocation.CelestialObjectEnum celestialObject;
 
-        public TrackCelestialObjectInstruction(CelestialLocation.CelestialObjectEnum celestialObj, DateTime dest) : base(dest)
+        public TrackCelestialObjectInstruction(CelestialLocation.CelestialObjectEnum celestialObj, DateTime destTime) : base(destTime)
         {
             celestialObject = celestialObj;
         }
@@ -80,7 +80,7 @@ namespace MovementController_1._0
 
         private const decimal SCAN_DROP_DEGREES = 0.5m;
 
-        public DriftScanInstruction(decimal az, decimal el, DateTime dest) : base(dest) { destinationCoordinates = new AZELCoordinate(az, el); }
+        public DriftScanInstruction(decimal az, decimal el, DateTime destTime) : base(destTime) { destinationCoordinates = new AZELCoordinate(az, el); }
 
         public override AZELCoordinate CoordinateAtTime(decimal elapsedTime, AZELCoordinate startCoordinates)
         {
