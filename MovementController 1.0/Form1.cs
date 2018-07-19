@@ -94,8 +94,8 @@ namespace MovementController_1._0
 				encoder.moveAz(cmd.coordinates.azimuth);
 			}
 
-			// Graph Elevation vs. Azimuth
-			this.ELAZChart.Series[0].Points.Clear();
+            // Graph Elevation vs. Azimuth
+            this.ELAZChart.Series[0].Points.Clear();
             foreach (var cmd in instructionInterpreter.trajectory)
             {
                 this.ELAZChart.Series[0].Points.AddXY(cmd.coordinates.azimuth, cmd.coordinates.elevation);
@@ -106,7 +106,7 @@ namespace MovementController_1._0
 
 		}
 
-		private void ToggleTimeIntervalButton_Click(object sender, EventArgs e)
+        private void ToggleTimeIntervalButton_Click(object sender, EventArgs e)
         {
             if (ArrivalTimeInput.Enabled && ArrivalTimeLabel.Enabled)
             {

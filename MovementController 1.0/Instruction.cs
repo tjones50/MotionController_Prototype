@@ -89,8 +89,8 @@ namespace MovementController_1._0
             if (timeInterval > 0 && elapsedTime > 0)
             {
                 // Assume change in azimuth and change in elevation are both positive
-                decimal dAZ = destinationCoordinates.azimuth - startCoordinates.azimuth;
-                decimal dEL = destinationCoordinates.elevation - startCoordinates.elevation;
+                decimal dAZ = Math.Abs(destinationCoordinates.azimuth - startCoordinates.azimuth);
+                decimal dEL = Math.Abs(destinationCoordinates.elevation - startCoordinates.elevation);
 
                 // Every DriftScan must be at least one change in azimuth across
                 decimal pathLength = dAZ;
