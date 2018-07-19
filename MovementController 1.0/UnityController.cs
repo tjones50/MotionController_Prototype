@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace MovementController_1._0
 {
 	class UnityController
 	{
 		//static byte[] bytes = new byte[256];
-		static System.IO.StreamWriter sentFile = new System.IO.StreamWriter(@"C:\Users\Public\Driver\data.txt", true);
-		static System.IO.StreamReader receiveFile = new System.IO.StreamReader(@"C:\Users\Public\Driver\limits.txt", true);
+		static StreamWriter sentFile = File.CreateText("C:/Users/Public/Driver/data.txt");
+		static StreamWriter receiveFile = File.CreateText("C:/Users/Public/Driver/limits.txt");
 
-		public static void sendData(decimal val)
+		public void sendData(decimal val)
 		{
 			sentFile.WriteLine(val);
 			/*IPAddress host = IPAddress.Parse("192.168.1.18");
@@ -36,9 +37,10 @@ namespace MovementController_1._0
                 Console.WriteLine("{0} Error code: {1}.", e.Message, e.ErrorCode);
             }*/
 		}
-		public static string RecieveData()
+		public string RecieveData()
 		{
-			string data = receiveFile.ReadToEnd();
+			StreamReader reader = new StreamReader("C:/Users/Public/river/limits.txt");
+			string data = reader.ReadToEnd();
 
 			return data;
 			/*IPAddress host = IPAddress.Parse("192.168.1.18");
