@@ -28,18 +28,18 @@ namespace MovementController_1._0
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Title title4 = new System.Windows.Forms.DataVisualization.Charting.Title();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Title title5 = new System.Windows.Forms.DataVisualization.Charting.Title();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Title title6 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title3 = new System.Windows.Forms.DataVisualization.Charting.Title();
             this.ELPositionLabel = new System.Windows.Forms.Label();
             this.AZPositionLabel = new System.Windows.Forms.Label();
             this.ArrivalTimeLabel = new System.Windows.Forms.Label();
@@ -50,7 +50,7 @@ namespace MovementController_1._0
             this.ELChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.ELAZChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.SlewButton = new System.Windows.Forms.Button();
-            this.DriftScanButton = new System.Windows.Forms.Button();
+            this.ScanButton = new System.Windows.Forms.Button();
             this.ToggleTimeIntervalButton = new System.Windows.Forms.Button();
             this.IntervalInput = new System.Windows.Forms.NumericUpDown();
             this.IntervalLabel = new System.Windows.Forms.Label();
@@ -128,79 +128,79 @@ namespace MovementController_1._0
             // 
             // AZChart
             // 
-            chartArea4.AxisX.Minimum = 0D;
-            chartArea4.AxisX.Title = "Time (sec)";
-            chartArea4.AxisY.Title = "Azimuth Position (deg)";
-            chartArea4.Name = "OutputChartArea";
-            this.AZChart.ChartAreas.Add(chartArea4);
-            legend4.Enabled = false;
-            legend4.Name = "Legend1";
-            this.AZChart.Legends.Add(legend4);
+            chartArea1.AxisX.Minimum = 0D;
+            chartArea1.AxisX.Title = "Time (sec)";
+            chartArea1.AxisY.Title = "Azimuth Position (deg)";
+            chartArea1.Name = "OutputChartArea";
+            this.AZChart.ChartAreas.Add(chartArea1);
+            legend1.Enabled = false;
+            legend1.Name = "Legend1";
+            this.AZChart.Legends.Add(legend1);
             this.AZChart.Location = new System.Drawing.Point(22, 356);
             this.AZChart.Name = "AZChart";
-            series4.ChartArea = "OutputChartArea";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series4.Legend = "Legend1";
-            series4.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
-            series4.Name = "OutputData";
-            this.AZChart.Series.Add(series4);
+            series1.ChartArea = "OutputChartArea";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series1.Legend = "Legend1";
+            series1.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
+            series1.Name = "OutputData";
+            this.AZChart.Series.Add(series1);
             this.AZChart.Size = new System.Drawing.Size(744, 325);
             this.AZChart.TabIndex = 10;
             this.AZChart.Text = "AZChart";
-            title4.Name = "Title1";
-            title4.Text = "Output Azimuth Path";
-            this.AZChart.Titles.Add(title4);
+            title1.Name = "Title1";
+            title1.Text = "Output Azimuth Path";
+            this.AZChart.Titles.Add(title1);
             // 
             // ELChart
             // 
-            chartArea5.AxisX.Minimum = 0D;
-            chartArea5.AxisX.Title = "Time (sec)";
-            chartArea5.AxisY.Minimum = 0D;
-            chartArea5.AxisY.Title = "Elevation Position (deg)";
-            chartArea5.Name = "OutputChartArea";
-            this.ELChart.ChartAreas.Add(chartArea5);
-            legend5.Enabled = false;
-            legend5.Name = "Legend1";
-            this.ELChart.Legends.Add(legend5);
+            chartArea2.AxisX.Minimum = 0D;
+            chartArea2.AxisX.Title = "Time (sec)";
+            chartArea2.AxisY.Minimum = 0D;
+            chartArea2.AxisY.Title = "Elevation Position (deg)";
+            chartArea2.Name = "OutputChartArea";
+            this.ELChart.ChartAreas.Add(chartArea2);
+            legend2.Enabled = false;
+            legend2.Name = "Legend1";
+            this.ELChart.Legends.Add(legend2);
             this.ELChart.Location = new System.Drawing.Point(22, 12);
             this.ELChart.Name = "ELChart";
-            series5.ChartArea = "OutputChartArea";
-            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series5.Legend = "Legend1";
-            series5.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
-            series5.Name = "InputData";
-            this.ELChart.Series.Add(series5);
+            series2.ChartArea = "OutputChartArea";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series2.Legend = "Legend1";
+            series2.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
+            series2.Name = "InputData";
+            this.ELChart.Series.Add(series2);
             this.ELChart.Size = new System.Drawing.Size(744, 325);
             this.ELChart.TabIndex = 11;
             this.ELChart.Text = "ElChart";
-            title5.Name = "Title1";
-            title5.Text = "Output Elevation Path";
-            this.ELChart.Titles.Add(title5);
+            title2.Name = "Title1";
+            title2.Text = "Output Elevation Path";
+            this.ELChart.Titles.Add(title2);
             // 
             // ELAZChart
             // 
-            chartArea6.AxisX.Minimum = 0D;
-            chartArea6.AxisX.Title = "Azimuth Position (deg)";
-            chartArea6.AxisY.Title = "Elevation Position (deg)";
-            chartArea6.Name = "OutputChartArea";
-            this.ELAZChart.ChartAreas.Add(chartArea6);
-            legend6.Enabled = false;
-            legend6.Name = "Legend1";
-            this.ELAZChart.Legends.Add(legend6);
+            chartArea3.AxisX.Minimum = 0D;
+            chartArea3.AxisX.Title = "Azimuth Position (deg)";
+            chartArea3.AxisY.Title = "Elevation Position (deg)";
+            chartArea3.Name = "OutputChartArea";
+            this.ELAZChart.ChartAreas.Add(chartArea3);
+            legend3.Enabled = false;
+            legend3.Name = "Legend1";
+            this.ELAZChart.Legends.Add(legend3);
             this.ELAZChart.Location = new System.Drawing.Point(786, 12);
             this.ELAZChart.Name = "ELAZChart";
-            series6.ChartArea = "OutputChartArea";
-            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series6.Legend = "Legend1";
-            series6.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
-            series6.Name = "OutputData";
-            this.ELAZChart.Series.Add(series6);
+            series3.ChartArea = "OutputChartArea";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series3.Legend = "Legend1";
+            series3.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
+            series3.Name = "OutputData";
+            this.ELAZChart.Series.Add(series3);
             this.ELAZChart.Size = new System.Drawing.Size(744, 325);
             this.ELAZChart.TabIndex = 12;
             this.ELAZChart.Text = "ELAZChart";
-            title6.Name = "Title1";
-            title6.Text = "Output Elevation vs. Azimuth Path";
-            this.ELAZChart.Titles.Add(title6);
+            title3.Name = "Title1";
+            title3.Text = "Output Elevation vs. Azimuth Path";
+            this.ELAZChart.Titles.Add(title3);
             // 
             // SlewButton
             // 
@@ -212,15 +212,15 @@ namespace MovementController_1._0
             this.SlewButton.UseVisualStyleBackColor = true;
             this.SlewButton.Click += new System.EventHandler(this.SlewButton_Click);
             // 
-            // DriftScanButton
+            // ScanButton
             // 
-            this.DriftScanButton.Location = new System.Drawing.Point(786, 541);
-            this.DriftScanButton.Name = "DriftScanButton";
-            this.DriftScanButton.Size = new System.Drawing.Size(155, 27);
-            this.DriftScanButton.TabIndex = 14;
-            this.DriftScanButton.Text = "Drift Scan Instruction";
-            this.DriftScanButton.UseVisualStyleBackColor = true;
-            this.DriftScanButton.Click += new System.EventHandler(this.DriftScanButton_Click);
+            this.ScanButton.Location = new System.Drawing.Point(786, 541);
+            this.ScanButton.Name = "ScanButton";
+            this.ScanButton.Size = new System.Drawing.Size(155, 27);
+            this.ScanButton.TabIndex = 14;
+            this.ScanButton.Text = "Scan Instruction";
+            this.ScanButton.UseVisualStyleBackColor = true;
+            this.ScanButton.Click += new System.EventHandler(this.DriftScanButton_Click);
             // 
             // ToggleTimeIntervalButton
             // 
@@ -308,7 +308,7 @@ namespace MovementController_1._0
             this.Controls.Add(this.IntervalInput);
             this.Controls.Add(this.IntervalLabel);
             this.Controls.Add(this.ToggleTimeIntervalButton);
-            this.Controls.Add(this.DriftScanButton);
+            this.Controls.Add(this.ScanButton);
             this.Controls.Add(this.SlewButton);
             this.Controls.Add(this.ELAZChart);
             this.Controls.Add(this.ELChart);
@@ -343,7 +343,7 @@ namespace MovementController_1._0
         private System.Windows.Forms.DataVisualization.Charting.Chart ELChart;
         private System.Windows.Forms.DataVisualization.Charting.Chart ELAZChart;
         private System.Windows.Forms.Button SlewButton;
-        private System.Windows.Forms.Button DriftScanButton;
+        private System.Windows.Forms.Button ScanButton;
         private System.Windows.Forms.Button ToggleTimeIntervalButton;
         private System.Windows.Forms.NumericUpDown IntervalInput;
         private System.Windows.Forms.Label IntervalLabel;

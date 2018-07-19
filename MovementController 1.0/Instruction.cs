@@ -74,13 +74,13 @@ namespace MovementController_1._0
         }
     }
 
-    class DriftScanInstruction : Instruction
+    class ScanInstruction : Instruction
     {
         public AZELCoordinate destinationCoordinates;
 
         private const decimal SCAN_DROP_DEGREES = 0.5m;
 
-        public DriftScanInstruction(decimal az, decimal el, DateTime destTime) : base(destTime) { destinationCoordinates = new AZELCoordinate(az, el); }
+        public ScanInstruction(decimal az, decimal el, DateTime destTime) : base(destTime) { destinationCoordinates = new AZELCoordinate(az, el); }
 
         public override AZELCoordinate CoordinateAtTime(decimal elapsedTime, AZELCoordinate startCoordinates)
         {

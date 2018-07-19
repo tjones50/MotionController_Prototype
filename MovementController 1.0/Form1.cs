@@ -40,7 +40,7 @@ namespace MovementController_1._0
             if (ArrivalTimeInput.Enabled) { arrivalTime = ArrivalTimeInput.Value; }
             else { arrivalTime = DateTime.Now.AddSeconds((double)IntervalInput.Value); }
 
-            DriftScanInstruction inputInstruction = new DriftScanInstruction(endAZ, endEL, arrivalTime);
+            ScanInstruction inputInstruction = new ScanInstruction(endAZ, endEL, arrivalTime);
             Graph(inputInstruction);
         }
 
@@ -101,8 +101,8 @@ namespace MovementController_1._0
                 this.ELAZChart.Series[0].Points.AddXY(cmd.coordinates.azimuth, cmd.coordinates.elevation);
             }
 
-			this.label1.Text = "Elevation Position =" + encoder.getCurrentEl().ToString();
-			this.label2.Text = "Azimuth Position =" + encoder.getCurrentAz().ToString();
+			this.label1.Text = "Elevation Position =" + Math.Round(encoder.getCurrentEl()).ToString();
+			this.label2.Text = "Azimuth Position =" + Math.Round(encoder.getCurrentAz()).ToString();
 
 		}
 
