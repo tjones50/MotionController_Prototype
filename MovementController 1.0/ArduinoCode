@@ -1,0 +1,43 @@
+        static SerialPort port;
+        static SerialPort port2;
+
+
+                
+        static void Main(string[] args)
+        {
+            port = new SerialPort();
+            port.PortName = "COM28";
+            port.BaudRate = 9600; 
+            
+            port2 = new SerialPort();
+            port2.PortName = "COM29";
+            port2.BaudRate = 9600;
+            //28 = el
+            //29 = az
+            try
+            {
+                port.Open();
+                port2.Open();
+            }
+            catch (Exception error)
+            {
+                throw error;
+            }
+
+            string time = "";
+            while (!time.Contains("."))
+            {
+                if (port.IsOpen && port2.IsOpen)
+                {
+                    time = Console.ReadLine();
+                    
+                    port.WriteLine(time.Substring(time.IndexOf(",")+1));
+                    port2.WriteLine(time.Substring(0, time.IndexOf(",")));
+                }
+                else
+                {
+                    throw new Exception("port is not open!");
+                }
+            }
+
+        }
