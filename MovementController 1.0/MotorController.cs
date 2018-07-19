@@ -16,7 +16,7 @@ namespace MovementController_1._0
 			
 		}
 
-		public void Init(string portName, int baud)
+		public void ConnectToPort(string portName, int baud)
 		{
 			port = new SerialPort();
 			port.PortName = portName;
