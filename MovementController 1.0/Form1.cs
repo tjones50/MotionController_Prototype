@@ -13,6 +13,8 @@ namespace MovementController_1._0
 {
     public partial class Form1 : Form
     {
+		EncoderSimulator encoder = new EncoderSimulator();
+
         public Form1()
         {
             InitializeComponent();
@@ -45,13 +47,18 @@ namespace MovementController_1._0
         private void Graph(Instruction instruction)
         {
             InstructionInterpreter instructionInterpreter = new InstructionInterpreter();
-            instructionInterpreter.ProcessInstructionInput(instruction);
+
+			decimal currentAz = encoder.getCurrentAz();
+			decimal currentEl = encoder.getCurrentEl();
+
+			instructionInterpreter.ProcessInstructionInput(instruction, new AZELCoordinate(currentAz, currentEl));
 
             // Graph Elevation vs. Time 
             this.ELChart.Series[0].Points.Clear();
             foreach (var cmd in instructionInterpreter.trajectory)
             {
                 this.ELChart.Series[0].Points.AddXY(cmd.diffSecs, cmd.coordinates.elevation);
+				encoder.moveEl(cmd.coordinates.elevation);
             }
 
             // Graph Azimuth vs. Time 
@@ -59,17 +66,22 @@ namespace MovementController_1._0
             foreach (var cmd in instructionInterpreter.trajectory)
             {
                 this.AZChart.Series[0].Points.AddXY(cmd.diffSecs, cmd.coordinates.azimuth);
-            }
+				encoder.moveAz(cmd.coordinates.azimuth);
+			}
 
-            // Graph Elevation vs. Azimuth
-            this.ELAZChart.Series[0].Points.Clear();
+			// Graph Elevation vs. Azimuth
+			this.ELAZChart.Series[0].Points.Clear();
             foreach (var cmd in instructionInterpreter.trajectory)
             {
                 this.ELAZChart.Series[0].Points.AddXY(cmd.coordinates.azimuth, cmd.coordinates.elevation);
             }
-        }
 
-        private void ToggleTimeIntervalButton_Click(object sender, EventArgs e)
+			this.label1.Text = "Elevation Position =" + encoder.getCurrentEl().ToString();
+			this.label2.Text = "Azimuth Position =" + encoder.getCurrentAz().ToString();
+
+		}
+
+		private void ToggleTimeIntervalButton_Click(object sender, EventArgs e)
         {
             if (ArrivalTimeInput.Enabled && ArrivalTimeLabel.Enabled)
             {
@@ -93,5 +105,5 @@ namespace MovementController_1._0
                 IntervalLabel.Enabled = false;
             }
         }
-    }
+	}
 }

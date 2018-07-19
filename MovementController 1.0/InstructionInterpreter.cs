@@ -18,13 +18,13 @@ namespace MovementController_1._0
             trajectory = new List<DiscreteCommand>();
         }
 
-        public void ProcessInstructionInput(Instruction instruction)
+        public void ProcessInstructionInput(Instruction instruction, AZELCoordinate startCoords)
         {
             TimeSpan interval = instruction.destinationTime - DateTime.Now;
 
             // Some kind of global call that gets the current position from the last read encoder values
-            // For now, populate with (0,0)
-            AZELCoordinate startCoords = new AZELCoordinate(0, 0);
+            // For now, populate with Form Encoder
+            
 
             // Set Start time to now
             instruction.setStartTime(DateTime.Now);
