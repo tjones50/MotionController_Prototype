@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="AZELCoordinate.cs" />
     <Compile Include="CelestialLocation.cs" />
+    <Compile Include="DestinationTime.cs" />
     <Compile Include="DiscreteCommand.cs" />
     <Compile Include="CelestialLocationGraph.cs">
       <SubType>Form</SubType>

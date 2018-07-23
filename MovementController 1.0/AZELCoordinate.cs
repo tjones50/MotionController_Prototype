@@ -7,7 +7,6 @@ using AASharp;
 
 namespace MovementController_1._0
 {
-    // Test bruh
     class AZELCoordinate
     {
         public decimal azimuth;
@@ -17,6 +16,17 @@ namespace MovementController_1._0
         {
             azimuth = az;
             elevation = el;
+        }
+
+        public AZELCoordinate(AZELCoordinate copy)
+        {
+            azimuth = copy.azimuth;
+            elevation = copy.elevation;
+        }
+
+        public AZELCoordinate add(AZELCoordinate c)
+        {
+            return new AZELCoordinate(azimuth + c.azimuth, elevation + c.elevation);
         }
     }
 }

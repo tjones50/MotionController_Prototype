@@ -38,7 +38,7 @@ namespace MovementController_1._0
             if (ArrivalTimeInput.Enabled) { arrivalTime = ArrivalTimeInput.Value; }
             else { arrivalTime = DateTime.Now.AddSeconds((double)IntervalInput.Value); }
 
-            DriftScanInstruction inputInstruction = new DriftScanInstruction(endAZ, endEL, arrivalTime);
+            SectionalScanInstruction inputInstruction = new SectionalScanInstruction(endAZ, endEL, arrivalTime);
             Graph(inputInstruction);
         }
 
@@ -51,21 +51,21 @@ namespace MovementController_1._0
             this.ELChart.Series[0].Points.Clear();
             foreach (var cmd in instructionInterpreter.trajectory)
             {
-                this.ELChart.Series[0].Points.AddXY(cmd.diffSecs, cmd.coordinates.elevation);
+                this.ELChart.Series[0].Points.AddXY(cmd.DifferenceInSeconds(), cmd.objective.elevation);
             }
 
             // Graph Azimuth vs. Time 
             this.AZChart.Series[0].Points.Clear();
             foreach (var cmd in instructionInterpreter.trajectory)
             {
-                this.AZChart.Series[0].Points.AddXY(cmd.diffSecs, cmd.coordinates.azimuth);
+                this.AZChart.Series[0].Points.AddXY(cmd.DifferenceInSeconds(), cmd.objective.azimuth);
             }
 
             // Graph Elevation vs. Azimuth
             this.ELAZChart.Series[0].Points.Clear();
             foreach (var cmd in instructionInterpreter.trajectory)
             {
-                this.ELAZChart.Series[0].Points.AddXY(cmd.coordinates.azimuth, cmd.coordinates.elevation);
+                this.ELAZChart.Series[0].Points.AddXY(cmd.objective.azimuth, cmd.objective.elevation);
             }
         }
 

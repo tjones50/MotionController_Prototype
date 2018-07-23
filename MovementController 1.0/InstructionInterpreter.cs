@@ -8,7 +8,8 @@ namespace MovementController_1._0
 {
     class InstructionInterpreter
     {
-        private const decimal DEFAULT_INTERVAL = 1 / 1000;
+        // Our discrete time interval / "clock cycle"
+        public static readonly decimal DISCRETE_TIME_INTERVAL = 0.001m;
 
         internal List<DiscreteCommand> trajectory;
 
@@ -18,19 +19,26 @@ namespace MovementController_1._0
             trajectory = new List<DiscreteCommand>();
         }
 
-        public void ProcessInstructionInput(Instruction instruction)
+        public bool ProcessInstructionInput(Instruction instruction)
         {
-            TimeSpan interval = instruction.destinationTime - DateTime.Now;
+            // The moment processing should start
+            DateTime newStartTime = DateTime.Now;
+
+            // The number of seconds between the start and end time
+            double dt = instruction.destinationTime.UntilEndTimeInSeconds(newStartTime);
 
             // Some kind of global call that gets the current position from the last read encoder values
             // For now, populate with (0,0)
-            AZELCoordinate startCoords = new AZELCoordinate(0, 0);
+            AZELCoordinate newStartCoords = new AZELCoordinate(0, 0);
 
-            // Set Start time to now
-            instruction.setStartTime(DateTime.Now);
+            trajectory = instruction.CoordinatesAtTimes(newStartTime, newStartCoords);
 
-            for (int i = 0; i < interval.TotalSeconds; i++)
-                trajectory.Add(new DiscreteCommand(instruction.CoordinateAtTime(i, startCoords), i));
+            foreach (var cmd in trajectory)
+            {
+                Console.WriteLine(cmd.AsScriptCommand());
+            }
+
+            return true;
         }
     }
 }

@@ -17,7 +17,7 @@ namespace MovementController_1._0
         public Path()
         {
             trajectory = new List<DiscreteCommand>();
-            finalCommand = new DiscreteCommand(new AZELCoordinate(0, 0), 0);
+            finalCommand = new DiscreteCommand(0, 0, new AZELCoordinate(0, 0));
         }
     }
 }

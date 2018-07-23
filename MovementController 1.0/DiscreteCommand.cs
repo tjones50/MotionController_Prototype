@@ -8,13 +8,26 @@ namespace MovementController_1._0
 {
     class DiscreteCommand
     {
-        public AZELCoordinate coordinates;
-        public decimal diffSecs;
+        public double startSeconds;
+        public double destinationSeconds;
+        public AZELCoordinate objective;
 
-        public DiscreteCommand(AZELCoordinate coords, decimal ds)
+        public DiscreteCommand(double ss, double ds, AZELCoordinate obj)
         {
-            coordinates = coords;
-            diffSecs = ds;
+            Console.WriteLine("Given " + ss.ToString() + " : " + ds.ToString());
+            startSeconds = ss;
+            destinationSeconds = ds;
+            objective = obj;
+        }
+
+        public double DifferenceInSeconds()
+        {
+            return destinationSeconds - startSeconds;
+        }
+
+        public string AsScriptCommand()
+        {
+            return destinationSeconds.ToString() + " [" + objective.azimuth.ToString() + ":" + objective.elevation.ToString() + "]";
         }
     }
 }
