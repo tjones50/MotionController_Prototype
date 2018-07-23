@@ -7,8 +7,8 @@
     <ProjectGuid>{52ADC56F-A60C-4521-BD43-F9ED1722F34C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MovementController_1._0Tests1</RootNamespace>
-    <AssemblyName>MovementController 1.0Tests1</AssemblyName>
+    <RootNamespace>MovementController_1Tests1</RootNamespace>
+    <AssemblyName>MovementController 1Tests1</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -63,9 +63,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MovementController 1.0\MovementController 1.0.csproj">
+    <ProjectReference Include="..\MovementController 1.0\MovementController 1.csproj">
       <Project>{F6A1B768-3289-4817-BEA8-0E103CE678E4}</Project>
-      <Name>MovementController 1.0</Name>
+      <Name>MovementController 1</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

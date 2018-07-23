@@ -5,42 +5,21 @@ using System.Text;
 using System.Threading.Tasks;
 using AASharp;
 
-namespace MovementController_1
+namespace ControlRoomSoftware1
 {
-    public class CelestialLocation
+    public abstract class CelestialObject
     {
-        public enum CelestialObjectEnum
-        {
-            Unspecified = 0,
-            Sun = 1,
-            Moon = 2
-        }
-
         // Radio telescope location and height above sea level
-        private static double RT_LAT = AASCoordinateTransformation.DMSToDegrees(40, 01, 27.8);
-        private static double RT_LONG = AASCoordinateTransformation.DMSToDegrees(76, 42, 17.0); //West is considered positive, change later
-        private static double RT_HEIGHT = 119;
+        internal static double RT_LAT = AASCoordinateTransformation.DMSToDegrees(40, 01, 27.8);
+        internal static double RT_LONG = AASCoordinateTransformation.DMSToDegrees(76, 42, 17.0); //West is considered positive, change later
+        internal static double RT_HEIGHT = 119;
 
-        public static AAS2DCoordinate CelestialObjectSwitch(CelestialObjectEnum target, DateTime dateTime)
-        {
-            AAS2DCoordinate currentPostion = new AAS2DCoordinate();
-            switch (target)
-            {
-                case CelestialObjectEnum.Unspecified:
-                    throw new Exception("Celestial Object Unspecifed"); 
-                case CelestialObjectEnum.Sun:
-                    currentPostion =  SunPosition(dateTime);
-                    break;
-                case CelestialObjectEnum.Moon:
-                    currentPostion = MoonPosition(dateTime);
-                    break;
-                default:
-                    throw new Exception("Default Case Reached");
-            }
-            return currentPostion;
-        }
+        public abstract AAS2DCoordinate GetPosition(DateTime dateTime);
+    }
 
-        public static AAS2DCoordinate SunPosition(DateTime dateTime)
+    public class Sun : CelestialObject
+    {
+        public override AAS2DCoordinate GetPosition(DateTime dateTime)
         {
             var bHighPrecision = false;
             dateTime = dateTime.ToUniversalTime(); // NOTE: time must be converted to Universal Time
@@ -63,8 +42,11 @@ namespace MovementController_1
             //NOTE: for azimuth west is considered positive, to get east as positive subtract the result from 360
             return SunHorizontal;
         }
+    }
 
-        public static AAS2DCoordinate MoonPosition(DateTime dateTime)
+    public class Moon : CelestialObject
+    {
+        public override AAS2DCoordinate GetPosition(DateTime dateTime)
         {
             dateTime = dateTime.ToUniversalTime(); // NOTE: time must be converted to Universal Time
 

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MovementController_1.Properties {
+namespace Scheduler_1.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

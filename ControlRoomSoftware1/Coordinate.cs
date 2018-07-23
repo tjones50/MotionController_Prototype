@@ -5,14 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using AASharp;
 
-namespace MovementController_1
+namespace ControlRoomSoftware1
 {
-    public class AZELCoordinate
+    public class Coordinate
     {
-        public decimal azimuth;
-        public decimal elevation;
+        public double azimuth;
+        public double elevation;
 
-        public AZELCoordinate(decimal az, decimal el)
+        public Coordinate(double az, double el)
         {
             azimuth = az;
             elevation = el;

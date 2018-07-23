@@ -4,21 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MovementController_1
+namespace ControlRoomSoftware1
 {
     public class InstructionInterpreter
     {
-        private const decimal DEFAULT_INTERVAL = 1 / 1000;
+        private const double DEFAULT_INTERVAL = 1 / 1000;
 
-        public List<DiscreteCommand> trajectory;
+        public List<Command> trajectory;
 
         // A session creates one of these and it hosts all the Commands
         public InstructionInterpreter()
         {
-            trajectory = new List<DiscreteCommand>();
+            trajectory = new List<Command>();
         }
 
-        public bool CreateTrajectory(Instruction instruction, AZELCoordinate startCoords)
+        public bool CreateTrajectory(Instruction instruction, Coordinate startCoords)
         {
             // Convert start time to interval
             TimeSpan interval = instruction.destinationTime - DateTime.Now;
@@ -39,7 +39,7 @@ namespace MovementController_1
             // if not, return false and clear the trajectory
 
             for (int i = 0; i < interval.TotalSeconds; i++)
-                trajectory.Add(new DiscreteCommand(instruction.CoordinateAtTime(i, startCoords), i));
+                trajectory.Add(new Command(instruction.CoordinateAtTime(i, startCoords), i));
 
             // Placeholder
             return true;

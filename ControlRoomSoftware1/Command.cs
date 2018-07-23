@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MovementController_1
+namespace ControlRoomSoftware1
 {
-    public class DiscreteCommand
+    public class Command
     {
-        public AZELCoordinate coordinates;
-        public decimal diffSecs;
+        public Coordinate coordinates;
+        public double diffSecs;
 
-        public DiscreteCommand(AZELCoordinate coords, decimal ds)
+        public Command(Coordinate coords, double ds)
         {
             coordinates = coords;
             diffSecs = ds;

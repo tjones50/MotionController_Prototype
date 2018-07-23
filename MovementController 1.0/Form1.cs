@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using AASharp;
 
-namespace MovementController_1._0
+namespace MovementController_1
 {
     public partial class Form1 : Form
     {
@@ -77,7 +77,7 @@ namespace MovementController_1._0
 			decimal currentAz = encoder.getCurrentAz();
 			decimal currentEl = encoder.getCurrentEl();
 
-			instructionInterpreter.ProcessInstructionInput(instruction, new AZELCoordinate(currentAz, currentEl));
+			instructionInterpreter.CreateTrajectory(instruction, new AZELCoordinate(currentAz, currentEl));
 
             // Graph Elevation vs. Time 
             this.ELChart.Series[0].Points.Clear();

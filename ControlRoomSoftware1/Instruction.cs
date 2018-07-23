@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MovementController_1
+namespace ControlRoomSoftware1
 {
     public abstract class Instruction
     {
@@ -21,24 +21,24 @@ namespace MovementController_1
         public void setStartTime(DateTime st) { startTime = st; }
 
         // Abstract implementation
-        public abstract AZELCoordinate CoordinateAtTime(decimal dt, AZELCoordinate curr);
+        public abstract Coordinate CoordinateAtTime(double dt, Coordinate curr);
     }
 
     public class SlewInstruction : Instruction
     {
-        public AZELCoordinate destinationCoordinates;
+        public Coordinate destinationCoordinates;
 
-        public SlewInstruction(decimal az, decimal el, DateTime destTime) : base(destTime) { destinationCoordinates = new AZELCoordinate(az, el); }
+        public SlewInstruction(double az, double el, DateTime destTime) : base(destTime) { destinationCoordinates = new Coordinate(az, el); }
 
-        public override AZELCoordinate CoordinateAtTime(decimal elapsedTime, AZELCoordinate startCoordinates)
+        public override Coordinate CoordinateAtTime(double elapsedTime, Coordinate startCoordinates)
         {
             int timeInterval = (int) destinationTime.Subtract(startTime).TotalSeconds;
 
             if (timeInterval > 0 && elapsedTime > 0)
             {
-                decimal mAZ = (destinationCoordinates.azimuth - startCoordinates.azimuth) / timeInterval;
-                decimal mEL = (destinationCoordinates.elevation - startCoordinates.elevation) / timeInterval;
-                return new AZELCoordinate(
+                double mAZ = (destinationCoordinates.azimuth - startCoordinates.azimuth) / timeInterval;
+                double mEL = (destinationCoordinates.elevation - startCoordinates.elevation) / timeInterval;
+                return new Coordinate(
                     (mAZ * elapsedTime) + startCoordinates.azimuth,
                     (mEL * elapsedTime) + startCoordinates.elevation
                 );
@@ -52,20 +52,20 @@ namespace MovementController_1
 
     public class TrackCelestialObjectInstruction : Instruction
     {
-        public CelestialLocation.CelestialObjectEnum celestialObject;
+        CelestialObject celestialObject;
 
-        public TrackCelestialObjectInstruction(CelestialLocation.CelestialObjectEnum celestialObj, DateTime destTime) : base(destTime)
+        public TrackCelestialObjectInstruction(CelestialObject newcelestialObject, DateTime destTime) : base(destTime)
         {
-            celestialObject = celestialObj;
+            celestialObject = newcelestialObject;
         }
 
-        public override AZELCoordinate CoordinateAtTime(decimal elapsedTime, AZELCoordinate startCoordinates)
+        public override Coordinate CoordinateAtTime(double elapsedTime, Coordinate startCoordinates)
         {
             if (elapsedTime > 0)
             {
-                DateTime currentTime = startTime.AddSeconds((double)elapsedTime);
-                AASharp.AAS2DCoordinate celestialLocation = CelestialLocation.CelestialObjectSwitch(celestialObject, currentTime);
-                return new AZELCoordinate((decimal)celestialLocation.X, (decimal)celestialLocation.Y);
+                DateTime currentTime = startTime.AddSeconds(elapsedTime);
+                AASharp.AAS2DCoordinate celestialLocation = celestialObject.GetPosition(currentTime);
+                return new Coordinate(celestialLocation.X, celestialLocation.Y);
             }
             else
             {
@@ -76,27 +76,27 @@ namespace MovementController_1
 
     public class ScanInstruction : Instruction
     {
-        public AZELCoordinate destinationCoordinates;
+        public Coordinate destinationCoordinates;
 
-        private const decimal SCAN_DROP_DEGREES = 0.5m;
+        private const double SCAN_DROP_DEGREES = 0.5;
 
-        public ScanInstruction(decimal az, decimal el, DateTime destTime) : base(destTime) { destinationCoordinates = new AZELCoordinate(az, el); }
+        public ScanInstruction(double az, double el, DateTime destTime) : base(destTime) { destinationCoordinates = new Coordinate(az, el); }
 
-        public override AZELCoordinate CoordinateAtTime(decimal elapsedTime, AZELCoordinate startCoordinates)
+        public override Coordinate CoordinateAtTime(double elapsedTime, Coordinate startCoordinates)
         {
             int timeInterval = (int) destinationTime.Subtract(startTime).TotalSeconds;
 
             if (timeInterval > 0 && elapsedTime > 0)
             {
                 // Assume change in azimuth and change in elevation are both positive
-                decimal dAZ = Math.Abs(destinationCoordinates.azimuth - startCoordinates.azimuth);
-                decimal dEL = Math.Abs(destinationCoordinates.elevation - startCoordinates.elevation);
+                double dAZ = Math.Abs(destinationCoordinates.azimuth - startCoordinates.azimuth);
+                double dEL = Math.Abs(destinationCoordinates.elevation - startCoordinates.elevation);
 
                 // Every DriftScan must be at least one change in azimuth across
-                decimal pathLength = dAZ;
+                double pathLength = dAZ;
 
                 // Track how much change in elevation is left
-                decimal remainingEL = dEL;
+                double remainingEL = dEL;
 
                 while (remainingEL > 2 * SCAN_DROP_DEGREES)
                 {
@@ -108,11 +108,11 @@ namespace MovementController_1
                 // exact interval of 2*SCAN_DROP_DEGREES)
                 // pathLength += remainingEL;
 
-                decimal portionDone = pathLength * (elapsedTime / timeInterval);
+                double portionDone = pathLength * (elapsedTime / timeInterval);
 
-                AZELCoordinate cumulative = new AZELCoordinate(0, 0);
-                decimal accPath = 0;
-                decimal sequence = 0;
+                Coordinate cumulative = new Coordinate(0, 0);
+                double accPath = 0;
+                double sequence = 0;
 
                 while (true)
                 {

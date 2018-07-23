@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO.Ports;
 
-namespace MovementController_1._0
+namespace MovementController_1
 {
 	class MotorController
 	{

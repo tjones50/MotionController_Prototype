@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
-namespace MovementController_1._0
+namespace MovementController_1
 {
 	class UnityController
 	{
@@ -39,7 +39,7 @@ namespace MovementController_1._0
 		}
 		public string RecieveData()
 		{
-			StreamReader reader = new StreamReader("C:/Users/Public/river/limits.txt");
+			StreamReader reader = new StreamReader("C:/Users/Public/Driver/limits.txt");
 			string data = reader.ReadToEnd();
 
 			return data;

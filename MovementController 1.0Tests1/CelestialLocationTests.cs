@@ -1,13 +1,13 @@
 ﻿using AASharp;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MovementController_1._0;
+using MovementController_1;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MovementController_1._0.Tests
+namespace MovementController_1.Tests
 {
     [TestClass()]
     public class CelestialLocationTests

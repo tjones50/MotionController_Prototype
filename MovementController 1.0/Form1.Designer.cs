@@ -1,4 +1,4 @@
-namespace MovementController_1._0
+namespace MovementController_1
 {
     partial class Form1
     {
