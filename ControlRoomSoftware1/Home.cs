@@ -12,20 +12,22 @@ namespace ControlRoomSoftware1
 {
     public partial class Home : Form
     {
-        Scheduler scheduler;
+        Organizer organizer;
 
         public Home()
         {
             InitializeComponent();
+            // Create organizer for 1 telescope
+            organizer = new Organizer(1);
+
             // Generate 10 dummy appointments for testing
-            scheduler = new Scheduler();
-            for (int i = 0; i < 10; i++)
+            for (int i = 1; i < 10; i++)
             {
-                scheduler.AddAppointment(
+                organizer.SubmitAppointment(0,
                     new ActionAppointment(
                         DateTime.Now.AddDays(i),
                         DateTime.Now.AddDays(i).AddHours(2),
-                        new User(),
+                        new User(0,UserLevelEnum.Admin),
                         new List<Instruction>()
                         )
                     );
@@ -36,18 +38,22 @@ namespace ControlRoomSoftware1
         private void SetupCalender()
         {
             // Iterate through each appointment and add it to the month calander 
-            foreach (var appointment in scheduler.appointmentQueue)
+            foreach (var appointment in organizer.GetAppointmentQueue(0))
             {
                 monthCalendar1.AddBoldedDate(appointment.StartTime);
-
             }
         }
 
+        // FIXME
         private void monthCalendar1_CursorChanged(object sender, EventArgs e)
         {
-            foreach (var appointment in scheduler.appointmentQueue)
+            foreach (var day in monthCalendar1.BoldedDates)
             {
-                // show the daily schedule for that day when the date is selected
+                //foreach (var appointment in scheduler.appointmentQueue)
+                //{
+                //    // show the daily schedule for that day when the date is selected
+
+                //}
             }
         }
     }

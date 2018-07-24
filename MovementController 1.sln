@@ -13,8 +13,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AASharp (Ref. Only)", "AASh
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovementController 1Tests1", "MovementController 1.0Tests1\MovementController 1Tests1.csproj", "{52ADC56F-A60C-4521-BD43-F9ED1722F34C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scheduler 1", "Scheduler 1.0\Scheduler 1.csproj", "{FE669D30-74CB-4A37-8C91-D1CE707DAA67}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControlRoomSoftware1", "ControlRoomSoftware1\ControlRoomSoftware1.csproj", "{5069F259-693A-403F-B111-0F090A2A83D6}"
 EndProject
 Global
@@ -57,14 +55,6 @@ Global
 		{52ADC56F-A60C-4521-BD43-F9ED1722F34C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{52ADC56F-A60C-4521-BD43-F9ED1722F34C}.Release|x86.ActiveCfg = Release|Any CPU
 		{52ADC56F-A60C-4521-BD43-F9ED1722F34C}.Release|x86.Build.0 = Release|Any CPU
-		{FE669D30-74CB-4A37-8C91-D1CE707DAA67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FE669D30-74CB-4A37-8C91-D1CE707DAA67}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FE669D30-74CB-4A37-8C91-D1CE707DAA67}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{FE669D30-74CB-4A37-8C91-D1CE707DAA67}.Debug|x86.Build.0 = Debug|Any CPU
-		{FE669D30-74CB-4A37-8C91-D1CE707DAA67}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FE669D30-74CB-4A37-8C91-D1CE707DAA67}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FE669D30-74CB-4A37-8C91-D1CE707DAA67}.Release|x86.ActiveCfg = Release|Any CPU
-		{FE669D30-74CB-4A37-8C91-D1CE707DAA67}.Release|x86.Build.0 = Release|Any CPU
 		{5069F259-693A-403F-B111-0F090A2A83D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5069F259-693A-403F-B111-0F090A2A83D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5069F259-693A-403F-B111-0F090A2A83D6}.Debug|x86.ActiveCfg = Debug|Any CPU

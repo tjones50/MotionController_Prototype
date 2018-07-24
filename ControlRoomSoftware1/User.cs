@@ -11,8 +11,12 @@
     public class User
     {
         public int UserID { get; set; }
-        private string UserName;
-        private string Password; // will this be stored in this object?
         public UserLevelEnum UserLevel { get; set; }
+
+        public User(int setUserID, UserLevelEnum setUserLevel)
+        {
+            UserID = setUserID;
+            UserLevel = setUserLevel;
+        }
     }
 }

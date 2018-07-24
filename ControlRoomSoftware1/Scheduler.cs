@@ -9,15 +9,15 @@ namespace ControlRoomSoftware1
 {
     class Scheduler
     {
+        public int TelescopeID;
         public List<Appointment> appointmentQueue;
-        private InstructionInterpreter instructionInterpreter;
-        private CommandProcessor commandProcessor;
+        private InstructionHandler instructionHandler;
 
-        public Scheduler()
+        public Scheduler(int setTelescopeID)
         {
+            TelescopeID = setTelescopeID;
             appointmentQueue = new List<Appointment>();
-            instructionInterpreter = new InstructionInterpreter();
-            commandProcessor = new MotorDriver();
+            instructionHandler = new InstructionHandler();
         }
 
         public bool AddAppointment(Appointment newAppointment)
@@ -39,14 +39,19 @@ namespace ControlRoomSoftware1
                 appointmentQueue.Add(newAppointment);
                 // add a timer that will go off when the appointment timeslot arrives
                 Timer appointmentTimer = new Timer(newAppointment.StartTime.Subtract(DateTime.Now).TotalMilliseconds);
-                appointmentTimer.Elapsed += (sender, e) => OnAppointment(sender, e, newAppointment);
+                appointmentTimer.Elapsed += (sender, e) => AppointmentTimerHandler(sender, e, newAppointment);
                 appointmentTimer.AutoReset = false;
-                appointmentTimer.Enabled = true;
+                appointmentTimer.Start();
             }
             return success;
         }
 
-        private void OnAppointment(object sender, ElapsedEventArgs e, Appointment appointment)
+        public void RemoveAppointment(Appointment appointment)
+        {
+            // TODO
+        }
+
+        private void AppointmentTimerHandler(object sender, ElapsedEventArgs e, Appointment appointment)
         {
             ProcessAppointment(appointment);
         }
@@ -59,20 +64,9 @@ namespace ControlRoomSoftware1
             int test = 1; // for a breakpoint
         }
 
-        public bool submitInstruction(Instruction instruction)
+        public void ServiceInstruction(Instruction instruction)
         {
-            // check if the trajectoy is possible
-            bool approved = instructionInterpreter.CreateTrajectory(instruction, commandProcessor.GetPosition());
-            if (approved)
-            {
-                // if the trajectory is possible, then go through each command in the trajectoty and execute it
-                foreach (var command in instructionInterpreter.trajectory)
-                {
-                    commandProcessor.Move(command);
-                }
-            }
-
-            return approved;
+            instructionHandler.ProcessInstruction(instruction);
         }
     }
 }
