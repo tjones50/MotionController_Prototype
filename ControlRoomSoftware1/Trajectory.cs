@@ -15,7 +15,7 @@ namespace ControlRoomSoftware1
             command = setCommand;
         }
 
-        public Coordinate getIdealCoordinateAtTime(double secondsLeft)
+        public Coordinate getIdealCoordinateAtTime(double timePassed)
         {
             // Some function determining ideally where to be at this time
             return new Coordinate(0,0);

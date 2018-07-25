@@ -9,31 +9,28 @@ namespace ControlRoomSoftware1
     class MovementController
     {
         public Driver driver;
+        public Coordinate currentPosition;
+        public Velocity currentVelocity;
 
         public MovementController()
         {
             driver = new SimulatorDriver();
-        }
-
-        public Coordinate GetPosition()
-        {
-            return driver.GetPosition();
+            currentVelocity = new Velocity(0, 0);
+            currentPosition = new Coordinate(0, 0);
         }
 
         public void ProcessTrajectory(Trajectory trajectory)
         {
             // Update velocity based on PIDLoop()
             Coordinate idealPosition = trajectory.getIdealCoordinateAtTime(1);
-            Coordinate actualPosition = driver.GetPosition();
-            Velocity changeInVelocity = PIDLoop(idealPosition, actualPosition);
-            Velocity actualVelocity = driver.GetVelocity();
-            driver.Move(actualVelocity.Add(changeInVelocity));
+            currentPosition = driver.GetPosition();
+            currentVelocity = PIDLoop(idealPosition, currentPosition);
+            driver.Move(currentVelocity);
         }
 
-        public Velocity PIDLoop(Coordinate idealPosition, Coordinate acutalPosition)
+        private Velocity PIDLoop(Coordinate idealPosition, Coordinate actualPosition)
         {
             return new Velocity(0,0); // Placeholder with no change
         }
-
     }
 }

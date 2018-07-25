@@ -42,7 +42,7 @@ namespace ControlRoomSoftware1
             TimeSpan interval = instruction.destinationTime - DateTime.Now;
 
             // Some kind of global call that gets the current position from the last read encoder values
-            // For now, populate with Form Encoder
+            // For now, populate with fake Encoder
             Coordinate startCoords = commandHandler.GetPosition();
 
             // Set Start time to now

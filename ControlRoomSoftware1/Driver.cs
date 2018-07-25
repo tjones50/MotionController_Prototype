@@ -16,78 +16,41 @@ namespace ControlRoomSoftware1
 
     class SimulatorDriver : Driver
     {
-        private const UInt16 maxAzCount = 36000;
-        private const UInt16 maxElCount = 9000;
-
-        private double currentAzPosition;
-        private double currentElPosition;
-        private double currentAzSpeed;
-        private double currentElSpeed;
+        Coordinate currentPosition;
+        Velocity currentVelocity;
+        DateTime lastUpdate;
 
         public SimulatorDriver()
         {
-            currentAzPosition = 0;
-            currentElPosition = 0;
-            currentAzSpeed = 0;
-            currentElSpeed = 0;
+            currentPosition = new Coordinate(0, 0);
+            currentVelocity = new Velocity(0, 0);
+            lastUpdate = DateTime.Now;
+        }
+
+        public SimulatorDriver(Coordinate setPosition, Velocity setVelocity)
+        {
+            currentPosition = setPosition;
+            currentVelocity = setVelocity;
+            lastUpdate = DateTime.Now;
         }
 
         public override Coordinate GetPosition()
         {
-            return new Coordinate(currentAzPosition, currentElPosition);
+            return currentPosition;
         }
+
         public override Velocity GetVelocity()
         {
-            return new Velocity(currentAzSpeed, currentElSpeed);
+            return currentVelocity;
         }
 
         public override void Move(Velocity velocity)
         {
-            moveAz(velocity.AZSpeed);
-            Thread.Sleep(1000);
-        }
-
-        //Move and report an encoder position
-        public double moveAz(double az)
-        {
-            if (az != currentAzPosition)
-            {
-                int tolerance;
-                Random error = new Random();
-                if (error.NextDouble() < .9)
-                {
-                    tolerance = error.Next(1);
-                }
-                else
-                {
-                    tolerance = error.Next(2, 5);
-                }
-                //currentAz = (ushort)(tolerance + az);
-            }
-
-            return currentAzPosition = az;
-        }
-
-        //TODO: change to ushort
-        public double moveEl(double el)
-        {
-
-            if (el != currentElPosition)
-            {
-                int tolerance;
-                Random error = new Random();
-                if (error.NextDouble() < .9)
-                {
-                    tolerance = error.Next(2);
-                }
-                else
-                {
-                    tolerance = error.Next(2, 5);
-                }
-                //currentEl = (ushort)(tolerance + el);
-            }
-
-            return currentElPosition = el;
+            double secondsElapsed = DateTime.Now.Subtract(lastUpdate).TotalSeconds;
+            currentPosition.azimuth = currentVelocity.AZSpeed * secondsElapsed;
+            currentPosition.elevation = currentVelocity.ELSpeed * secondsElapsed;
+            currentVelocity = velocity;
+            lastUpdate = DateTime.Now;
         }
     }
 

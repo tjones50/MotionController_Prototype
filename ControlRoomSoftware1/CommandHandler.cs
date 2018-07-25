@@ -24,7 +24,7 @@ namespace ControlRoomSoftware1
 
         public Coordinate GetPosition()
         {
-            return movementController.GetPosition();
+            return movementController.currentPosition;
         }
 
 
