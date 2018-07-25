@@ -18,13 +18,13 @@ namespace ControlRoomSoftware1
 
         public void ProcessCommand(Command command)
         {
-            Trajectory trajectory= new Trajectory(command);
-            movementController.ProcessTrajectory(trajectory);
+            Trajectory trajectory= new StepTrajectory(0,0,0); // Placeholder
+            movementController.ProcessTrajectory(trajectory, command);
         }
 
         public Coordinate GetPosition()
         {
-            return movementController.currentPosition;
+            return movementController.GetPosition();
         }
 
 

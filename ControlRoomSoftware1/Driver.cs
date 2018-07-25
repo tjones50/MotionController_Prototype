@@ -36,6 +36,11 @@ namespace ControlRoomSoftware1
 
         public override Coordinate GetPosition()
         {
+            // Simulates where the position would be when it is checked
+            double secondsElapsed = DateTime.Now.Subtract(lastUpdate).TotalSeconds;
+            currentPosition.azimuth = currentPosition.azimuth + (currentVelocity.AZSpeed * secondsElapsed);
+            currentPosition.elevation = currentPosition.elevation + (currentVelocity.ELSpeed * secondsElapsed);
+            lastUpdate = DateTime.Now;
             return currentPosition;
         }
 
@@ -46,9 +51,6 @@ namespace ControlRoomSoftware1
 
         public override void Move(Velocity velocity)
         {
-            double secondsElapsed = DateTime.Now.Subtract(lastUpdate).TotalSeconds;
-            currentPosition.azimuth = currentVelocity.AZSpeed * secondsElapsed;
-            currentPosition.elevation = currentVelocity.ELSpeed * secondsElapsed;
             currentVelocity = velocity;
             lastUpdate = DateTime.Now;
         }

@@ -8,176 +8,235 @@ namespace ControlRoomSoftware1
 {
     public abstract class Instruction
     {
-        public DateTime destinationTime;
-        public DateTime startTime;
+        // The desired resolution, in degrees
+        const double RESOLUTION = 0.1;
 
-        public Instruction(DateTime destTime)
+        // Temporary variable that dictates the amount of time to move 0.1 degrees
+        protected const double T_MOVE = 1;
+
+        // Immediately set
+        public Coordinate destinationCoordinates;
+        public DestinationTime destinationTime;
+
+        // Set during actual start time
+        public DateTime startTime;
+        public Coordinate startCoordinates;
+
+        public Instruction(Coordinate destCoords, DestinationTime destTime)
         {
+            destinationCoordinates = destCoords;
             destinationTime = destTime;
         }
 
-        // This will be used later when this Instruction is starting its execution, to recalibrate
-        // its actual start time instead of assuming its exactly on time
-        public void setStartTime(DateTime st) { startTime = st; }
+        public Instruction(Coordinate destCoords, DateTime dateTime) : this(destCoords, new DestinationTime(dateTime)) { }
 
-        // Abstract implementation
-        public abstract Coordinate CoordinateAtTime(double dt, Coordinate curr);
+        public Instruction(Coordinate destCoords, double dt) : this(destCoords, new DestinationTime(dt)) { }
+
+        public Instruction(double az, double el, DateTime dateTime) : this(new Coordinate(az, el), dateTime) { }
+
+        public Instruction(double az, double el, double dt) : this(new Coordinate(az, el), dt) { }
+
+        // This will be used later when this Instruction is starting its execution, to recalibrate
+        // its actual start time and location instead of assuming its exactly on time at the right place
+        public void setStartTimeAndCoordinates(DateTime st, Coordinate sc)
+        {
+            startTime = st;
+            startCoordinates = sc;
+        }
+
+        // Default call to CoordinatesAtMultipleTimes, given the start time to be Now
+        public List<Command> CoordinatesAtTimes(Coordinate coords)
+        {
+            return CoordinatesAtTimes(DateTime.Now, coords);
+        }
+
+        // The number of increments of RESOLUTION that occur throughout the path
+        public double NumberOfSteps()
+        {
+            return Math.Ceiling(PathLength() / RESOLUTION);
+        }
+
+        // Get the time to wait at each intermediate point
+        public double OptimalWaitTime(double totalTime)
+        {
+            return (totalTime / NumberOfSteps()) - T_MOVE;
+        }
+
+        // Abstract implementations
+        public abstract double PathLength();
+        public abstract List<Command> CoordinatesAtTimes(DateTime time, Coordinate coords);
     }
 
-    public class SlewInstruction : Instruction
+    class SlewInstruction : Instruction
     {
-        public Coordinate destinationCoordinates;
+        public SlewInstruction(double az, double el, DateTime dest) : base(az, el, dest) { }
 
-        public SlewInstruction(double az, double el, DateTime destTime) : base(destTime) { destinationCoordinates = new Coordinate(az, el); }
-
-        public override Coordinate CoordinateAtTime(double elapsedTime, Coordinate startCoordinates)
+        public override double PathLength()
         {
-            int timeInterval = (int) destinationTime.Subtract(startTime).TotalSeconds;
+            double dAZ = destinationCoordinates.azimuth - startCoordinates.azimuth;
+            double dEL = destinationCoordinates.elevation - startCoordinates.elevation;
 
-            if (timeInterval > 0 && elapsedTime > 0)
-            {
-                double mAZ = (destinationCoordinates.azimuth - startCoordinates.azimuth) / timeInterval;
-                double mEL = (destinationCoordinates.elevation - startCoordinates.elevation) / timeInterval;
-                return new Coordinate(
-                    (mAZ * elapsedTime) + startCoordinates.azimuth,
-                    (mEL * elapsedTime) + startCoordinates.elevation
-                );
-            }
-            else
-            {
-                return startCoordinates;
-            }
+            return Math.Sqrt((dAZ * dAZ) + (dEL * dEL));
+        }
+
+        public override List<Command> CoordinatesAtTimes(DateTime time, Coordinate coords)
+        {
+            setStartTimeAndCoordinates(time, coords);
+
+            List<Command> cmdList = new List<Command>();
+
+            double startTimeSeconds = (double)(startTime.Ticks / 10000000);
+            decimal tTotal = (decimal)destinationTime.UntilEndTimeInSeconds(startTime);
+
+            cmdList.Add(new Command(
+                startTimeSeconds,
+                destinationTime.EndTimeAsSeconds(startTimeSeconds),
+                destinationCoordinates
+            ));
+
+            Console.WriteLine("Time: " + startTimeSeconds + " : " + cmdList[0].DifferenceInSeconds().ToString());
+
+            return cmdList;
         }
     }
 
-    public class TrackCelestialObjectInstruction : Instruction
+    public class TrackInstruction : Instruction
     {
         CelestialObject celestialObject;
 
-        public TrackCelestialObjectInstruction(CelestialObject newcelestialObject, DateTime destTime) : base(destTime)
+        public TrackInstruction(CelestialObject newcelestialObject, DateTime destTime) : base(newcelestialObject.GetPosition(destTime), destTime)
         {
             celestialObject = newcelestialObject;
         }
 
-        public override Coordinate CoordinateAtTime(double elapsedTime, Coordinate startCoordinates)
+        public override List<Command> CoordinatesAtTimes(DateTime time, Coordinate coords)
         {
-            if (elapsedTime > 0)
-            {
-                DateTime currentTime = startTime.AddSeconds(elapsedTime);
-                AASharp.AAS2DCoordinate celestialLocation = celestialObject.GetPosition(currentTime);
-                return new Coordinate(celestialLocation.X, celestialLocation.Y);
-            }
-            else
-            {
-                return startCoordinates;
-            }
+            List<Command> cmdList = new List<Command>();
+
+            // TODO
+
+            return cmdList;
+        }
+
+        public override double PathLength()
+        {
+            throw new NotImplementedException();
         }
     }
 
-    public class ScanInstruction : Instruction
+    class SectionalScanInstruction : Instruction
     {
-        public Coordinate destinationCoordinates;
-
         private const double SCAN_DROP_DEGREES = 0.5;
 
-        public ScanInstruction(double az, double el, DateTime destTime) : base(destTime) { destinationCoordinates = new Coordinate(az, el); }
+        public SectionalScanInstruction(double az, double el, DateTime dest) : base(az, el, dest) { }
 
-        public override Coordinate CoordinateAtTime(double elapsedTime, Coordinate startCoordinates)
+        public override double PathLength()
         {
-            int timeInterval = (int) destinationTime.Subtract(startTime).TotalSeconds;
+            double dAZ = destinationCoordinates.azimuth - startCoordinates.azimuth;
 
-            if (timeInterval > 0 && elapsedTime > 0)
+            // Every DriftScan must be at least one change in azimuth across
+            double pathLength = dAZ;
+
+            // Track how much change in elevation is left
+            double remainingEL = destinationCoordinates.elevation - startCoordinates.elevation;
+
+            while (remainingEL > 2 * SCAN_DROP_DEGREES)
             {
-                // Assume change in azimuth and change in elevation are both positive
-                double dAZ = Math.Abs(destinationCoordinates.azimuth - startCoordinates.azimuth);
-                double dEL = Math.Abs(destinationCoordinates.elevation - startCoordinates.elevation);
-
-                // Every DriftScan must be at least one change in azimuth across
-                double pathLength = dAZ;
-
-                // Track how much change in elevation is left
-                double remainingEL = dEL;
-
-                while (remainingEL > 2 * SCAN_DROP_DEGREES)
-                {
-                    pathLength += ((2 * dAZ) + (2 * SCAN_DROP_DEGREES));
-                    remainingEL -= (2 * SCAN_DROP_DEGREES);
-                }
-
-                // Ignore this case for now (assume the difference in position is an
-                // exact interval of 2*SCAN_DROP_DEGREES)
-                // pathLength += remainingEL;
-
-                double portionDone = pathLength * (elapsedTime / timeInterval);
-
-                Coordinate cumulative = new Coordinate(0, 0);
-                double accPath = 0;
-                double sequence = 0;
-
-                while (true)
-                {
-                    switch (sequence)
-                    {
-                        case 0:
-                            if (portionDone - accPath > dAZ)
-                            {
-                                accPath += dAZ;
-                            }
-                            else
-                            {
-                                cumulative.azimuth = portionDone - accPath;
-                                return cumulative;
-                            }
-                            break;
-
-                        case 1:
-                            if (portionDone - accPath > SCAN_DROP_DEGREES)
-                            {
-                                accPath += SCAN_DROP_DEGREES;
-                                cumulative.elevation += SCAN_DROP_DEGREES;
-                            }
-                            else
-                            {
-                                cumulative.elevation += portionDone - accPath;
-                                cumulative.azimuth = dAZ;
-                                return cumulative;
-                            }
-                            break;
-
-                        case 2:
-                            if (portionDone - accPath > dAZ)
-                            {
-                                accPath += dAZ;
-                            }
-                            else
-                            {
-                                cumulative.azimuth = dAZ - portionDone + accPath;
-                                return cumulative;
-                            }
-                            break;
-
-                        case 3:
-                            if (portionDone - accPath > SCAN_DROP_DEGREES)
-                            {
-                                accPath += SCAN_DROP_DEGREES;
-                                cumulative.elevation += SCAN_DROP_DEGREES;
-                            }
-                            else
-                            {
-                                cumulative.elevation += portionDone - accPath;
-                                cumulative.azimuth = 0;
-                                return cumulative;
-                            }
-                            break;
-                    }
-
-                    sequence = (sequence + 1) % 4;
-                }
+                pathLength += ((2 * dAZ) + (2 * SCAN_DROP_DEGREES));
+                remainingEL -= (2 * SCAN_DROP_DEGREES);
             }
-            else
+
+            return pathLength;
+        }
+
+        public override List<Command> CoordinatesAtTimes(DateTime time, Coordinate coords)
+        {
+            // Set the member variables
+            setStartTimeAndCoordinates(time, coords);
+
+            // Empty list to add onto
+            List<Command> cmdList = new List<Command>();
+
+            // Get the overall start time
+            double startTimeSeconds = (double)(startTime.Ticks / 10000000);
+
+            // Assume change in azimuth and change in elevation are both positive
+            double dAZ = destinationCoordinates.azimuth - startCoordinates.azimuth;
+            double dEL = destinationCoordinates.elevation - startCoordinates.elevation;
+
+            // Every SectionalScan must be at least one change in azimuth across, so init the cumulative
+            // change in azimuth to be that, and change in elevation is 0
+            double cumulativeAZ = dAZ;
+            double cumulativeEL = 0;
+            double cumulativeTime = startTimeSeconds + (cumulativeAZ / References.MAX_VEL_AZ);
+
+            // Add the first discrete command
+            cmdList.Add(new Command(
+                cumulativeTime,
+                destinationTime.EndTimeAsSeconds(cumulativeTime),
+                startCoordinates = startCoordinates.Add(cumulativeAZ, cumulativeEL)
+            ));
+
+            // Loop through until movement is accounted for
+            while (cumulativeEL <= dEL - (2 * SCAN_DROP_DEGREES))
             {
-                return startCoordinates;
+                // account for the next drop in elevation
+                cumulativeEL += SCAN_DROP_DEGREES;
+                cumulativeTime += (SCAN_DROP_DEGREES / References.MAX_VEL_EL);
+
+                cmdList.Add(new Command(
+                    cumulativeTime,
+                    destinationTime.EndTimeAsSeconds(cumulativeTime),
+                    startCoordinates = startCoordinates.Add(cumulativeAZ, cumulativeEL)
+                ));
+
+                // account for the next move right in azimuth
+                cumulativeAZ = 0;
+                cumulativeTime += (dAZ / References.MAX_VEL_AZ);
+
+                cmdList.Add(new Command(
+                    cumulativeTime,
+                    destinationTime.EndTimeAsSeconds(cumulativeTime),
+                    startCoordinates = startCoordinates.Add(cumulativeAZ, cumulativeEL)
+                ));
+
+                // account for the next move drop in elevation
+                cumulativeEL += SCAN_DROP_DEGREES;
+                cumulativeTime += (SCAN_DROP_DEGREES / References.MAX_VEL_EL);
+
+                cmdList.Add(new Command(
+                    cumulativeTime,
+                    destinationTime.EndTimeAsSeconds(cumulativeTime),
+                    startCoordinates = startCoordinates.Add(cumulativeAZ, cumulativeEL)
+                ));
+
+                // account for the next move left in azimuth
+                cumulativeAZ = dAZ;
+                cumulativeTime += (dAZ / References.MAX_VEL_AZ);
+
+                cmdList.Add(new Command(
+                    cumulativeTime,
+                    destinationTime.EndTimeAsSeconds(cumulativeTime),
+                    startCoordinates = startCoordinates.Add(cumulativeAZ, cumulativeEL)
+                ));
             }
+
+            // If the cumulative path doesn't end right on the corner the user
+            // specified, add on that extra last bit as one more command
+            if (cumulativeEL != dEL)
+            {
+                cumulativeTime += ((dEL - cumulativeEL) * References.MAX_VEL_EL);
+                cumulativeEL = dEL;
+
+                cmdList.Add(new Command(
+                    cumulativeTime,
+                    destinationTime.EndTimeAsSeconds(cumulativeTime),
+                    startCoordinates = startCoordinates.Add(cumulativeAZ, cumulativeEL)
+                ));
+            }
+
+            // Return the built list of DiscreteCommand
+            return cmdList;
         }
     }
 }

@@ -8,13 +8,25 @@ namespace ControlRoomSoftware1
 {
     public class Command
     {
-        public Coordinate coordinates;
-        public double diffSecs;
+        public double startSeconds;
+        public double destinationSeconds;
+        public Coordinate objective;
 
-        public Command(Coordinate coords, double ds)
+        public Command(double ss, double ds, Coordinate obj)
         {
-            coordinates = coords;
-            diffSecs = ds;
+            startSeconds = ss;
+            destinationSeconds = ds;
+            objective = obj;
+        }
+
+        public double DifferenceInSeconds()
+        {
+            return destinationSeconds - startSeconds;
+        }
+
+        public string AsScriptCommand()
+        {
+            return destinationSeconds.ToString() + " [" + objective.azimuth.ToString() + ":" + objective.elevation.ToString() + "]";
         }
     }
 }

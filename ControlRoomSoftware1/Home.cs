@@ -35,10 +35,11 @@ namespace ControlRoomSoftware1
             SetupCalender();
         }
 
+        // Updates the graph every 0.1 second
         private void StartTimer()
         {
             Timer graphTimer = new Timer();
-            graphTimer.Interval = 3000;
+            graphTimer.Interval = 100;
             graphTimer.Tick += (sender, e) => GraphTimerHandler(sender, e);
             graphTimer.Start();
         }
@@ -78,9 +79,12 @@ namespace ControlRoomSoftware1
             DateTime arrivalTime;
             if (ArrivalTimeInput.Enabled) { arrivalTime = ArrivalTimeInput.Value; }
             else { arrivalTime = DateTime.Now.AddSeconds((double)IntervalInput.Value); }
-
-            SlewInstruction inputInstruction = new SlewInstruction(endAZ, endEL, arrivalTime);
-            organizer.SubmitInstruction(0, inputInstruction);
+            // Make sure the arrival time is in the future
+            if(DateTime.Now.Subtract(arrivalTime).TotalSeconds < 0)
+            {
+                SlewInstruction inputInstruction = new SlewInstruction(endAZ, endEL, arrivalTime);
+                organizer.SubmitInstruction(0, inputInstruction);
+            }
         }
 
         private void ScanButton_Click(object sender, EventArgs e)
@@ -90,9 +94,12 @@ namespace ControlRoomSoftware1
             DateTime arrivalTime;
             if (ArrivalTimeInput.Enabled) { arrivalTime = ArrivalTimeInput.Value; }
             else { arrivalTime = DateTime.Now.AddSeconds((double)IntervalInput.Value); }
-
-            ScanInstruction inputInstruction = new ScanInstruction(endAZ, endEL, arrivalTime);
-            organizer.SubmitInstruction(0, inputInstruction);
+            // Make sure the arrival time is in the future
+            if (DateTime.Now.Subtract(arrivalTime).TotalSeconds < 0)
+            {
+                SectionalScanInstruction inputInstruction = new SectionalScanInstruction(endAZ, endEL, arrivalTime);
+                organizer.SubmitInstruction(0, inputInstruction);
+            }
         }
 
         private void TrackInstructionButton_Click(object sender, EventArgs e)
@@ -100,24 +107,27 @@ namespace ControlRoomSoftware1
             DateTime arrivalTime;
             if (ArrivalTimeInput.Enabled) { arrivalTime = ArrivalTimeInput.Value; }
             else { arrivalTime = DateTime.Now.AddSeconds((double)IntervalInput.Value); }
-
-            CelestialObject celestialObject;
-
-            if (CelesitialDropDown.SelectedItem.Equals("Sun"))
+            // Make sure the arrival time is in the future
+            if (DateTime.Now.Subtract(arrivalTime).TotalSeconds < 0)
             {
-                celestialObject = new Sun();
-            }
-            else if (CelesitialDropDown.SelectedItem.Equals("Moon"))
-            {
-                celestialObject = new Moon();
-            }
-            else
-            {
-                throw new Exception("Invalid Input");
-            }
+                CelestialObject celestialObject;
 
-            TrackCelestialObjectInstruction inputInstruction = new TrackCelestialObjectInstruction(celestialObject, arrivalTime);
-            organizer.SubmitInstruction(0, inputInstruction);
+                if (CelesitialDropDown.SelectedItem.Equals("Sun"))
+                {
+                    celestialObject = new Sun();
+                }
+                else if (CelesitialDropDown.SelectedItem.Equals("Moon"))
+                {
+                    celestialObject = new Moon();
+                }
+                else
+                {
+                    throw new Exception("Invalid Input");
+                }
+
+                TrackInstruction inputInstruction = new TrackInstruction(celestialObject, arrivalTime);
+                organizer.SubmitInstruction(0, inputInstruction);
+            }
         }
 
 

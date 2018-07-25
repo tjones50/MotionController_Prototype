@@ -14,12 +14,12 @@ namespace ControlRoomSoftware1
         internal static double RT_LONG = AASCoordinateTransformation.DMSToDegrees(76, 42, 17.0); //West is considered positive, change later
         internal static double RT_HEIGHT = 119;
 
-        public abstract AAS2DCoordinate GetPosition(DateTime dateTime);
+        public abstract Coordinate GetPosition(DateTime dateTime);
     }
 
     public class Sun : CelestialObject
     {
-        public override AAS2DCoordinate GetPosition(DateTime dateTime)
+        public override Coordinate GetPosition(DateTime dateTime)
         {
             var bHighPrecision = false;
             dateTime = dateTime.ToUniversalTime(); // NOTE: time must be converted to Universal Time
@@ -40,13 +40,13 @@ namespace ControlRoomSoftware1
 
             //The result above should be that we have a setting Sun at Y degrees above the horizon at azimuth X degrees south of the westerly horizon 
             //NOTE: for azimuth west is considered positive, to get east as positive subtract the result from 360
-            return SunHorizontal;
+            return new Coordinate(SunHorizontal.X, SunHorizontal.Y);
         }
     }
 
     public class Moon : CelestialObject
     {
-        public override AAS2DCoordinate GetPosition(DateTime dateTime)
+        public override Coordinate GetPosition(DateTime dateTime)
         {
             dateTime = dateTime.ToUniversalTime(); // NOTE: time must be converted to Universal Time
 
@@ -67,7 +67,7 @@ namespace ControlRoomSoftware1
 
             //The result above should be that we have a rising Moon at Y degrees above the horizon at azimuth X degrees east of the southern horizon  
             //NOTE: for azimuth west is considered positive, to get east as positive subtract the result from 360
-            return MoonHorizontal;
+            return new Coordinate(MoonHorizontal.X, MoonHorizontal.Y);
         }
     }
 }

@@ -17,5 +17,31 @@ namespace ControlRoomSoftware1
             azimuth = az;
             elevation = el;
         }
+
+        public Coordinate(Coordinate copy)
+        {
+            azimuth = copy.azimuth;
+            elevation = copy.elevation;
+        }
+
+        public Coordinate Add(double daz, double del)
+        {	
+            return new Coordinate(azimuth + daz, elevation + del);	
+        }
+
+        public Coordinate Add(Coordinate c)
+        {
+            return new Coordinate(azimuth + c.azimuth, elevation + c.elevation);
+        }
+
+        public Coordinate Subtract(double daz, double del)
+        {
+            return new Coordinate(azimuth - daz, elevation - del);
+        }
+
+        public Coordinate Subtract(Coordinate c)
+        {
+            return new Coordinate(azimuth - c.azimuth, elevation - c.elevation);
+        }
     }
 }
