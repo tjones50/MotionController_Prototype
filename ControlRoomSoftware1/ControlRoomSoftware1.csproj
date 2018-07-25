@@ -86,9 +86,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <None Include="packages.config" />
-    <None Include="Properties\DataSources\Coordinate.datasource" />
-    <None Include="Properties\DataSources\Home.datasource" />
-    <None Include="Properties\DataSources\Organizer.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
