@@ -210,17 +210,37 @@ namespace ControlRoomSoftware1
             // 
             // TelescopePositionGraph
             // 
+            chartArea1.AxisX.IntervalAutoMode = System.Windows.Forms.DataVisualization.Charting.IntervalAutoMode.VariableCount;
+            chartArea1.AxisX.MajorGrid.Interval = 0D;
+            chartArea1.AxisX.MajorGrid.IntervalOffset = 0D;
+            chartArea1.AxisX.MajorGrid.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
+            chartArea1.AxisX.MajorGrid.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
+            chartArea1.AxisX.MajorTickMark.Interval = 0D;
+            chartArea1.AxisX.MajorTickMark.IntervalOffset = 0D;
+            chartArea1.AxisX.MajorTickMark.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
+            chartArea1.AxisX.MajorTickMark.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
             chartArea1.AxisX.Maximum = 360D;
             chartArea1.AxisX.Minimum = 0D;
+            chartArea1.AxisX.MinorTickMark.Enabled = true;
             chartArea1.AxisX.Title = "Azimuth";
+            chartArea1.AxisY.IntervalAutoMode = System.Windows.Forms.DataVisualization.Charting.IntervalAutoMode.VariableCount;
+            chartArea1.AxisY.MajorGrid.Interval = 0D;
+            chartArea1.AxisY.MajorGrid.IntervalOffset = 0D;
+            chartArea1.AxisY.MajorGrid.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
+            chartArea1.AxisY.MajorGrid.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
+            chartArea1.AxisY.MajorTickMark.Interval = 0D;
+            chartArea1.AxisY.MajorTickMark.IntervalOffset = 0D;
+            chartArea1.AxisY.MajorTickMark.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
+            chartArea1.AxisY.MajorTickMark.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
             chartArea1.AxisY.Maximum = 90D;
             chartArea1.AxisY.Minimum = 0D;
+            chartArea1.AxisY.MinorTickMark.Enabled = true;
             chartArea1.AxisY.Title = "Elevation";
             chartArea1.Name = "ChartArea1";
             this.TelescopePositionGraph.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
             this.TelescopePositionGraph.Legends.Add(legend1);
-            this.TelescopePositionGraph.Location = new System.Drawing.Point(65, 345);
+            this.TelescopePositionGraph.Location = new System.Drawing.Point(65, 338);
             this.TelescopePositionGraph.Name = "TelescopePositionGraph";
             series1.ChartArea = "ChartArea1";
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
@@ -229,7 +249,7 @@ namespace ControlRoomSoftware1
             dataPoint1.AxisLabel = "";
             series1.Points.Add(dataPoint1);
             this.TelescopePositionGraph.Series.Add(series1);
-            this.TelescopePositionGraph.Size = new System.Drawing.Size(1325, 359);
+            this.TelescopePositionGraph.Size = new System.Drawing.Size(1325, 387);
             this.TelescopePositionGraph.TabIndex = 37;
             this.TelescopePositionGraph.Text = "chart1";
             // 
