@@ -9,10 +9,10 @@ namespace MovementController_1._0
 {
     class AZELCoordinate
     {
-        public double azimuth;
-        public double elevation;
+        public decimal azimuth;
+        public decimal elevation;
 
-        public AZELCoordinate(double az, double el)
+        public AZELCoordinate(decimal az, decimal el)
         {
             azimuth = az;
             elevation = el;
@@ -24,12 +24,7 @@ namespace MovementController_1._0
             elevation = copy.elevation;
         }
 
-        public AZELCoordinate Add(double daz, double del)
-        {
-            return new AZELCoordinate(azimuth + daz, elevation + del);
-        }
-
-        public AZELCoordinate Add(AZELCoordinate c)
+        public AZELCoordinate add(AZELCoordinate c)
         {
             return new AZELCoordinate(azimuth + c.azimuth, elevation + c.elevation);
         }
