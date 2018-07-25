@@ -26,11 +26,11 @@ namespace MovementController_1._0
 
             AAS2DCoordinate sunPos = CelestialLocation.CelestialObjectSwitch(CelestialLocation.CelestialObjectEnum.Sun, arrivalTime);
 
-            decimal endEL = (decimal) sunPos.Y;
-            decimal endAZ = (decimal) sunPos.X;
+            double endEL = sunPos.Y;
+            double endAZ = sunPos.X;
 
-            ELValue.Value = endEL;
-            AZValue.Value = endAZ;
+            ELValue.Value = (decimal)endEL;
+            AZValue.Value = (decimal)endAZ;
 
             SlewInstruction inputInstruction = new SlewInstruction(endAZ, endEL, arrivalTime);
             Graph(inputInstruction);
@@ -44,11 +44,11 @@ namespace MovementController_1._0
 
             AAS2DCoordinate moonPos = CelestialLocation.CelestialObjectSwitch(CelestialLocation.CelestialObjectEnum.Moon, arrivalTime);
 
-            decimal endEL = (decimal) moonPos.Y;
-            decimal endAZ = (decimal) moonPos.X;
+            double endEL = moonPos.Y;
+            double endAZ = moonPos.X;
 
-            ELValue.Value = endEL;
-            AZValue.Value = endAZ;
+            ELValue.Value = (decimal)endEL;
+            AZValue.Value = (decimal)endAZ;
 
             SlewInstruction inputInstruction = new SlewInstruction(endAZ, endEL, arrivalTime);
             Graph(inputInstruction);

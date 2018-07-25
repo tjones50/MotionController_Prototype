@@ -28,7 +28,6 @@ namespace MovementController_1._0
         // user or equivalent to the max speed
         double peakVelocity;
         double peakAcceleration;
-        double instanceJerk;
 
         // Our discretized versions of the values
         double discVelocity;
@@ -59,7 +58,7 @@ namespace MovementController_1._0
 
             Generate();
         }
-        
+
         public void Generate()
         {
             // Assume non-synced end times
@@ -74,14 +73,14 @@ namespace MovementController_1._0
             double t1 = peakAcceleration / References.SYSTEM_JERK;
             double t2 = peakVelocity / peakAcceleration;
             double t4 = elapsedTime - (4 * t1) - (2 * t2);
-            
+
             // Discretize the times, guarantee our maximum values aren't met
             double t1Disc = Math.Round(t1, 3);
             double t2Disc = Math.Round(t2, 3);
             double t4Disc = Math.Round(t4, 3);
-            
+
             // Override the peak values to reflect the discretization
-            
+
         }
 
         public double EvaluateAtElapsedTime(double dt)
@@ -95,7 +94,7 @@ namespace MovementController_1._0
                     initialPosition,
                     initialVelocity,
                     initialAcceleration,
-                    instanceJerk,
+                    discJerk,
                     dt
                 );
             }
@@ -117,7 +116,7 @@ namespace MovementController_1._0
                     initialPosition + intermediatePos[1],
                     initialVelocity + intermediateVel[1],
                     peakAcceleration,
-                    -instanceJerk,
+                    -discJerk,
                     dt
                 );
             }
@@ -139,7 +138,7 @@ namespace MovementController_1._0
                     initialPosition + intermediatePos[3],
                     initialVelocity + intermediateVel[3],
                     0,
-                    -instanceJerk,
+                    -discJerk,
                     dt
                 );
             }
@@ -161,7 +160,7 @@ namespace MovementController_1._0
                     initialPosition + intermediatePos[5],
                     initialVelocity + intermediateVel[5],
                     -peakAcceleration,
-                    instanceJerk,
+                    discJerk,
                     dt
                 );
             }

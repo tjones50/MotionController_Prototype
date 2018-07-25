@@ -38,7 +38,8 @@ namespace MovementController_1._0
 
         // This will be used later when this Instruction is starting its execution, to recalibrate
         // its actual start time and location instead of assuming its exactly on time at the right place
-        public void setStartTimeAndCoordinates(DateTime st, AZELCoordinate sc) {
+        public void setStartTimeAndCoordinates(DateTime st, AZELCoordinate sc)
+        {
             startTime = st;
             startCoordinates = sc;
         }
@@ -151,7 +152,7 @@ namespace MovementController_1._0
                 destinationTime.EndTimeAsSeconds(cumulativeTime),
                 startCoordinates.Add(cumulativeAZ, cumulativeEL)
             ));
-            
+
             // Loop through until movement is accounted for
             while (cumulativeEL <= dEL - (2 * SCAN_DROP_DEGREES))
             {

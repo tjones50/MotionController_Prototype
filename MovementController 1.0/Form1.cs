@@ -20,8 +20,8 @@ namespace MovementController_1._0
 
         private void SlewButton_Click(object sender, EventArgs e)
         {
-            decimal endEL = ELPositionInput.Value;
-            decimal endAZ = AZPositionInput.Value;
+            double endEL = (double)ELPositionInput.Value;
+            double endAZ = (double)AZPositionInput.Value;
             DateTime arrivalTime;
             if (ArrivalTimeInput.Enabled) {  arrivalTime = ArrivalTimeInput.Value;  }
             else { arrivalTime = DateTime.Now.AddSeconds((double) IntervalInput.Value); }
@@ -32,8 +32,8 @@ namespace MovementController_1._0
 
         private void DriftScanButton_Click(object sender, EventArgs e)
         {
-            decimal endEL = ELPositionInput.Value;
-            decimal endAZ = AZPositionInput.Value;
+            double endEL = (double)ELPositionInput.Value;
+            double endAZ = (double)AZPositionInput.Value;
             DateTime arrivalTime;
             if (ArrivalTimeInput.Enabled) { arrivalTime = ArrivalTimeInput.Value; }
             else { arrivalTime = DateTime.Now.AddSeconds((double)IntervalInput.Value); }
