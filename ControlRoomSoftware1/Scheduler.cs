@@ -46,6 +46,11 @@ namespace ControlRoomSoftware1
             return success;
         }
 
+        internal Coordinate GetPosition()
+        {
+            return instructionHandler.GetPosition();
+        }
+
         public void RemoveAppointment(Appointment appointment)
         {
             // TODO

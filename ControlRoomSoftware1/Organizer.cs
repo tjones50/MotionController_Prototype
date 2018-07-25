@@ -31,10 +31,20 @@ namespace ControlRoomSoftware1
             scheduler.RemoveAppointment(appointment);
         }
 
+        public void SubmitInstruction(int telescopeID, Instruction instruction)
+        {
+            schedulers[telescopeID].ServiceInstruction(instruction);
+        }
+
         public List<Appointment> GetAppointmentQueue(int telescopeID)
         {
             Scheduler scheduler = schedulers[telescopeID];
             return scheduler.appointmentQueue;
+        }
+
+        internal Coordinate GetPosition(int telescopeID)
+        {
+            return schedulers[telescopeID].GetPosition();
         }
     }
 }

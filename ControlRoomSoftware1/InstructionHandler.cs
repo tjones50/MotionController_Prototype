@@ -62,5 +62,10 @@ namespace ControlRoomSoftware1
             // Placeholder
             return true;
         }
+
+        internal Coordinate GetPosition()
+        {
+            return commandHandler.GetPosition();
+        }
     }
 }
