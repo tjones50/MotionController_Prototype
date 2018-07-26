@@ -12,15 +12,17 @@ namespace ControlRoomSoftware1
     public partial class Home : Form
     {
         Organizer organizer;
+		MotorDriver driver = new MotorDriver();
 
         public Home()
         {
             InitializeComponent();
             // Create organizer for 1 telescope
             organizer = new Organizer(1);
+			driver.StartConnection("COM3", 9600);
 
-            // Generate 10 dummy appointments for testing
-            for (int i = 1; i < 10; i++)
+			// Generate 10 dummy appointments for testing
+			for (int i = 1; i < 10; i++)
             {
                 organizer.SubmitAppointment(0,
                     new ActionAppointment(
@@ -76,6 +78,9 @@ namespace ControlRoomSoftware1
         {
             double endEL = (double) ELPositionInput.Value;
             double endAZ = (double) AZPositionInput.Value;
+			
+			driver.Move(new Velocity(endAZ, 0));
+
             DateTime arrivalTime;
             if (ArrivalTimeInput.Enabled) { arrivalTime = ArrivalTimeInput.Value; }
             else { arrivalTime = DateTime.Now.AddSeconds((double)IntervalInput.Value); }
