@@ -115,7 +115,7 @@ namespace ControlRoomSoftware1
             t[6] = disc_t4 + disc_t1 + disc_t2;
 
             // Override the peak values to reflect the discretization, guarantees
-            // that it will be below the specified maxmimum values
+            // that it will be below the specified maximum values
             discJerk = peakAcceleration / disc_t1;
             discAcceleration = peakVelocity / disc_t2;
             discVelocity = distanceTraveled / disc_t4;
