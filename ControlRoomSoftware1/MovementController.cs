@@ -10,13 +10,15 @@ namespace ControlRoomSoftware1
 {
     class MovementController
     {
-        private Driver driver;
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+        private RadioTelescope radioTelescope;
         private Coordinate currentPosition;
         private Velocity currentVelocity;
 
-        public MovementController()
+        public MovementController(RadioTelescope setRadioTelescope)
         {
-            driver = new SimulatorDriver();
+            radioTelescope = setRadioTelescope;
             currentVelocity = new Velocity(0, 0);
             currentPosition = new Coordinate(0, 0);
         }
@@ -24,20 +26,28 @@ namespace ControlRoomSoftware1
         public void ProcessTrajectory(Trajectory trajectory, Command command)
         {
             // Update velocity based on PIDLoop()
-            currentPosition = GetPosition();
+            currentPosition = radioTelescope.GetPosition();
             // Coordinate idealPosition = trajectory.EvaluateAtElapsedTime(command.destinationSeconds); // FIXME
             Coordinate idealPosition = currentPosition; // Placeholder
             //currentVelocity = PIDLoop(currentVelocity, idealPosition, currentPosition); // FIXME
 
-            // Placeholder 
+            // Update velocity placeholder 
             Coordinate changeInPosition = command.objective.Subtract(currentPosition);
             double changeInTime = command.destinationSeconds - command.startSeconds;
             currentVelocity = new Velocity(changeInPosition.azimuth / changeInTime, changeInPosition.elevation / changeInTime);
-            // Placeholder
 
-            driver.Move(currentVelocity);
-            StartWaitTimer(changeInTime, command);
-            
+            // Temp fix to work around prototype driver implemenation
+            if (radioTelescope.radioTelescopeType.Equals(RadioTelescopeEnum.Prototype))
+            {
+                radioTelescope.Move(new Velocity(command.objective.azimuth, 0));
+            }
+            else
+            {
+                // Move the telescope
+                radioTelescope.Move(currentVelocity);
+                // Start a timer to stop the movement after the correct time inverval
+                StartWaitTimer(changeInTime, command);
+            }
         }
 
         // Timer that stops movement after the movement is over
@@ -52,17 +62,12 @@ namespace ControlRoomSoftware1
 
         private void WaitTimer_Elapsed(object sender, ElapsedEventArgs e, Command command)
         {
-            driver.Move(new Velocity(0, 0)); // Stop after movement
+            radioTelescope.Move(new Velocity(0, 0)); // Stop after movement
         }
 
         private Velocity PIDLoop(Velocity currentVelocity, Coordinate idealPosition, Coordinate actualPosition)
         {
             return currentVelocity; // Placeholder with no change
-        }
-
-        public Coordinate GetPosition()
-        {
-            return driver.GetPosition();
         }
     }
 }

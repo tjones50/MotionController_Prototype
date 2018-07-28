@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ControlRoomSoftware1
 {
-    class References
+    class TrajectoryReferences
     {
         public static readonly double MAX_VEL_AZ = 15.0 / 180 * Math.PI; // rad/s
         public static readonly double MAX_VEL_EL = 3.0 / 180 * Math.PI;  // rad/s

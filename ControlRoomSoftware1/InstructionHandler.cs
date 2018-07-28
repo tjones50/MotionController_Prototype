@@ -8,17 +8,20 @@ namespace ControlRoomSoftware1
 {
     public class InstructionHandler
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         // Our discrete time interval / "clock cycle"
         public static readonly decimal DISCRETE_TIME_INTERVAL = 0.001m;
 
         internal List<Command> path;
         private CommandHandler commandHandler;
+        private RadioTelescope radioTelescope;
 
-        // A session creates one of these and it hosts all the Commands
-        public InstructionHandler()
+        public InstructionHandler(RadioTelescope setRadioTelescope)
         {
             path = new List<Command>();
-            commandHandler = new CommandHandler();
+            radioTelescope = setRadioTelescope;
+            commandHandler = new CommandHandler(setRadioTelescope);
         }
 
         public bool ProcessInstruction(Instruction instruction)
@@ -31,7 +34,7 @@ namespace ControlRoomSoftware1
 
             // Some kind of global call that gets the current position from the last read encoder values
             // For now, populate with (0,0)
-            Coordinate newStartCoords = commandHandler.GetPosition();
+            Coordinate newStartCoords = radioTelescope.GetPosition();
 
             path = instruction.CoordinatesAtTimes(newStartTime, newStartCoords);
 
@@ -42,11 +45,6 @@ namespace ControlRoomSoftware1
             }
 
             return true;
-        }
-
-        public Coordinate GetPosition()
-        {
-            return commandHandler.GetPosition();
         }
     }
 }

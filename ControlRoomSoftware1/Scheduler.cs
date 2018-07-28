@@ -9,15 +9,17 @@ namespace ControlRoomSoftware1
 {
     class Scheduler
     {
-        public int TelescopeID;
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+        public RadioTelescope radioTelescope;
         public List<Appointment> appointmentQueue;
         private InstructionHandler instructionHandler;
 
-        public Scheduler(int setTelescopeID)
+        public Scheduler(RadioTelescope setRadioTelescope)
         {
-            TelescopeID = setTelescopeID;
+            radioTelescope = setRadioTelescope;
             appointmentQueue = new List<Appointment>();
-            instructionHandler = new InstructionHandler();
+            instructionHandler = new InstructionHandler(radioTelescope);
         }
 
         public bool AddAppointment(Appointment newAppointment)
@@ -44,11 +46,6 @@ namespace ControlRoomSoftware1
                 appointmentTimer.Start();
             }
             return success;
-        }
-
-        internal Coordinate GetPosition()
-        {
-            return instructionHandler.GetPosition();
         }
 
         public void RemoveAppointment(Appointment appointment)

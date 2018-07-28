@@ -9,11 +9,13 @@ namespace ControlRoomSoftware1
     // Process a command
     class CommandHandler 
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         private MovementController movementController;
 
-        public CommandHandler()
+        public CommandHandler(RadioTelescope setRadioTelescope)
         {
-            movementController = new MovementController();
+            movementController = new MovementController(setRadioTelescope);
         }
 
         public void ProcessCommand(Command command)
@@ -21,12 +23,5 @@ namespace ControlRoomSoftware1
             Trajectory trajectory= new StepTrajectory(0,0,0); // Placeholder
             movementController.ProcessTrajectory(trajectory, command);
         }
-
-        public Coordinate GetPosition()
-        {
-            return movementController.GetPosition();
-        }
-
-
     }
 }

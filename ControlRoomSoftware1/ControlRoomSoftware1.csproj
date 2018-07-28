@@ -35,6 +35,9 @@
     <Reference Include="AASharp, Version=1.93.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\AASharp.1.93.3\lib\net45\AASharp.dll</HintPath>
     </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Windows.Forms.DataVisualization" />
@@ -53,9 +56,9 @@
     <Compile Include="Coordinate.cs" />
     <Compile Include="CelestialObject.cs" />
     <Compile Include="DestinationTime.cs" />
-    <Compile Include="Driver.cs" />
+    <Compile Include="RadioTelescope.cs" />
     <Compile Include="Command.cs" />
-    <Compile Include="Organizer.cs" />
+    <Compile Include="ControlRoom.cs" />
     <Compile Include="Home.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -71,6 +74,7 @@
     <Compile Include="References.cs" />
     <Compile Include="RFData.cs" />
     <Compile Include="Scheduler.cs" />
+    <Compile Include="SpectraCyber.cs" />
     <Compile Include="Trajectory.cs" />
     <Compile Include="CommandHandler.cs" />
     <Compile Include="User.cs" />
@@ -87,7 +91,10 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="packages.config" />
+    <None Include="Config\log4net.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Config\packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -99,7 +106,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="Config\App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

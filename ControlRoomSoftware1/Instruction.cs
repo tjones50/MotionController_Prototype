@@ -168,7 +168,7 @@ namespace ControlRoomSoftware1
             // change in azimuth to be that, and change in elevation is 0
             double cumulativeAZ = dAZ;
             double cumulativeEL = 0;
-            double cumulativeTime = startTimeSeconds + (cumulativeAZ / References.MAX_VEL_AZ);
+            double cumulativeTime = startTimeSeconds + (cumulativeAZ / TrajectoryReferences.MAX_VEL_AZ);
 
             // Add the first discrete command
             cmdList.Add(new Command(
@@ -182,7 +182,7 @@ namespace ControlRoomSoftware1
             {
                 // account for the next drop in elevation
                 cumulativeEL += SCAN_DROP_DEGREES;
-                cumulativeTime += (SCAN_DROP_DEGREES / References.MAX_VEL_EL);
+                cumulativeTime += (SCAN_DROP_DEGREES / TrajectoryReferences.MAX_VEL_EL);
 
                 cmdList.Add(new Command(
                     cumulativeTime,
@@ -192,7 +192,7 @@ namespace ControlRoomSoftware1
 
                 // account for the next move right in azimuth
                 cumulativeAZ = 0;
-                cumulativeTime += (dAZ / References.MAX_VEL_AZ);
+                cumulativeTime += (dAZ / TrajectoryReferences.MAX_VEL_AZ);
 
                 cmdList.Add(new Command(
                     cumulativeTime,
@@ -202,7 +202,7 @@ namespace ControlRoomSoftware1
 
                 // account for the next move drop in elevation
                 cumulativeEL += SCAN_DROP_DEGREES;
-                cumulativeTime += (SCAN_DROP_DEGREES / References.MAX_VEL_EL);
+                cumulativeTime += (SCAN_DROP_DEGREES / TrajectoryReferences.MAX_VEL_EL);
 
                 cmdList.Add(new Command(
                     cumulativeTime,
@@ -212,7 +212,7 @@ namespace ControlRoomSoftware1
 
                 // account for the next move left in azimuth
                 cumulativeAZ = dAZ;
-                cumulativeTime += (dAZ / References.MAX_VEL_AZ);
+                cumulativeTime += (dAZ / TrajectoryReferences.MAX_VEL_AZ);
 
                 cmdList.Add(new Command(
                     cumulativeTime,
@@ -225,7 +225,7 @@ namespace ControlRoomSoftware1
             // specified, add on that extra last bit as one more command
             if (cumulativeEL != dEL)
             {
-                cumulativeTime += ((dEL - cumulativeEL) * References.MAX_VEL_EL);
+                cumulativeTime += ((dEL - cumulativeEL) * TrajectoryReferences.MAX_VEL_EL);
                 cumulativeEL = dEL;
 
                 cmdList.Add(new Command(

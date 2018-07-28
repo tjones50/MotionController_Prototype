@@ -8,27 +8,39 @@ using System.Threading.Tasks;
 
 namespace ControlRoomSoftware1
 {
-    public abstract class Driver
+    public enum RadioTelescopeEnum
     {
+        Unspecified,
+        Simulator,
+        Prototype,
+        Unity,
+        Actual
+    }
+
+    public abstract class RadioTelescope
+    {
+        public RadioTelescopeEnum radioTelescopeType;
+
         abstract public void Move(Velocity velocity); // change velocity and wait for it to complete
         abstract public Coordinate GetPosition(); // return the current positon of the telescope
         abstract public Velocity GetVelocity(); // return the current velocity of the telescope
     }
 
-    class SimulatorDriver : Driver
+    public class SimulatorRadioTelescope : RadioTelescope
     {
-        Coordinate currentPosition;
-        Velocity currentVelocity;
-        DateTime lastUpdate;
+        private Coordinate currentPosition;
+        private Velocity currentVelocity;
+        private DateTime lastUpdate;
 
-        public SimulatorDriver()
+        public SimulatorRadioTelescope()
         {
+            radioTelescopeType = RadioTelescopeEnum.Simulator;
             currentPosition = new Coordinate(0, 0);
             currentVelocity = new Velocity(0, 0);
             lastUpdate = DateTime.Now;
         }
 
-        public SimulatorDriver(Coordinate setPosition, Velocity setVelocity)
+        public SimulatorRadioTelescope(Coordinate setPosition, Velocity setVelocity)
         {
             currentPosition = setPosition;
             currentVelocity = setVelocity;
@@ -57,7 +69,7 @@ namespace ControlRoomSoftware1
         }
     }
 
-    public class MotorDriver : Driver
+    public class PrototypeRadioTelescope : RadioTelescope
     {
 		static private SerialPort port;
 
@@ -65,6 +77,12 @@ namespace ControlRoomSoftware1
 		Coordinate currentPosition;
 		Velocity currentVelocity;
 		DateTime lastUpdate;
+
+        public PrototypeRadioTelescope()
+        {
+            radioTelescopeType = RadioTelescopeEnum.Prototype;
+            StartConnection("COM3", 9600);
+        }
 
 		public override Coordinate GetPosition()
         {
@@ -137,10 +155,28 @@ namespace ControlRoomSoftware1
 			{
 				throw error;
 			}
-	}
-}
+	    }
+    }
 
-    public class UnityDriver : Driver
+    public class UnityRadioTelescope : RadioTelescope
+    {
+        public override Coordinate GetPosition()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Velocity GetVelocity()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Move(Velocity velocity)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class ActualRadioTelescope : RadioTelescope
     {
         public override Coordinate GetPosition()
         {

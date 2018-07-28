@@ -83,7 +83,7 @@ namespace ControlRoomSoftware1
 
             // Calculate the important time segments
             // TODO: change this to not only account for best-case scenario
-            double t1 = peakAcceleration / References.SYSTEM_JERK;
+            double t1 = peakAcceleration / TrajectoryReferences.SYSTEM_JERK;
             double t2 = peakVelocity / peakAcceleration;
             
             double t4;
@@ -304,7 +304,7 @@ namespace ControlRoomSoftware1
         {
             double vn = (xf - xi) / et;
 
-            if (Math.Abs(vn - vi) <= References.STEP_TRAJECTORY_VELOCITY_CHANGE_THRESHOLD)
+            if (Math.Abs(vn - vi) <= TrajectoryReferences.STEP_TRAJECTORY_VELOCITY_CHANGE_THRESHOLD)
             {
                 return new StepTrajectory(xi, xf, et);
             }
