@@ -29,11 +29,11 @@ namespace ControlRoomSoftware1
             // Generate 10 dummy appointments for testing
             for (int i = 1; i < 10; i++)
             {
-                SubmitAppointment(RadioTelescopeEnum.Simulator,
+                SubmitAppointment(radioTelescopeToAdd.radioTelescopeType,
                     new ActionAppointment(
-                        DateTime.Now.AddDays(i),
-                        DateTime.Now.AddDays(i).AddHours(2),
-                        new User(0, UserLevelEnum.Admin),
+                        DateTime.Now.AddDays(i).AddHours(i),
+                        DateTime.Now.AddDays(i).AddHours(2+i),
+                        new User(0,"Kerry", UserLevelEnum.Admin),
                         new List<Instruction>()
                         )
                     );
@@ -122,6 +122,19 @@ namespace ControlRoomSoftware1
                 log.Error(e.Message);
                 throw e;
             } 
+        }
+
+        internal List<Appointment> GetAppointmentsFromDay(RadioTelescopeEnum targetTelescopeType, DateTime day)
+        {
+            List<Appointment> appointmentsFromDay = new List<Appointment>();
+            foreach (var appointment in GetAppointmentQueue(targetTelescopeType))
+            {
+                if (appointment.StartTime.Date.Equals(day.Date))
+                {
+                    appointmentsFromDay.Add(appointment);
+                }
+            }
+            return appointmentsFromDay;
         }
 
         public Coordinate GetPosition(RadioTelescopeEnum targetTelescopeType)
