@@ -60,8 +60,14 @@ namespace ControlRoomSoftware1
         private void WindowUpdateTimerHandler(object sender, EventArgs e)
         {
             // Update Graph
-            TelescopePositionGraph.Series[0].Points[0].XValue = controlRoom.GetPosition(RadioTelescopeEnum.Simulator).azimuth;
-            TelescopePositionGraph.Series[0].Points[0].YValues[0] = controlRoom.GetPosition(RadioTelescopeEnum.Simulator).elevation;
+            double currentAz = controlRoom.GetPosition(RadioTelescopeEnum.Simulator).azimuth;
+            double currentEL = controlRoom.GetPosition(RadioTelescopeEnum.Simulator).elevation;
+            TelescopePositionGraph.Series[0].Points[0].XValue = currentAz;
+            TelescopePositionGraph.Series[0].Points[0].YValues[0] = currentEL;
+
+            // Update Labels
+            CurrentAzLabel.Text = "Azimuth (deg): " + Math.Round(currentAz).ToString();
+            CurrentElLabel.Text = "Elevation (deg): " + Math.Round(currentEL).ToString();
         }
 
         private void CheckRadioTelescopeType()
@@ -165,7 +171,8 @@ namespace ControlRoomSoftware1
                 {
                     // Submit a TrackingInstruction
                     CelestialObject celestialObject = getCelestialObjectInput();
-                    TrackInstruction inputInstruction = new TrackInstruction(celestialObject, arrivalTime);
+                    //TrackCelestialObjectInstruction inputInstruction = new TrackCelestialObjectInstruction(celestialObject, arrivalTime);
+                    SlewCelestialObjectInstruction inputInstruction = new SlewCelestialObjectInstruction(celestialObject, arrivalTime);
                     controlRoom.SubmitInstruction(RadioTelescopeEnum.Simulator, inputInstruction);
                 }
                 catch (Exception error)

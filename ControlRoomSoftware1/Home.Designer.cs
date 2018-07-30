@@ -53,6 +53,8 @@ namespace ControlRoomSoftware1
             this.RadioTelescopeTypeBox = new System.Windows.Forms.GroupBox();
             this.PrototypeRadioTelescopeButton = new System.Windows.Forms.RadioButton();
             this.SimulatorRadioTelescopeButton = new System.Windows.Forms.RadioButton();
+            this.CurrentElLabel = new System.Windows.Forms.Label();
+            this.CurrentAzLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.IntervalInput)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.AZPositionInput)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ELPositionInput)).BeginInit();
@@ -91,7 +93,6 @@ namespace ControlRoomSoftware1
             // 
             // CelesitialDropDown
             // 
-            this.CelesitialDropDown.Enabled = false;
             this.CelesitialDropDown.FormattingEnabled = true;
             this.CelesitialDropDown.Items.AddRange(new object[] {
             "Sun",
@@ -241,7 +242,7 @@ namespace ControlRoomSoftware1
             chartArea1.AxisY.MajorTickMark.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
             chartArea1.AxisY.MajorTickMark.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
             chartArea1.AxisY.Maximum = 90D;
-            chartArea1.AxisY.Minimum = 0D;
+            chartArea1.AxisY.Minimum = -90D;
             chartArea1.AxisY.MinorTickMark.Enabled = true;
             chartArea1.AxisY.Title = "Elevation";
             chartArea1.Name = "ChartArea1";
@@ -315,11 +316,31 @@ namespace ControlRoomSoftware1
             this.SimulatorRadioTelescopeButton.UseVisualStyleBackColor = true;
             this.SimulatorRadioTelescopeButton.CheckedChanged += new System.EventHandler(this.SimulatorRadioTelescopeButton_CheckedChanged);
             // 
+            // CurrentElLabel
+            // 
+            this.CurrentElLabel.AutoSize = true;
+            this.CurrentElLabel.Location = new System.Drawing.Point(644, 177);
+            this.CurrentElLabel.Name = "CurrentElLabel";
+            this.CurrentElLabel.Size = new System.Drawing.Size(108, 17);
+            this.CurrentElLabel.TabIndex = 43;
+            this.CurrentElLabel.Text = "Elevation (deg):";
+            // 
+            // CurrentAzLabel
+            // 
+            this.CurrentAzLabel.AutoSize = true;
+            this.CurrentAzLabel.Location = new System.Drawing.Point(644, 239);
+            this.CurrentAzLabel.Name = "CurrentAzLabel";
+            this.CurrentAzLabel.Size = new System.Drawing.Size(100, 17);
+            this.CurrentAzLabel.TabIndex = 44;
+            this.CurrentAzLabel.Text = "Azimuth (deg):";
+            // 
             // Home
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1439, 759);
+            this.Controls.Add(this.CurrentAzLabel);
+            this.Controls.Add(this.CurrentElLabel);
             this.Controls.Add(this.RadioTelescopeTypeBox);
             this.Controls.Add(this.CelestialObjectLabel);
             this.Controls.Add(this.ErrorLabel);
@@ -375,6 +396,8 @@ namespace ControlRoomSoftware1
         private System.Windows.Forms.GroupBox RadioTelescopeTypeBox;
         private System.Windows.Forms.RadioButton PrototypeRadioTelescopeButton;
         private System.Windows.Forms.RadioButton SimulatorRadioTelescopeButton;
+        private System.Windows.Forms.Label CurrentElLabel;
+        private System.Windows.Forms.Label CurrentAzLabel;
     }
 }
 
