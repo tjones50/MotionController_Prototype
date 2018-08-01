@@ -79,15 +79,19 @@ namespace ControlRoomSoftware1
             return Math.Sqrt((dAZ * dAZ) + (dEL * dEL));
         }
 
-        public override List<Command> CoordinatesAtTimes(DateTime time, Coordinate coords)
+        public override List<Command> CoordinatesAtTimes(DateTime time, Coordinate startCoords)
         {
-            setStartTimeAndCoordinates(time, coords);
+            // FIXME: what exactly does this do?
+            setStartTimeAndCoordinates(time, startCoords);
 
+            // Create a new command list
             List<Command> cmdList = new List<Command>();
 
-            double startTimeSeconds = (double)(startTime.Ticks / 10000000);
-            decimal tTotal = (decimal)destinationTime.UntilEndTimeInSeconds(startTime);
+            // convert the start time and time interval to seconds
+            double startTimeSeconds = (startTime.Ticks / 10000000);
+            double tTotal = destinationTime.UntilEndTimeInSeconds(startTime);
 
+            // Create a new command to slew to the correct position
             cmdList.Add(new Command(
                 startTimeSeconds,
                 destinationTime.EndTimeAsSeconds(startTimeSeconds),
@@ -96,25 +100,78 @@ namespace ControlRoomSoftware1
 
             Console.WriteLine("Time: " + startTimeSeconds + " : " + cmdList[0].DifferenceInSeconds().ToString());
 
+            // Return the list of commands
             return cmdList;
         }
     }
 
-    public class TrackInstruction : Instruction
+    public class SlewCelestialObjectInstruction : Instruction
     {
         CelestialObject celestialObject;
 
-        public TrackInstruction(CelestialObject newcelestialObject, DateTime destTime) : base(newcelestialObject.GetPosition(destTime), destTime)
+        public SlewCelestialObjectInstruction(CelestialObject newcelestialObject, DateTime destTime) : base(newcelestialObject.GetPosition(destTime), destTime)
         {
             celestialObject = newcelestialObject;
         }
 
-        public override List<Command> CoordinatesAtTimes(DateTime time, Coordinate coords)
+        public override List<Command> CoordinatesAtTimes(DateTime time, Coordinate startCoords)
         {
+            // Create a new command list
             List<Command> cmdList = new List<Command>();
 
-            // TODO
+            // convert the start time and time interval to seconds
+            double startTimeSeconds = (time.Ticks / 10000000);
+            double tTotal = destinationTime.UntilEndTimeInSeconds(startTime);
 
+            // Create a new command to slew to the currrent position of the celestial object
+            cmdList.Add(new Command(
+                startTimeSeconds,
+                destinationTime.EndTimeAsSeconds(startTimeSeconds),
+                celestialObject.GetPosition(time)
+            ));
+
+            Console.WriteLine("Time: " + startTimeSeconds + " : " + cmdList[0].DifferenceInSeconds().ToString());
+
+            // Return the list of commands
+            return cmdList;
+        }
+
+        public override double PathLength()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class TrackCelestialObjectInstruction : Instruction
+    {
+        CelestialObject celestialObject;
+
+        public TrackCelestialObjectInstruction(CelestialObject newcelestialObject, DateTime destTime) : base(newcelestialObject.GetPosition(destTime), destTime)
+        {
+            celestialObject = newcelestialObject;
+        }
+
+        // FIXME
+        public override List<Command> CoordinatesAtTimes(DateTime time, Coordinate startCoords)
+        {
+            // Create a new command list
+            List<Command> cmdList = new List<Command>();
+
+            // convert the start time and time interval to seconds
+            double timeInterval = destinationTime.endTime.Subtract(time).TotalSeconds;
+            double startTimeSeconds = (time.Ticks / 10000000);
+
+            // At each time increment during the time interval, add a command to move to the corrent position (BUGGY)
+            for (double i = T_MOVE; i < timeInterval; i+= T_MOVE)
+            {
+                cmdList.Add(new Command(
+                    startTimeSeconds,
+                    (startTimeSeconds+i),
+                    celestialObject.GetPosition(time.AddSeconds(i))
+                ));
+            }
+
+            // Return the list of commands
             return cmdList;
         }
 
