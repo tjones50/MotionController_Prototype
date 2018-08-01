@@ -16,7 +16,7 @@ namespace ControlRoomSoftware1
         public ControlRoom()
         {
             // Create SpecraCyber and set it up
-            spectraCyber = new SpectraCyber();
+            spectraCyber = new SpectraCyber("COM1");
 
             // Initialize a list of schedulers
             schedulers = new List<Scheduler>();

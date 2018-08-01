@@ -1,21 +1,136 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 
 namespace ControlRoomSoftware1
 {
-    class SpectraCyber
+    // This enum describes the two modes that the SpectraCyber can be in at all times
+    public enum SpectraCyberModeType
     {
-        // Constructer
+        Continuum,
+        Spectral
+    }
+
+    // This class and its members encapsulates all interaction with the SpectraCyber
+    public class SpectraCyber
+    {
+        //
+        // Class members
+        //
+
+        // Serial communication handler
+        private SpectraCyberCommunication comms;
+
+        // Current mode
+        private SpectraCyberModeType currentMode;
+
+        //
+        // Class methods
+        //
+
+        // Constructor
+        public SpectraCyber(string commPort)
+        {
+            // Initialize serial port communication
+            comms = new SpectraCyberCommunication(commPort);
+
+            // Default currentMode to Continuum
+            currentMode = SpectraCyberModeType.Continuum;
+
+            // Init communication, as well as any other necessary bringup procedure
+            BringUnitOnline();
+
+            //
+            // Everything below here is for testing
+            //
+
+            // Test scanning once
+            SpectraCyberResponse response = ScanOnce();
+            Console.WriteLine("Testing ScanOnce... Response: [" + response.RequestSuccessful + "] [" + response.Valid + "] [" + response.HexData + "] [" + response.DecimalData + "]");
+
+            // Test scanning repeatedly over a period of 1.5 seconds
+            StartScan();
+            Thread.Sleep(1500);
+            List<SpectraCyberResponse> responses = StopScan();
+            Console.WriteLine("Testing StartScan and StopScan... Captured " + responses.Count + " responses.");
+            foreach (SpectraCyberResponse r in responses)
+                Console.WriteLine("\t[" + r.RequestSuccessful + "] [" + r.Valid + "] [" + r.HexData + "] [" + r.DecimalData + "]");
+        }
 
         // Configuration
+        public void BringUnitOnline()
+        {
+            // Attempt to open serial communication and start the processing thread
+            if (comms.BringUp())
+            {
+                Console.WriteLine("Connected to unit like a boss!");
+            }
+            else
+            {
+                Console.WriteLine("ERROR connecting to unit.");
+            }
+        }
 
-        // Start Scan (Arg: start, stop)
+        public void BringUnitOffline()
+        {
+            // Simply disconnect serial communication and kill the processing thread
+            comms.BringDown();
+        }
 
-        // Stop Scan (return scan info)
+        public SpectraCyberResponse SendSpectraCyberRequest(SpectraCyberRequest request)
+        {
+            // Simply send the command and return that response
+            return comms.SendCommand(request);
+        }
 
-        // Send Command
+        // Scan once, based on current mode
+        public SpectraCyberResponse ScanOnce()
+        {
+            return SendSpectraCyberRequest(CurrentRequest(true, 4));
+        }
+
+        // Start scan (Arg: start, stop)
+        // TODO: implement a start and stop time procedure
+        public void StartScan()
+        {
+            comms.SetProcessingRequest(CurrentRequest(true, 4));
+            comms.ClearResponseList();
+            comms.SetProcessingThreadActivity(true);
+        }
+
+        // Stop scan (return scan info)
+        public List<SpectraCyberResponse> StopScan()
+        {
+            comms.SetProcessingThreadActivity(false);
+            return comms.GetResponseList();
+        }
+
+        // Generate a SpectraCyberRequest based on currentMode
+        public SpectraCyberRequest CurrentRequest(bool waitForReply, int numChars)
+        {
+            // Based on the current mode, create the proper command string
+            string commandString;
+
+            if (currentMode == SpectraCyberModeType.Continuum)
+            {
+                commandString = "!D000";
+            }
+            else if (currentMode == SpectraCyberModeType.Spectral)
+            {
+                commandString = "!D001";
+            }
+            else
+            {
+                // Unkown case, default to Continuum
+                commandString = "!D000";
+            }
+
+            return new SpectraCyberRequest(
+                SpectraCyberCommandType.DataRequest,
+                commandString,
+                waitForReply,
+                numChars
+            );
+        }
     }
 }

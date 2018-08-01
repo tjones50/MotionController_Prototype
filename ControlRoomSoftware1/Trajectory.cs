@@ -96,7 +96,7 @@ namespace ControlRoomSoftware1
             {
                 // Fill up the remainder of our time with the constant velocity
                 // TODO: verify this math is correct with simulation
-                t4 = elapsedTime - (4 * t1) - (2 * t2);
+                t4 = elapsedTime - (2 * t1) - (2 * t2);
             }
 
             // Discretize the times, guarantee our maximum values aren't met
@@ -115,7 +115,7 @@ namespace ControlRoomSoftware1
             t[6] = disc_t4 + disc_t1 + disc_t2;
 
             // Override the peak values to reflect the discretization, guarantees
-            // that it will be below the specified maxmimum values
+            // that it will be below the specified maximum values
             discJerk = peakAcceleration / disc_t1;
             discAcceleration = peakVelocity / disc_t2;
             discVelocity = distanceTraveled / disc_t4;
@@ -189,75 +189,77 @@ namespace ControlRoomSoftware1
             {
                 // Sequence is in its constant bringup portion
                 x = Kinematics.PositionAt(
-                    initialPosition + intermediatePos[0],
-                    initialVelocity + intermediateVel[0],
+                    intermediatePos[0],
+                    intermediateVel[0],
                     peakAcceleration,
                     0,
-                    dt
+                    dt - t[0]
                 );
             }
             else if (dt < t[2])
             {
                 // Sequence is in its decelerating bringup portion
                 x = Kinematics.PositionAt(
-                    initialPosition + intermediatePos[1],
-                    initialVelocity + intermediateVel[1],
+                    intermediatePos[1],
+                    intermediateVel[1],
                     peakAcceleration,
                     -discJerk,
-                    dt
+                    dt - t[1]
                 );
             }
             else if (dt < t[3])
             {
                 // Sequence is in its constant velocity portion
                 x = Kinematics.PositionAt(
-                    initialPosition + intermediatePos[2],
-                    initialVelocity + intermediateVel[2],
+                    intermediatePos[2],
+                    intermediateVel[2],
                     0,
                     0,
-                    dt
+                    dt - t[2]
                 );
             }
             else if (dt < t[4])
             {
                 // Sequence is in its decelerating bringdown portion
                 x = Kinematics.PositionAt(
-                    initialPosition + intermediatePos[3],
-                    initialVelocity + intermediateVel[3],
+                    intermediatePos[3],
+                    intermediateVel[3],
                     0,
                     -discJerk,
-                    dt
+                    dt - t[3]
                 );
             }
             else if (dt < t[5])
             {
                 // Sequence is in its constant bringdown portion
                 x = Kinematics.PositionAt(
-                    initialPosition + intermediatePos[4],
-                    initialVelocity + intermediateVel[4],
+                    intermediatePos[4],
+                    intermediateVel[4],
                     -peakAcceleration,
                     0,
-                    dt
+                    dt - t[4]
                 );
             }
             else if (dt < t[6])
             {
                 // Sequence is in its accelerating bringdown portion
                 x = Kinematics.PositionAt(
-                    initialPosition + intermediatePos[5],
-                    initialVelocity + intermediateVel[5],
+                    intermediatePos[5],
+                    intermediateVel[5],
                     -peakAcceleration,
                     discJerk,
-                    dt
+                    dt - t[5]
                 );
             }
             else
             {
                 // Sequence is past its objective time
-                x = objectivePositon;
+                x = objectivePositon - initialPosition;
             }
 
-            return isNegative ? -x : x;
+            x =  isNegative ? -Math.Abs(x) : x;
+
+            return x + initialPosition;
         }
     }
 

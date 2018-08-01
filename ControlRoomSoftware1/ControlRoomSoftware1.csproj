@@ -75,6 +75,8 @@
     <Compile Include="RFData.cs" />
     <Compile Include="Scheduler.cs" />
     <Compile Include="SpectraCyber.cs" />
+    <Compile Include="SpectraCyberCommand.cs" />
+    <Compile Include="SpectraCyberCommunication.cs" />
     <Compile Include="Trajectory.cs" />
     <Compile Include="CommandHandler.cs" />
     <Compile Include="User.cs" />
@@ -95,6 +97,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Config\packages.config" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
