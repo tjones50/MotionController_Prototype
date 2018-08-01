@@ -19,6 +19,7 @@ namespace ControlRoomSoftware1
 
     public abstract class RadioTelescope
     {
+        public bool online;
         public RadioTelescopeEnum radioTelescopeType;
 
         abstract public void Move(Velocity velocity); // change velocity and wait for it to complete

@@ -27,16 +27,19 @@ namespace ControlRoomSoftware1
             schedulers.Add(new Scheduler(radioTelescopeToAdd));
 
             // Generate 10 dummy appointments for testing
-            for (int i = 1; i < 10; i++)
+            for (int i = 1; i < 15; i++)
             {
-                SubmitAppointment(radioTelescopeToAdd.radioTelescopeType,
+                for (int j = 1; j < 15; j++)
+                {
+                    SubmitAppointment(radioTelescopeToAdd.radioTelescopeType,
                     new ActionAppointment(
-                        DateTime.Now.AddDays(i).AddHours(i),
-                        DateTime.Now.AddDays(i).AddHours(2+i),
-                        new User(0,"Kerry", UserLevelEnum.Admin),
+                        DateTime.Now.AddDays(i).AddHours(j),
+                        DateTime.Now.AddDays(i).AddHours(j+1),
+                        new User(0, "Kerry", UserLevelEnum.Admin),
                         new List<Instruction>()
                         )
                     );
+                }
             }
         }
 
