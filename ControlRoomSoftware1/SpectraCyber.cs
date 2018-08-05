@@ -7,6 +7,7 @@ namespace ControlRoomSoftware1
     // This enum describes the two modes that the SpectraCyber can be in at all times
     public enum SpectraCyberModeType
     {
+        Unspecified,
         Continuum,
         Spectral
     }
