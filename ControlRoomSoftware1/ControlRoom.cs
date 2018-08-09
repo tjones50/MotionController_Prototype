@@ -11,12 +11,12 @@ namespace ControlRoomSoftware1
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public List<Scheduler> schedulers;
-        public SpectraCyber spectraCyber;
+        public Receiver receiver;
 
         public ControlRoom()
         {
             // Create SpecraCyber and set it up
-            spectraCyber = new SpectraCyber("COM1");
+            receiver = new SpectraCyber("COM1");
 
             // Initialize a list of schedulers
             schedulers = new List<Scheduler>();
@@ -25,22 +25,6 @@ namespace ControlRoomSoftware1
         public void AddRadioTelescope(RadioTelescope radioTelescopeToAdd)
         {
             schedulers.Add(new Scheduler(radioTelescopeToAdd));
-
-            // Generate 10 dummy appointments for testing
-            for (int i = 1; i < 15; i++)
-            {
-                for (int j = 1; j < 15; j++)
-                {
-                    SubmitAppointment(radioTelescopeToAdd.radioTelescopeType,
-                    new ActionAppointment(
-                        DateTime.Now.AddDays(i).AddHours(j),
-                        DateTime.Now.AddDays(i).AddHours(j+1),
-                        new User(0, "Kerry", UserLevelEnum.Admin),
-                        new List<Instruction>()
-                        )
-                    );
-                }
-            }
         }
 
         public bool DoesRadioTelescopeExist(RadioTelescopeEnum radioTelescopeType)
@@ -127,7 +111,7 @@ namespace ControlRoomSoftware1
             } 
         }
 
-        internal List<Appointment> GetAppointmentsFromDay(RadioTelescopeEnum targetTelescopeType, DateTime day)
+        public List<Appointment> GetAppointmentsFromDay(RadioTelescopeEnum targetTelescopeType, DateTime day)
         {
             List<Appointment> appointmentsFromDay = new List<Appointment>();
             foreach (var appointment in GetAppointmentQueue(targetTelescopeType))
@@ -138,6 +122,20 @@ namespace ControlRoomSoftware1
                 }
             }
             return appointmentsFromDay;
+        }
+
+        internal string ReceiverScan()
+        {
+            
+            RecieverResponse response = receiver.ScanOnce();
+            if(response.RequestSuccessful && response.Valid)
+            {
+                return response.DecimalData.ToString();
+            }
+            else
+            {
+                return "Not Connected";
+            }
         }
 
         public Coordinate GetPosition(RadioTelescopeEnum targetTelescopeType)

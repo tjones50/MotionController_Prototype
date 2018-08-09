@@ -13,7 +13,7 @@ namespace ControlRoomSoftware1
     }
 
     // This class and its members encapsulates all interaction with the SpectraCyber
-    public class SpectraCyber
+    public class SpectraCyber : Receiver
     {
         //
         // Class members
@@ -46,20 +46,20 @@ namespace ControlRoomSoftware1
             //
 
             // Test scanning once
-            SpectraCyberResponse response = ScanOnce();
+            RecieverResponse response = ScanOnce();
             Console.WriteLine("Testing ScanOnce... Response: [" + response.RequestSuccessful + "] [" + response.Valid + "] [" + response.HexData + "] [" + response.DecimalData + "]");
 
             // Test scanning repeatedly over a period of 1.5 seconds
             StartScan();
             Thread.Sleep(1500);
-            List<SpectraCyberResponse> responses = StopScan();
+            List<RecieverResponse> responses = StopScan();
             Console.WriteLine("Testing StartScan and StopScan... Captured " + responses.Count + " responses.");
             foreach (SpectraCyberResponse r in responses)
                 Console.WriteLine("\t[" + r.RequestSuccessful + "] [" + r.Valid + "] [" + r.HexData + "] [" + r.DecimalData + "]");
         }
 
         // Configuration
-        public void BringUnitOnline()
+        public override void BringUnitOnline()
         {
             // Attempt to open serial communication and start the processing thread
             if (comms.BringUp())
@@ -72,7 +72,7 @@ namespace ControlRoomSoftware1
             }
         }
 
-        public void BringUnitOffline()
+        public override void BringUnitOffline()
         {
             // Simply disconnect serial communication and kill the processing thread
             comms.BringDown();
@@ -85,14 +85,14 @@ namespace ControlRoomSoftware1
         }
 
         // Scan once, based on current mode
-        public SpectraCyberResponse ScanOnce()
+        public override RecieverResponse ScanOnce()
         {
             return SendSpectraCyberRequest(CurrentRequest(true, 4));
         }
 
         // Start scan (Arg: start, stop)
         // TODO: implement a start and stop time procedure
-        public void StartScan()
+        public override void StartScan()
         {
             comms.SetProcessingRequest(CurrentRequest(true, 4));
             comms.ClearResponseList();
@@ -100,7 +100,7 @@ namespace ControlRoomSoftware1
         }
 
         // Stop scan (return scan info)
-        public List<SpectraCyberResponse> StopScan()
+        public override List<RecieverResponse> StopScan()
         {
             comms.SetProcessingThreadActivity(false);
             return comms.GetResponseList();

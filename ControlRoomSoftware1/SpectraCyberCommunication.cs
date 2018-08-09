@@ -17,7 +17,7 @@ namespace ControlRoomSoftware1
         private bool processingThreadActive;
         private Thread processingThread;
         private SpectraCyberRequest processingRequest;
-        private List<SpectraCyberResponse> responseList;
+        private List<RecieverResponse> responseList;
         private bool killProcessingThread;
 
         public SpectraCyberCommunication(string cp)
@@ -28,7 +28,7 @@ namespace ControlRoomSoftware1
             // Initialize necessary processing thread members
             processingThreadActive = false;
             processingRequest = SpectraCyberRequest.GetNewEmpty();
-            responseList = new List<SpectraCyberResponse>();
+            responseList = new List<RecieverResponse>();
             killProcessingThread = false;
         }
 
@@ -275,7 +275,7 @@ namespace ControlRoomSoftware1
         }
 
         // Get the list of responses captured in the processing thread
-        public List<SpectraCyberResponse> GetResponseList()
+        public List<RecieverResponse> GetResponseList()
         {
             return responseList;
         }

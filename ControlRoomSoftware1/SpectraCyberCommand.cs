@@ -123,7 +123,7 @@ namespace ControlRoomSoftware1
     }
 
     // This class acts as a wrapper of a response to a command published to the SpectraCyber
-    public class SpectraCyberResponse
+    public class SpectraCyberResponse : RecieverResponse
     {
         public SpectraCyberResponse()
         {

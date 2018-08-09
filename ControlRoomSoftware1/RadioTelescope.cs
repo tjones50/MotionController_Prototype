@@ -82,7 +82,15 @@ namespace ControlRoomSoftware1
         public PrototypeRadioTelescope()
         {
             radioTelescopeType = RadioTelescopeEnum.Prototype;
-            StartConnection("COM3", 9600);
+            try
+            {
+                StartConnection("COM3", 9600);
+            }
+            catch (Exception StartConnectionError)
+            {
+                throw StartConnectionError;
+            }
+                
         }
 
 		public override Coordinate GetPosition()

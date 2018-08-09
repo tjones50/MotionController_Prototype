@@ -28,10 +28,10 @@ namespace ControlRoomSoftware1
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint1 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 90D);
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint4 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 90D);
             this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
             this.ApplicationList = new System.Windows.Forms.ListView();
             this.TrackInstructionButton = new System.Windows.Forms.Button();
@@ -55,6 +55,13 @@ namespace ControlRoomSoftware1
             this.SimulatorRadioTelescopeButton = new System.Windows.Forms.RadioButton();
             this.CurrentElLabel = new System.Windows.Forms.Label();
             this.CurrentAzLabel = new System.Windows.Forms.Label();
+            this.ReceiverScanTextBox = new System.Windows.Forms.TextBox();
+            this.ReceiverScanButton = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.AppointmentStartDateTime = new System.Windows.Forms.DateTimePicker();
+            this.AppointmentEndDateTime = new System.Windows.Forms.DateTimePicker();
+            this.SubmitAppointmentButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.IntervalInput)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.AZPositionInput)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ELPositionInput)).BeginInit();
@@ -64,7 +71,7 @@ namespace ControlRoomSoftware1
             // 
             // monthCalendar1
             // 
-            this.monthCalendar1.Location = new System.Drawing.Point(1128, 46);
+            this.monthCalendar1.Location = new System.Drawing.Point(1030, 29);
             this.monthCalendar1.Name = "monthCalendar1";
             this.monthCalendar1.TabIndex = 0;
             this.monthCalendar1.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.monthCalendar1_DateChanged);
@@ -73,9 +80,9 @@ namespace ControlRoomSoftware1
             // ApplicationList
             // 
             this.ApplicationList.AutoArrange = false;
-            this.ApplicationList.Location = new System.Drawing.Point(840, 46);
+            this.ApplicationList.Location = new System.Drawing.Point(747, 29);
             this.ApplicationList.Name = "ApplicationList";
-            this.ApplicationList.Size = new System.Drawing.Size(262, 207);
+            this.ApplicationList.Size = new System.Drawing.Size(262, 243);
             this.ApplicationList.TabIndex = 1;
             this.ApplicationList.UseCompatibleStateImageBehavior = false;
             this.ApplicationList.View = System.Windows.Forms.View.Tile;
@@ -83,7 +90,7 @@ namespace ControlRoomSoftware1
             // TrackInstructionButton
             // 
             this.TrackInstructionButton.Enabled = false;
-            this.TrackInstructionButton.Location = new System.Drawing.Point(644, 117);
+            this.TrackInstructionButton.Location = new System.Drawing.Point(199, 245);
             this.TrackInstructionButton.Name = "TrackInstructionButton";
             this.TrackInstructionButton.Size = new System.Drawing.Size(155, 27);
             this.TrackInstructionButton.TabIndex = 34;
@@ -97,7 +104,7 @@ namespace ControlRoomSoftware1
             this.CelesitialDropDown.Items.AddRange(new object[] {
             "Sun",
             "Moon"});
-            this.CelesitialDropDown.Location = new System.Drawing.Point(644, 58);
+            this.CelesitialDropDown.Location = new System.Drawing.Point(199, 204);
             this.CelesitialDropDown.Name = "CelesitialDropDown";
             this.CelesitialDropDown.Size = new System.Drawing.Size(155, 24);
             this.CelesitialDropDown.TabIndex = 33;
@@ -106,7 +113,7 @@ namespace ControlRoomSoftware1
             // IntervalInput
             // 
             this.IntervalInput.Enabled = false;
-            this.IntervalInput.Location = new System.Drawing.Point(277, 120);
+            this.IntervalInput.Location = new System.Drawing.Point(199, 96);
             this.IntervalInput.Maximum = new decimal(new int[] {
             86400,
             0,
@@ -120,7 +127,7 @@ namespace ControlRoomSoftware1
             // 
             this.IntervalLabel.AutoSize = true;
             this.IntervalLabel.Enabled = false;
-            this.IntervalLabel.Location = new System.Drawing.Point(274, 100);
+            this.IntervalLabel.Location = new System.Drawing.Point(196, 76);
             this.IntervalLabel.Name = "IntervalLabel";
             this.IntervalLabel.Size = new System.Drawing.Size(90, 17);
             this.IntervalLabel.TabIndex = 31;
@@ -128,7 +135,7 @@ namespace ControlRoomSoftware1
             // 
             // ToggleTimeIntervalButton
             // 
-            this.ToggleTimeIntervalButton.Location = new System.Drawing.Point(275, 177);
+            this.ToggleTimeIntervalButton.Location = new System.Drawing.Point(199, 130);
             this.ToggleTimeIntervalButton.Name = "ToggleTimeIntervalButton";
             this.ToggleTimeIntervalButton.Size = new System.Drawing.Size(149, 27);
             this.ToggleTimeIntervalButton.TabIndex = 30;
@@ -139,7 +146,7 @@ namespace ControlRoomSoftware1
             // ScanButton
             // 
             this.ScanButton.Enabled = false;
-            this.ScanButton.Location = new System.Drawing.Point(455, 239);
+            this.ScanButton.Location = new System.Drawing.Point(568, 91);
             this.ScanButton.Name = "ScanButton";
             this.ScanButton.Size = new System.Drawing.Size(155, 27);
             this.ScanButton.TabIndex = 29;
@@ -149,7 +156,7 @@ namespace ControlRoomSoftware1
             // 
             // SlewButton
             // 
-            this.SlewButton.Location = new System.Drawing.Point(455, 177);
+            this.SlewButton.Location = new System.Drawing.Point(568, 29);
             this.SlewButton.Name = "SlewButton";
             this.SlewButton.Size = new System.Drawing.Size(155, 27);
             this.SlewButton.TabIndex = 28;
@@ -159,7 +166,7 @@ namespace ControlRoomSoftware1
             // 
             // AZPositionInput
             // 
-            this.AZPositionInput.Location = new System.Drawing.Point(455, 120);
+            this.AZPositionInput.Location = new System.Drawing.Point(389, 96);
             this.AZPositionInput.Maximum = new decimal(new int[] {
             360,
             0,
@@ -171,7 +178,7 @@ namespace ControlRoomSoftware1
             // 
             // ELPositionInput
             // 
-            this.ELPositionInput.Location = new System.Drawing.Point(455, 60);
+            this.ELPositionInput.Location = new System.Drawing.Point(389, 39);
             this.ELPositionInput.Maximum = new decimal(new int[] {
             90,
             0,
@@ -185,7 +192,7 @@ namespace ControlRoomSoftware1
             // 
             this.ArrivalTimeInput.Checked = false;
             this.ArrivalTimeInput.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.ArrivalTimeInput.Location = new System.Drawing.Point(277, 60);
+            this.ArrivalTimeInput.Location = new System.Drawing.Point(199, 39);
             this.ArrivalTimeInput.Name = "ArrivalTimeInput";
             this.ArrivalTimeInput.Size = new System.Drawing.Size(149, 22);
             this.ArrivalTimeInput.TabIndex = 25;
@@ -193,7 +200,7 @@ namespace ControlRoomSoftware1
             // ArrivalTimeLabel
             // 
             this.ArrivalTimeLabel.AutoSize = true;
-            this.ArrivalTimeLabel.Location = new System.Drawing.Point(274, 40);
+            this.ArrivalTimeLabel.Location = new System.Drawing.Point(196, 19);
             this.ArrivalTimeLabel.Name = "ArrivalTimeLabel";
             this.ArrivalTimeLabel.Size = new System.Drawing.Size(83, 17);
             this.ArrivalTimeLabel.TabIndex = 24;
@@ -202,7 +209,7 @@ namespace ControlRoomSoftware1
             // AZPositionLabel
             // 
             this.AZPositionLabel.AutoSize = true;
-            this.AZPositionLabel.Location = new System.Drawing.Point(452, 100);
+            this.AZPositionLabel.Location = new System.Drawing.Point(386, 76);
             this.AZPositionLabel.Name = "AZPositionLabel";
             this.AZPositionLabel.Size = new System.Drawing.Size(150, 17);
             this.AZPositionLabel.TabIndex = 23;
@@ -211,7 +218,7 @@ namespace ControlRoomSoftware1
             // ELPositionLabel
             // 
             this.ELPositionLabel.AutoSize = true;
-            this.ELPositionLabel.Location = new System.Drawing.Point(452, 40);
+            this.ELPositionLabel.Location = new System.Drawing.Point(386, 19);
             this.ELPositionLabel.Name = "ELPositionLabel";
             this.ELPositionLabel.Size = new System.Drawing.Size(158, 17);
             this.ELPositionLabel.TabIndex = 22;
@@ -219,46 +226,47 @@ namespace ControlRoomSoftware1
             // 
             // TelescopePositionGraph
             // 
-            chartArea1.AxisX.IntervalAutoMode = System.Windows.Forms.DataVisualization.Charting.IntervalAutoMode.VariableCount;
-            chartArea1.AxisX.MajorGrid.Interval = 0D;
-            chartArea1.AxisX.MajorGrid.IntervalOffset = 0D;
-            chartArea1.AxisX.MajorGrid.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
-            chartArea1.AxisX.MajorGrid.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
-            chartArea1.AxisX.MajorTickMark.Interval = 0D;
-            chartArea1.AxisX.MajorTickMark.IntervalOffset = 0D;
-            chartArea1.AxisX.MajorTickMark.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
-            chartArea1.AxisX.MajorTickMark.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
-            chartArea1.AxisX.Maximum = 360D;
-            chartArea1.AxisX.Minimum = 0D;
-            chartArea1.AxisX.MinorTickMark.Enabled = true;
-            chartArea1.AxisX.Title = "Azimuth";
-            chartArea1.AxisY.IntervalAutoMode = System.Windows.Forms.DataVisualization.Charting.IntervalAutoMode.VariableCount;
-            chartArea1.AxisY.MajorGrid.Interval = 0D;
-            chartArea1.AxisY.MajorGrid.IntervalOffset = 0D;
-            chartArea1.AxisY.MajorGrid.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
-            chartArea1.AxisY.MajorGrid.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
-            chartArea1.AxisY.MajorTickMark.Interval = 0D;
-            chartArea1.AxisY.MajorTickMark.IntervalOffset = 0D;
-            chartArea1.AxisY.MajorTickMark.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
-            chartArea1.AxisY.MajorTickMark.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
-            chartArea1.AxisY.Maximum = 90D;
-            chartArea1.AxisY.Minimum = -90D;
-            chartArea1.AxisY.MinorTickMark.Enabled = true;
-            chartArea1.AxisY.Title = "Elevation";
-            chartArea1.Name = "ChartArea1";
-            this.TelescopePositionGraph.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.TelescopePositionGraph.Legends.Add(legend1);
-            this.TelescopePositionGraph.Location = new System.Drawing.Point(63, 302);
+            chartArea4.AxisX.IntervalAutoMode = System.Windows.Forms.DataVisualization.Charting.IntervalAutoMode.VariableCount;
+            chartArea4.AxisX.MajorGrid.Interval = 0D;
+            chartArea4.AxisX.MajorGrid.IntervalOffset = 0D;
+            chartArea4.AxisX.MajorGrid.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
+            chartArea4.AxisX.MajorGrid.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
+            chartArea4.AxisX.MajorTickMark.Interval = 0D;
+            chartArea4.AxisX.MajorTickMark.IntervalOffset = 0D;
+            chartArea4.AxisX.MajorTickMark.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
+            chartArea4.AxisX.MajorTickMark.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
+            chartArea4.AxisX.Maximum = 360D;
+            chartArea4.AxisX.Minimum = 0D;
+            chartArea4.AxisX.MinorTickMark.Enabled = true;
+            chartArea4.AxisX.Title = "Azimuth";
+            chartArea4.AxisY.IntervalAutoMode = System.Windows.Forms.DataVisualization.Charting.IntervalAutoMode.VariableCount;
+            chartArea4.AxisY.MajorGrid.Interval = 0D;
+            chartArea4.AxisY.MajorGrid.IntervalOffset = 0D;
+            chartArea4.AxisY.MajorGrid.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
+            chartArea4.AxisY.MajorGrid.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
+            chartArea4.AxisY.MajorTickMark.Interval = 0D;
+            chartArea4.AxisY.MajorTickMark.IntervalOffset = 0D;
+            chartArea4.AxisY.MajorTickMark.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
+            chartArea4.AxisY.MajorTickMark.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
+            chartArea4.AxisY.Maximum = 90D;
+            chartArea4.AxisY.Minimum = -90D;
+            chartArea4.AxisY.MinorTickMark.Enabled = true;
+            chartArea4.AxisY.Title = "Elevation";
+            chartArea4.Name = "ChartArea1";
+            this.TelescopePositionGraph.ChartAreas.Add(chartArea4);
+            legend4.Enabled = false;
+            legend4.Name = "Legend1";
+            this.TelescopePositionGraph.Legends.Add(legend4);
+            this.TelescopePositionGraph.Location = new System.Drawing.Point(12, 302);
             this.TelescopePositionGraph.Name = "TelescopePositionGraph";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-            series1.Legend = "Legend1";
-            series1.Name = "Telescope Position";
-            dataPoint1.AxisLabel = "";
-            series1.Points.Add(dataPoint1);
-            this.TelescopePositionGraph.Series.Add(series1);
-            this.TelescopePositionGraph.Size = new System.Drawing.Size(1325, 387);
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series4.Legend = "Legend1";
+            series4.Name = "Telescope Position";
+            dataPoint4.AxisLabel = "";
+            series4.Points.Add(dataPoint4);
+            this.TelescopePositionGraph.Series.Add(series4);
+            this.TelescopePositionGraph.Size = new System.Drawing.Size(1280, 387);
             this.TelescopePositionGraph.TabIndex = 37;
             this.TelescopePositionGraph.Text = "chart1";
             // 
@@ -266,15 +274,15 @@ namespace ControlRoomSoftware1
             // 
             this.ErrorLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ErrorLabel.ForeColor = System.Drawing.Color.Red;
-            this.ErrorLabel.Location = new System.Drawing.Point(63, 718);
+            this.ErrorLabel.Location = new System.Drawing.Point(12, 705);
             this.ErrorLabel.Name = "ErrorLabel";
-            this.ErrorLabel.Size = new System.Drawing.Size(1315, 22);
+            this.ErrorLabel.Size = new System.Drawing.Size(1283, 22);
             this.ErrorLabel.TabIndex = 38;
             // 
             // CelestialObjectLabel
             // 
             this.CelestialObjectLabel.AutoSize = true;
-            this.CelestialObjectLabel.Location = new System.Drawing.Point(641, 38);
+            this.CelestialObjectLabel.Location = new System.Drawing.Point(196, 184);
             this.CelestialObjectLabel.Name = "CelestialObjectLabel";
             this.CelestialObjectLabel.Size = new System.Drawing.Size(162, 17);
             this.CelestialObjectLabel.TabIndex = 41;
@@ -284,9 +292,9 @@ namespace ControlRoomSoftware1
             // 
             this.RadioTelescopeTypeBox.Controls.Add(this.PrototypeRadioTelescopeButton);
             this.RadioTelescopeTypeBox.Controls.Add(this.SimulatorRadioTelescopeButton);
-            this.RadioTelescopeTypeBox.Location = new System.Drawing.Point(34, 58);
+            this.RadioTelescopeTypeBox.Location = new System.Drawing.Point(9, 12);
             this.RadioTelescopeTypeBox.Name = "RadioTelescopeTypeBox";
-            this.RadioTelescopeTypeBox.Size = new System.Drawing.Size(200, 100);
+            this.RadioTelescopeTypeBox.Size = new System.Drawing.Size(181, 100);
             this.RadioTelescopeTypeBox.TabIndex = 42;
             this.RadioTelescopeTypeBox.TabStop = false;
             this.RadioTelescopeTypeBox.Text = "Radio Telescope Type";
@@ -319,7 +327,7 @@ namespace ControlRoomSoftware1
             // CurrentElLabel
             // 
             this.CurrentElLabel.AutoSize = true;
-            this.CurrentElLabel.Location = new System.Drawing.Point(644, 177);
+            this.CurrentElLabel.Location = new System.Drawing.Point(12, 208);
             this.CurrentElLabel.Name = "CurrentElLabel";
             this.CurrentElLabel.Size = new System.Drawing.Size(108, 17);
             this.CurrentElLabel.TabIndex = 43;
@@ -328,17 +336,86 @@ namespace ControlRoomSoftware1
             // CurrentAzLabel
             // 
             this.CurrentAzLabel.AutoSize = true;
-            this.CurrentAzLabel.Location = new System.Drawing.Point(644, 239);
+            this.CurrentAzLabel.Location = new System.Drawing.Point(12, 246);
             this.CurrentAzLabel.Name = "CurrentAzLabel";
             this.CurrentAzLabel.Size = new System.Drawing.Size(100, 17);
             this.CurrentAzLabel.TabIndex = 44;
             this.CurrentAzLabel.Text = "Azimuth (deg):";
             // 
+            // ReceiverScanTextBox
+            // 
+            this.ReceiverScanTextBox.Location = new System.Drawing.Point(12, 164);
+            this.ReceiverScanTextBox.Name = "ReceiverScanTextBox";
+            this.ReceiverScanTextBox.Size = new System.Drawing.Size(149, 22);
+            this.ReceiverScanTextBox.TabIndex = 45;
+            // 
+            // ReceiverScanButton
+            // 
+            this.ReceiverScanButton.Location = new System.Drawing.Point(12, 131);
+            this.ReceiverScanButton.Name = "ReceiverScanButton";
+            this.ReceiverScanButton.Size = new System.Drawing.Size(147, 27);
+            this.ReceiverScanButton.TabIndex = 46;
+            this.ReceiverScanButton.Text = "Receiver Scan";
+            this.ReceiverScanButton.UseVisualStyleBackColor = true;
+            this.ReceiverScanButton.Click += new System.EventHandler(this.ReceiverScanButton_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(386, 159);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(121, 17);
+            this.label1.TabIndex = 47;
+            this.label1.Text = "Appointment Start";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(386, 221);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(116, 17);
+            this.label2.TabIndex = 49;
+            this.label2.Text = "Appointment End";
+            // 
+            // AppointmentStartDateTime
+            // 
+            this.AppointmentStartDateTime.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            this.AppointmentStartDateTime.Location = new System.Drawing.Point(389, 179);
+            this.AppointmentStartDateTime.Name = "AppointmentStartDateTime";
+            this.AppointmentStartDateTime.Size = new System.Drawing.Size(155, 22);
+            this.AppointmentStartDateTime.TabIndex = 50;
+            // 
+            // AppointmentEndDateTime
+            // 
+            this.AppointmentEndDateTime.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            this.AppointmentEndDateTime.Location = new System.Drawing.Point(389, 241);
+            this.AppointmentEndDateTime.Name = "AppointmentEndDateTime";
+            this.AppointmentEndDateTime.Size = new System.Drawing.Size(155, 22);
+            this.AppointmentEndDateTime.TabIndex = 51;
+            // 
+            // SubmitAppointmentButton
+            // 
+            this.SubmitAppointmentButton.Location = new System.Drawing.Point(568, 174);
+            this.SubmitAppointmentButton.Name = "SubmitAppointmentButton";
+            this.SubmitAppointmentButton.Size = new System.Drawing.Size(155, 27);
+            this.SubmitAppointmentButton.TabIndex = 52;
+            this.SubmitAppointmentButton.Text = "Submit Appointment";
+            this.SubmitAppointmentButton.UseVisualStyleBackColor = true;
+            this.SubmitAppointmentButton.Click += new System.EventHandler(this.SubmitAppointmentButton_Click);
+            // 
             // Home
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1439, 759);
+            this.AutoSize = true;
+            this.ClientSize = new System.Drawing.Size(1317, 736);
+            this.Controls.Add(this.SubmitAppointmentButton);
+            this.Controls.Add(this.AppointmentEndDateTime);
+            this.Controls.Add(this.AppointmentStartDateTime);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.ReceiverScanButton);
+            this.Controls.Add(this.ReceiverScanTextBox);
             this.Controls.Add(this.CurrentAzLabel);
             this.Controls.Add(this.CurrentElLabel);
             this.Controls.Add(this.RadioTelescopeTypeBox);
@@ -398,6 +475,13 @@ namespace ControlRoomSoftware1
         private System.Windows.Forms.RadioButton SimulatorRadioTelescopeButton;
         private System.Windows.Forms.Label CurrentElLabel;
         private System.Windows.Forms.Label CurrentAzLabel;
+        private System.Windows.Forms.TextBox ReceiverScanTextBox;
+        private System.Windows.Forms.Button ReceiverScanButton;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.DateTimePicker AppointmentStartDateTime;
+        private System.Windows.Forms.DateTimePicker AppointmentEndDateTime;
+        private System.Windows.Forms.Button SubmitAppointmentButton;
     }
 }
 

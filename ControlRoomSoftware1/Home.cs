@@ -15,18 +15,22 @@ namespace ControlRoomSoftware1
 
         ControlRoom controlRoom;
         RadioTelescopeEnum currentRadioTelescopeType;
+        User currentUser;
 
         public Home()
         {
             try
             {
                 InitializeComponent();
-                
+
                 // Create control room
                 controlRoom = new ControlRoom();
 
                 // Set the radioTelescopeType to default, will be updated in WindowUpdateTimerHandler
                 currentRadioTelescopeType = RadioTelescopeEnum.Unspecified;
+
+                // Set Current User (placeholder)
+                currentUser = new User(0, "Kerry", UserLevelEnum.Admin);
 
                 // Create/select correct radio telescope
                 CheckRadioTelescopeType();
@@ -73,12 +77,20 @@ namespace ControlRoomSoftware1
         private void CheckRadioTelescopeType()
         {
             // Set the current radio telescope type based on the radio buttons
-            if(SimulatorRadioTelescopeButton.Checked)
+            if (SimulatorRadioTelescopeButton.Checked)
             {
                 currentRadioTelescopeType = RadioTelescopeEnum.Simulator;
                 if (!controlRoom.DoesRadioTelescopeExist(currentRadioTelescopeType))
                 {
-                    controlRoom.AddRadioTelescope(new SimulatorRadioTelescope());
+                    try
+                    {
+                        controlRoom.AddRadioTelescope(new SimulatorRadioTelescope());
+                    }
+                    catch (Exception error)
+                    {
+
+                        ErrorLabel.Text = error.Message;
+                    }
                 }
             }
             else if (PrototypeRadioTelescopeButton.Checked)
@@ -86,7 +98,14 @@ namespace ControlRoomSoftware1
                 currentRadioTelescopeType = RadioTelescopeEnum.Prototype;
                 if (!controlRoom.DoesRadioTelescopeExist(currentRadioTelescopeType))
                 {
-                    controlRoom.AddRadioTelescope(new PrototypeRadioTelescope());
+                    try
+                    {
+                        controlRoom.AddRadioTelescope(new PrototypeRadioTelescope());
+                    }
+                    catch (Exception error)
+                    {
+                        ErrorLabel.Text = error.Message;
+                    }
                 }
             }
         }
@@ -113,10 +132,15 @@ namespace ControlRoomSoftware1
             //ApplicationList.AutoResizeColumn(1, ColumnHeaderAutoResizeStyle.ColumnContent);
         }
 
+        private void ReceiverScanButton_Click(object sender, EventArgs e)
+        {
+            ReceiverScanTextBox.Text =  controlRoom.ReceiverScan();
+        }
+
         private void SlewButton_Click(object sender, EventArgs e)
         {
-            double endEL = (double) ELPositionInput.Value;
-            double endAZ = (double) AZPositionInput.Value;
+            double endEL = (double)ELPositionInput.Value;
+            double endAZ = (double)AZPositionInput.Value;
             DateTime arrivalTime = getTimeInput();
 
             // Make sure the arrival time is in the future
@@ -126,14 +150,16 @@ namespace ControlRoomSoftware1
                 {
                     // Submit a slew instruction
                     SlewInstruction inputInstruction = new SlewInstruction(endAZ, endEL, arrivalTime);
-                    controlRoom.SubmitInstruction(RadioTelescopeEnum.Simulator, inputInstruction);
-                    //organizer.SubmitInstruction(RadioTelescopeEnum.Prototype, inputInstruction); // Can't use unless COM3 is set up
+                    controlRoom.SubmitInstruction(currentRadioTelescopeType, inputInstruction);
                 }
                 catch (Exception error)
                 {
-
                     ErrorLabel.Text = error.Message;
                 }
+            }
+            else
+            {
+                ErrorLabel.Text = "Invalid Instruction Time";
             }
         }
 
@@ -150,14 +176,17 @@ namespace ControlRoomSoftware1
                 {
                     // Submit a scan instruction
                     SectionalScanInstruction inputInstruction = new SectionalScanInstruction(endAZ, endEL, arrivalTime);
-                    controlRoom.SubmitInstruction(RadioTelescopeEnum.Simulator, inputInstruction);
+                    controlRoom.SubmitInstruction(currentRadioTelescopeType, inputInstruction);
                 }
                 catch (Exception error)
                 {
 
                     ErrorLabel.Text = error.Message;
                 }
-                
+            }
+            else
+            {
+                ErrorLabel.Text = "Invalid Instruction Time";
             }
         }
 
@@ -173,13 +202,16 @@ namespace ControlRoomSoftware1
                     CelestialObject celestialObject = getCelestialObjectInput();
                     //TrackCelestialObjectInstruction inputInstruction = new TrackCelestialObjectInstruction(celestialObject, arrivalTime);
                     SlewCelestialObjectInstruction inputInstruction = new SlewCelestialObjectInstruction(celestialObject, arrivalTime);
-                    controlRoom.SubmitInstruction(RadioTelescopeEnum.Simulator, inputInstruction);
+                    controlRoom.SubmitInstruction(currentRadioTelescopeType, inputInstruction);
                 }
                 catch (Exception error)
                 {
                     ErrorLabel.Text = error.Message;
                 }
-                
+            }
+            else
+            {
+                ErrorLabel.Text = "Invalid Instruction Time";
             }
         }
 
@@ -266,6 +298,21 @@ namespace ControlRoomSoftware1
         {
             // Show list of appointments from selected day
             showAppointmentsForDate(monthCalendar1.SelectionStart);
+        }
+
+        private void SubmitAppointmentButton_Click(object sender, EventArgs e)
+        {
+            DateTime startDateTime = AppointmentStartDateTime.Value;
+            DateTime endDateTime = AppointmentEndDateTime.Value;
+            if (DateTime.Now.CompareTo(startDateTime) < 0 && startDateTime.CompareTo(endDateTime) < 0)
+            {
+                controlRoom.SubmitAppointment(currentRadioTelescopeType, new ControlAppointment(startDateTime, endDateTime, currentUser));
+                UpdateCalender();
+            }
+            else
+            {
+                ErrorLabel.Text = "Invalid Appointment Time";
+            }
         }
     }
 }
