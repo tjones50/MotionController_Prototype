@@ -16,6 +16,7 @@ namespace ControlRoomSoftware1
         ControlRoom controlRoom;
         RadioTelescopeEnum currentRadioTelescopeType;
         User currentUser;
+        
 
         public Home()
         {
@@ -151,6 +152,13 @@ namespace ControlRoomSoftware1
                     // Submit a slew instruction
                     SlewInstruction inputInstruction = new SlewInstruction(endAZ, endEL, arrivalTime);
                     controlRoom.SubmitInstruction(currentRadioTelescopeType, inputInstruction);
+
+                    // DEMO
+                    RadioTelescope rt = new PrototypeRadioTelescope();
+
+                    rt.Move(new Velocity(endAZ, endEL));
+
+
                 }
                 catch (Exception error)
                 {

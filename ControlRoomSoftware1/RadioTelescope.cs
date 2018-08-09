@@ -149,7 +149,7 @@ namespace ControlRoomSoftware1
 
         public override void Move(Velocity velocity)
         {
-			port.WriteLine("move:"+velocity.AZSpeed.ToString());
+			port.WriteLine("move:"+velocity.AZSpeed.ToString() + "," + velocity.ELSpeed.ToString());
         }
 
 		public void StartConnection(string portName, int baud)
